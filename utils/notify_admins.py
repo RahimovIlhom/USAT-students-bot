@@ -1,10 +1,10 @@
 import logging
 
 from data.config import ADMINS
-from loader import bot
 
 
 async def on_startup_notify():
+    from loader import bot
     for admin in ADMINS:
         try:
             await bot.send_message(admin, "Bot ishga tushdi")

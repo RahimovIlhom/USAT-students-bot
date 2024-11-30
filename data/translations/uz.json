@@ -1,0 +1,11 @@
+{
+  "welcome": "Assalomu alaykum! USAT talabalari uchun mo'ljallangan botga xush kelibsiz!\n\nПривет! Добро пожаловать в бот, предназначенный для студентов USAT!",
+  "choose_language": "Iltimos tilni tanlang / Пожалуйста, выберите язык",
+  "start": "Bosh sahifa",
+  "phone_input": "Quyidagi tugma orqali telefon raqamingizni yuboring",
+  "passport_input": "Botda ro'yxatdan o'tish uchun pasport seriyasini va raqamini kiriting (Misol: AA1234567)",
+  "register_confirmation": "Quyidagi ma'lumotlarni tekshiring. To'g'ri bo'lsa tasdiqlash tugmasini, noto'g'ri bo'lsa tahrirlash tugmasini bosing.",
+  "student_info": "Ism va familiya: Palonchiyev Pistonchi\nKurs: {N}\nYo'nalish: {X}\nTa'lim shakli: {Y}\nTil: {U}",
+  "register_completed": "Siz botda muvaffaqiyatli ro'yxatdan o'tdingiz. Endi talabalar uchun yopiq kanalga a'zo bo'lishingiz mumkin:",
+  "edit": "Qaysi ma'lumotni tahrirlamoqchisiz?"
+}
