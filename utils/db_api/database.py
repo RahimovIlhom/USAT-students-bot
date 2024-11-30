@@ -64,9 +64,52 @@ class Database:
         """
         return await self.fetchrow(sql, tg_id)
 
+    async def add_draft_user(self, tg_id, status, *args, **kwargs):
+        sql = """
+        INSERT INTO
+            users (tg_id, status, created_at, updated_at)
+        VALUES
+            ($1, $2, now(), now());
+        """
+        return await self.execute(sql, str(tg_id), status)
+
+    async def update_user_language(self, tg_id, chat_lang, status='COMPLETED', *args, **kwargs):
+        sql = """
+        UPDATE
+            users
+        SET
+            chat_lang = $1, status = $2
+        WHERE
+            tg_id = $3;
+        """
+        return await self.execute(sql, chat_lang, status, str(tg_id))
+
+    async def update_user_phone(self, tg_id, phone, status='COMPLETED', *args, **kwargs):
+        sql = """
+        UPDATE
+            users
+        SET
+            phone = $1, status = $2
+        WHERE
+            tg_id = $3;
+        """
+        return await self.execute(sql, phone, status, str(tg_id))
+
+    async def update_user_passport(self, tg_id, student_id, status='COMPLETED', *args, **kwargs):
+        sql = """
+        UPDATE
+            users
+        SET
+            student_id = $1, status = $2
+        WHERE
+            tg_id = $3;
+        """
+        return await self.execute(sql, student_id, status, str(tg_id))
+
     async def get_student(self, passport: str) -> dict | None:
         sql = """
         SELECT 
+            s.id,
             s.fullname, 
             s.passport, 
             s.pinfl, 

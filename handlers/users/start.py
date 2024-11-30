@@ -5,7 +5,8 @@ from aiogram.types import ReplyKeyboardRemove
 
 from filters.private_filters import PrivateFilter, PrivateAdminFilter
 from keyboards.default import choose_language_keyboard, contact_keyboard
-from loader import dp, messages, redis_client
+from keyboards.inline import registration_confirmation_keyboard
+from loader import dp, messages, redis_client, db
 from states import RegisterForm
 
 
@@ -25,15 +26,16 @@ async def bot_start(message: types.Message, state: FSMContext):
         'DRAFT': ('choose_language', choose_language_keyboard, RegisterForm.chat_lang),
         'PHONE_INPUT': ('phone_input', await contact_keyboard(chat_lang), RegisterForm.phone),
         'PASSPORT_INPUT': ('passport_input', ReplyKeyboardRemove(), RegisterForm.passport),
-        'CONFIRM': ('confirm', ReplyKeyboardRemove(), RegisterForm.confirm),
+        'CONFIRMATION': ('register_confirmation', await registration_confirmation_keyboard(chat_lang), RegisterForm.confirm),
         'EDIT': ('edit', ReplyKeyboardRemove(), RegisterForm.edit_fullname),
         'BLOCKED': ('blocked', ReplyKeyboardRemove(), None),
     }
 
     if not user_status:
-        await redis_client.set_user_status(user_id, 'DRAFT')
-        await message.answer(await messages.get_message(chat_lang, 'welcome'))
         user_status = 'DRAFT'
+        await redis_client.set_user_status(user_id, user_status)
+        await db.add_draft_user(user_id, user_status)
+        await message.answer(await messages.get_message(chat_lang, 'welcome'))
 
     status_data = status_messages.get(user_status)
 

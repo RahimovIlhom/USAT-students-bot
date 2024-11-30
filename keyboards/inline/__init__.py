@@ -1,1 +1,1 @@
-
+from .registration_confirmation import registration_confirmation_keyboard

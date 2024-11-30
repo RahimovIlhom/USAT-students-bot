@@ -46,7 +46,7 @@ REGISTER_STATUS = (
     ('DRAFT', _('Qoralama')),
     ('PHONE_INPUT', _('Telefon raqamini kiritish')),
     ('PASSPORT_INPUT', _('Pasport maʼlumotlarini kiritish')),
-    ('CONFIRMATION', _('Tasdiqlash')),
+    ('CONFIRMATION', _('Tasdiqlash kutilmoqda')),
     ('EDIT', _('Tahrirlash')),
     ('COMPLETED', _('Tugatildi')),
     ('BLOCKED', _('Bloklangan')),
@@ -57,7 +57,7 @@ class User(models.Model):
     phone = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('Telefon raqami'))
     student = OneToOneField('user_app.Student', null=True, blank=True, on_delete=models.SET_NULL,
                             related_name='user', verbose_name=_('Talaba'))
-    chat_lang = models.CharField(max_length=2, choices=EDU_LANGUAGES, default='uz', verbose_name=_('Chat tili'))
+    chat_lang = models.CharField(max_length=2, choices=EDU_LANGUAGES, null=True, blank=True, verbose_name=_('Chat tili'))
     status = models.CharField(max_length=15, choices=REGISTER_STATUS, default='DRAFT', verbose_name=_('Status'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Yaratilgan vaqti'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Oxirgi yangilangan vaqti'))
