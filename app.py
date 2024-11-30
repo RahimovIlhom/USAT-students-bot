@@ -2,7 +2,7 @@ import asyncio
 import logging
 import sys
 
-from loader import dp, bot, on_startup_bot
+from loader import dp, bot, on_startup_bot, stop_bot
 import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
@@ -21,9 +21,10 @@ async def on_startup():
 
 async def main() -> None:
     dp.startup.register(on_startup)
+    dp.shutdown.register(stop_bot)
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stdout)
     asyncio.run(main())

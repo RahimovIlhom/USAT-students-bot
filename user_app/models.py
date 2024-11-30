@@ -54,9 +54,9 @@ REGISTER_STATUS = (
 
 class User(models.Model):
     tg_id = models.CharField(max_length=20, primary_key=True, verbose_name=_('Telegram ID'))
-    phone = models.CharField(max_length=20, verbose_name=_('Telefon raqami'))
-    student = OneToOneField('user_app.Student', on_delete=models.DO_NOTHING, related_name='user',
-                            verbose_name=_('Talaba'))
+    phone = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('Telefon raqami'))
+    student = OneToOneField('user_app.Student', null=True, blank=True, on_delete=models.SET_NULL,
+                            related_name='user', verbose_name=_('Talaba'))
     chat_lang = models.CharField(max_length=2, choices=EDU_LANGUAGES, default='uz', verbose_name=_('Chat tili'))
     status = models.CharField(max_length=15, choices=REGISTER_STATUS, default='DRAFT', verbose_name=_('Status'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Yaratilgan vaqti'))
