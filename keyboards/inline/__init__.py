@@ -1,1 +1,3 @@
 from .registration_confirmation import registration_confirmation_keyboard
+from .edit_student_data import edit_student_data_keyboard
+from .subscribe_channel import subscribe_keyboard

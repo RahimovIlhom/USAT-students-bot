@@ -16,3 +16,5 @@ DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
 REDIS_URL = env.str("REDIS_URL")
+
+PRIVATE_CHANNEL_LINK = env.str("PRIVATE_CHANNEL_LINK")

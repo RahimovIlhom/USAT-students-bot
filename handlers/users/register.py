@@ -2,9 +2,10 @@ from aiogram import types, F
 from aiogram.enums import ContentType
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
+from celery.utils.saferepr import chars_t
 
 from keyboards.default import contact_keyboard
-from keyboards.inline import registration_confirmation_keyboard
+from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard, subscribe_keyboard
 from loader import dp, redis_client, messages, db
 from states import RegisterForm
 
@@ -25,7 +26,7 @@ async def set_language(message: types.Message, state: FSMContext):
     await message.answer(await messages.get_message(lang, 'phone_input'), reply_markup=chat_keyboard)
 
 
-@dp.message(RegisterForm.chat_lang, lambda msg: msg.content_type == ContentType.ANY)
+@dp.message(RegisterForm.chat_lang, lambda msg: msg.content_type == ContentType.TEXT)
 async def err_choose_language(message: types.Message):
     await message.delete()
     await message.answer(await messages.get_message('uz', 'choose_language'))
@@ -40,7 +41,7 @@ async def set_phone(message: types.Message, state: FSMContext):
     await message.answer(await messages.get_message(chat_lang, 'passport_input'), reply_markup=ReplyKeyboardRemove())
 
 
-@dp.message(RegisterForm.phone, F.content_type == ContentType.ANY)
+@dp.message(RegisterForm.phone, F.content_type == ContentType.TEXT)
 async def err_phone(message: types.Message):
     await message.delete()
     chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
@@ -96,3 +97,23 @@ async def invalid_passport(message: types.Message):
     await message.delete()
     chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
     await message.answer(await messages.get_message(chat_lang, 'invalid_passport'))
+
+
+@dp.callback_query(RegisterForm.confirm, F.data == 'registration_confirmation_edit')
+async def edit_student_data(callback_query: types.CallbackQuery, state: FSMContext):
+    chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
+    await callback_query.message.edit_text(await messages.get_message(chat_lang, 'edit'),
+                                           reply_markup=await edit_student_data_keyboard(chat_lang))
+    await redis_client.set_user_status(callback_query.from_user.id, 'EDIT')
+    await db.update_user_status(callback_query.from_user.id, 'EDIT')
+    await state.set_state(RegisterForm.edit)
+
+
+@dp.callback_query(RegisterForm.confirm, F.data == 'registration_confirm')
+async def confirm_registration(callback_query: types.CallbackQuery, state: FSMContext):
+    chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
+    await callback_query.message.edit_text(await messages.get_message(chat_lang, 'register_completed'),
+                                           reply_markup=await subscribe_keyboard(chat_lang))
+    await redis_client.set_user_status(callback_query.from_user.id, 'COMPLETED')
+    await db.update_user_status(callback_query.from_user.id, 'COMPLETED')
+    await state.clear()

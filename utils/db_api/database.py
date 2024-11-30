@@ -106,6 +106,17 @@ class Database:
         """
         return await self.execute(sql, student_id, status, str(tg_id))
 
+    async def update_user_status(self, tg_id, status, *args, **kwargs):
+        sql = """
+        UPDATE
+            users
+        SET
+            status = $1
+        WHERE
+            tg_id = $2;
+        """
+        return await self.execute(sql, status, str(tg_id))
+
     async def get_student(self, passport: str) -> dict | None:
         sql = """
         SELECT 
