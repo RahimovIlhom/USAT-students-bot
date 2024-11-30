@@ -1,8 +1,6 @@
 import asyncpg
-from environs import Env
 
-env = Env()
-env.read_env()
+from data import config
 
 
 class Database:
@@ -13,13 +11,13 @@ class Database:
         if self.pool is None:  # Avoid redundant initialization
             try:
                 self.pool = await asyncpg.create_pool(
-                    user=env.str("DB_USER"),
-                    password=env.str("DB_PASSWORD"),
-                    host=env.str("DB_HOST"),
-                    database=env.str("DB_NAME"),
-                    min_size=1,  # Minimum number of connections in the pool
-                    max_size=10,  # Maximum number of connections in the pool
-                    timeout=10  # Timeout for acquiring a connection
+                    user=config.DB_USER,
+                    password=config.DB_PASSWORD,
+                    host=config.DB_HOST,
+                    database=config.DB_NAME,
+                    min_size=1,
+                    max_size=10,
+                    timeout=10
                 )
             except Exception as e:
                 raise RuntimeError(f"Error connecting to the database: {e}")
@@ -51,6 +49,20 @@ class Database:
                 return await getattr(connection, query_type)(command, *args)
         except asyncpg.PostgresError as e:
             raise RuntimeError(f"Database query failed: {e}")
+
+    async def get_user(self, tg_id) -> dict | None:
+        sql = """
+        SELECT 
+            tg_id, 
+            phone,
+            chat_lang,
+            status
+        FROM
+            users
+        WHERE
+            tg_id = $1;
+        """
+        return await self.fetchrow(sql, tg_id)
 
     async def get_student(self, passport: str) -> dict | None:
         sql = """
