@@ -51,6 +51,26 @@ async def err_phone(message: types.Message):
 PASSPORT_REGEX = r'^[A-Z]{2}\d{7}$'
 
 
+async def confirmation(message, chat_lang, student, state):
+    # Prepare confirmation message with student information
+    student_info = await messages.get_message(chat_lang, 'student_info')
+    register_confirmation = await messages.get_message(chat_lang, 'register_confirmation')
+    language_name = "O'zbek" if chat_lang == 'uz' else 'Русский'
+
+    answer_text = (
+            f"{register_confirmation}\n\n" +
+            student_info.format(
+                F=student['fullname'],
+                N=student['course'],
+                X=student[f'edu_direction_name_{chat_lang}'],
+                Y=student[f'edu_type_name_{chat_lang}'],
+                U=language_name
+            )
+    )
+    await message.answer(answer_text, reply_markup=await registration_confirmation_keyboard(chat_lang))
+    await state.set_state(RegisterForm.confirm)
+
+
 @dp.message(RegisterForm.passport, F.text.regexp(PASSPORT_REGEX))
 async def set_passport(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
@@ -63,27 +83,12 @@ async def set_passport(message: types.Message, state: FSMContext):
         await message.answer(await messages.get_message(chat_lang, 'passport_not_found'))
         return
 
-    # Prepare confirmation message with student information
-    student_info = await messages.get_message(chat_lang, 'student_info')
-    register_confirmation = await messages.get_message(chat_lang, 'register_confirmation')
-    language_name = "O'zbek" if chat_lang == 'uz' else 'Русский'
-
-    answer_text = (
-        f"{register_confirmation}\n\n" +
-        student_info.format(
-            F=student['fullname'],
-            N=student['course'],
-            X=student[f'edu_direction_name_{chat_lang}'],
-            Y=student[f'edu_type_name_{chat_lang}'],
-            U=language_name
-        )
-    )
-    await message.answer(answer_text, reply_markup=await registration_confirmation_keyboard(chat_lang))
+    await confirmation(message, chat_lang, student, state)
 
     # Update database and Redis with new user state
     await db.update_user_passport(user_id, student['id'], 'CONFIRMATION')
     await redis_client.set_user_status(user_id, 'CONFIRMATION')
-    await state.set_state(RegisterForm.confirm)
+    await redis_client.set_user_passport(user_id, passport)
 
 
 @dp.message(RegisterForm.passport, lambda msg: msg.content_type == ContentType.TEXT)
