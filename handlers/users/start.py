@@ -1,18 +1,50 @@
 from aiogram import types
 from aiogram.filters import CommandStart
+from aiogram.fsm.context import FSMContext
+from aiogram.types import ReplyKeyboardRemove
 
 from filters.private_filters import PrivateFilter, PrivateAdminFilter
-from keyboards.default import choose_language_keyboard
-from loader import dp, messages
+from keyboards.default import choose_language_keyboard, contact_keyboard
+from loader import dp, messages, redis_client
+from states import RegisterForm
 
 
 @dp.message(PrivateAdminFilter(), CommandStart())
 async def admin_bot_start(message: types.Message):
-    await message.answer(f"Salom, {message.from_user.full_name}!")
+    await message.answer(f"Admin panel")
 
 
 @dp.message(PrivateFilter(), CommandStart())
-async def bot_start(message: types.Message):
+async def bot_start(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
 
-    await message.answer(await messages.get_message('uz', 'welcome'))
-    await message.answer(await messages.get_message('uz', 'choose_language'), reply_markup=choose_language_keyboard)
+    user_status = await redis_client.get_user_status(user_id)
+    chat_lang = await redis_client.get_user_chat_lang(user_id) or 'uz'
+
+    status_messages = {
+        'DRAFT': ('choose_language', choose_language_keyboard, RegisterForm.chat_lang),
+        'PHONE_INPUT': ('phone_input', await contact_keyboard(chat_lang), RegisterForm.phone),
+        'PASSPORT_INPUT': ('passport_input', ReplyKeyboardRemove(), RegisterForm.passport),
+        'CONFIRM': ('confirm', ReplyKeyboardRemove(), RegisterForm.confirm),
+        'EDIT': ('edit', ReplyKeyboardRemove(), RegisterForm.edit_fullname),
+        'BLOCKED': ('blocked', ReplyKeyboardRemove(), None),
+    }
+
+    if not user_status:
+        await redis_client.set_user_status(user_id, 'DRAFT')
+        await message.answer(await messages.get_message(chat_lang, 'welcome'))
+        user_status = 'DRAFT'
+
+    status_data = status_messages.get(user_status)
+
+    if not status_data:
+        await message.answer(await messages.get_message(chat_lang, 'restart'))
+        await state.clear()
+        return
+
+    message_key, keyboard, next_state = status_data
+    await message.answer(await messages.get_message(chat_lang, message_key), reply_markup=keyboard)
+
+    if next_state:
+        await state.set_state(next_state)
+

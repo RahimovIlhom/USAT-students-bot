@@ -6,6 +6,7 @@ class RegisterForm(StatesGroup):
     phone = State()
     passport = State()
     confirm = State()
+    edit = State()
     edit_fullname = State()
     edit_course = State()
     edit_edu_direction = State()
