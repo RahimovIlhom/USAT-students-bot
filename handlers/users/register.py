@@ -1,8 +1,10 @@
+import asyncio
+
 from aiogram import types, F
 from aiogram.enums import ContentType
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
-from celery.utils.saferepr import chars_t
 
 from keyboards.default import contact_keyboard
 from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard, subscribe_keyboard
@@ -49,7 +51,7 @@ async def err_phone(message: types.Message):
                          reply_markup=await contact_keyboard(chat_lang))
 
 # Regex pattern: AA1234567
-PASSPORT_REGEX = r'^[A-Z]{2}\d{7}$'
+PASSPORT_REGEX = r'^[a-zA-Z]{2}\d{7}$'
 
 
 async def confirmation(message, chat_lang, student, state):
@@ -117,3 +119,13 @@ async def confirm_registration(callback_query: types.CallbackQuery, state: FSMCo
     await redis_client.set_user_status(callback_query.from_user.id, 'COMPLETED')
     await db.update_user_status(callback_query.from_user.id, 'COMPLETED')
     await state.clear()
+
+
+@dp.message(StateFilter(RegisterForm))
+async def err_message(message: types.Message):
+    await message.delete()
+
+    chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
+    warning_msg = await message.answer(await messages.get_message(chat_lang, 'warning_msg'))
+    await asyncio.sleep(5)
+    await warning_msg.delete()

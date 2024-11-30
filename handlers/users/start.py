@@ -6,7 +6,7 @@ from aiogram.types import ReplyKeyboardRemove
 from filters.private_filters import PrivateFilter, PrivateAdminFilter
 from handlers.users.register import confirmation
 from keyboards.default import choose_language_keyboard, contact_keyboard
-from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard
+from keyboards.inline import edit_student_data_keyboard
 from loader import dp, messages, redis_client, db
 from states import RegisterForm
 
@@ -19,14 +19,9 @@ async def admin_bot_start(message: types.Message):
 @dp.message(PrivateFilter(), CommandStart())
 async def bot_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
-
-    user_status = await redis_client.get_user_status(user_id)
     chat_lang = await redis_client.get_user_chat_lang(user_id) or 'uz'
 
-    if user_status == "CONFIRMATION":
-        student = await db.get_student(await redis_client.get_user_passport(user_id))
-        await confirmation(message, chat_lang, student, state)
-        return
+    user_status = await redis_client.get_user_status(user_id)
 
     status_messages = {
         'DRAFT': ('choose_language', choose_language_keyboard, RegisterForm.chat_lang),
@@ -37,11 +32,19 @@ async def bot_start(message: types.Message, state: FSMContext):
     }
 
     if not user_status:
-        user_status = 'DRAFT'
-        await redis_client.set_user_status(user_id, user_status)
-        await db.add_draft_user(user_id, user_status)
+        await redis_client.set_user_status(user_id, 'DRAFT')
+        await db.add_draft_user(user_id, 'DRAFT')
         await message.answer(await messages.get_message(chat_lang, 'welcome'))
+        await state.set_state(RegisterForm.chat_lang)
+        return
 
+    # Handle user status based on current status
+    if user_status == "CONFIRMATION":
+        student = await db.get_student(await redis_client.get_user_passport(user_id))
+        await confirmation(message, chat_lang, student, state)
+        return
+
+    # Lookup message, keyboard, and next state for the user's status
     status_data = status_messages.get(user_status)
 
     if not status_data:
@@ -49,9 +52,11 @@ async def bot_start(message: types.Message, state: FSMContext):
         await state.clear()
         return
 
+    # Unpack message key, keyboard, and next state
     message_key, keyboard, next_state = status_data
     await message.answer(await messages.get_message(chat_lang, message_key), reply_markup=keyboard)
 
+    # Set the next state if applicable
     if next_state:
         await state.set_state(next_state)
 
