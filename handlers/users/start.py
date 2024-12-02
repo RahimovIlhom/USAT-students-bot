@@ -5,7 +5,7 @@ from aiogram.types import ReplyKeyboardRemove
 
 from filters.private_filters import PrivateFilter, PrivateAdminFilter
 from handlers.users.register import confirmation
-from keyboards.default import choose_language_keyboard, contact_keyboard
+from keyboards.default import choose_language_keyboard, contact_keyboard, user_menu
 from keyboards.inline import edit_student_data_keyboard
 from loader import dp, messages, redis_client, db
 from states import RegisterForm
@@ -48,7 +48,8 @@ async def bot_start(message: types.Message, state: FSMContext):
     status_data = status_messages.get(user_status)
 
     if not status_data:
-        await message.answer(await messages.get_message(chat_lang, 'restart'))
+        await message.answer(await messages.get_message(chat_lang, 'restart'),
+                             reply_markup=await user_menu(chat_lang))
         await state.clear()
         return
 

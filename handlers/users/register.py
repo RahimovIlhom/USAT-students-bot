@@ -6,10 +6,12 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
+from data.config import PRIVATE_CHANNELS
 from keyboards.default import contact_keyboard
-from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard, subscribe_keyboard
-from loader import dp, redis_client, messages, db
+from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard, check_subscribe_keyboard
+from loader import dp, redis_client, messages, db, bot
 from states import RegisterForm
+from utils.misc import check_subscription_channel
 
 
 async def set_language_and_proceed(user_id, lang, state: FSMContext):
@@ -114,8 +116,15 @@ async def edit_student_data(callback_query: types.CallbackQuery, state: FSMConte
 @dp.callback_query(RegisterForm.confirm, F.data == 'registration_confirm')
 async def confirm_registration(callback_query: types.CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-    await callback_query.message.edit_text(await messages.get_message(chat_lang, 'register_completed'),
-                                           reply_markup=await subscribe_keyboard(chat_lang))
+    channels_format = await messages.get_message(chat_lang, 'register_completed')
+    for channel_id in PRIVATE_CHANNELS:
+        chat = await bot.get_chat(channel_id)
+        invite_link = await chat.export_invite_link()
+        if not (await check_subscription_channel(callback_query.from_user.id, channel_id)):
+            channels_format += f"<a href='{invite_link}'>{chat.title}</a>\n"
+
+    await callback_query.message.edit_text(channels_format,
+                                           reply_markup=await check_subscribe_keyboard(chat_lang))
     await redis_client.set_user_status(callback_query.from_user.id, 'COMPLETED')
     await db.update_user_status(callback_query.from_user.id, 'COMPLETED')
     await state.clear()
