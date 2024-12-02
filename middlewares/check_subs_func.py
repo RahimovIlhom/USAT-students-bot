@@ -39,7 +39,7 @@ async def check_subs(
                 reply_markup=await check_subscribe_keyboard(chat_lang),
                 disable_web_page_preview=True
             )
-            # CancelHandler xatolikni to‘g‘ri ishlatish
+
             return
 
     # Agar kanalga obuna bo‘lsa, handlerni davom ettiradi

@@ -27,7 +27,7 @@ async def bot_start(message: types.Message, state: FSMContext):
         'DRAFT': ('choose_language', choose_language_keyboard, RegisterForm.chat_lang),
         'PHONE_INPUT': ('phone_input', await contact_keyboard(chat_lang), RegisterForm.phone),
         'PASSPORT_INPUT': ('passport_input', ReplyKeyboardRemove(), RegisterForm.passport),
-        'EDIT': ('edit', await edit_student_data_keyboard(chat_lang), RegisterForm.edit_fullname),
+        'EDIT': ('edit', await edit_student_data_keyboard(chat_lang), RegisterForm.edit),
         'BLOCKED': ('blocked', ReplyKeyboardRemove(), None),
     }
 
@@ -60,4 +60,3 @@ async def bot_start(message: types.Message, state: FSMContext):
     # Set the next state if applicable
     if next_state:
         await state.set_state(next_state)
-

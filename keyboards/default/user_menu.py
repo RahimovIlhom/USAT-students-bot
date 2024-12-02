@@ -13,9 +13,6 @@ user_menu_buttons_texts = {
 
 async def user_menu(lang: str = 'uz') -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
-    builder.row(
-        KeyboardButton(
-            text=user_menu_buttons_texts[lang][0]
-        )
-    )
-    return builder.as_markup(resize_keyboard=True, one_time_keyboard=False)
+    for button_text in user_menu_buttons_texts[lang]:
+        builder.row(KeyboardButton(text=button_text))
+    return builder.as_markup(row_width=2, resize_keyboard=True, one_time_keyboard=False)

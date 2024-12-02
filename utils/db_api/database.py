@@ -71,7 +71,7 @@ class Database:
         VALUES
             ($1, $2, now(), now());
         """
-        return await self.execute(sql, str(tg_id), status)
+        await self.execute(sql, str(tg_id), status)
 
     async def update_user_language(self, tg_id, chat_lang, status='COMPLETED', *args, **kwargs):
         sql = """
@@ -82,7 +82,7 @@ class Database:
         WHERE
             tg_id = $3;
         """
-        return await self.execute(sql, chat_lang, status, str(tg_id))
+        await self.execute(sql, chat_lang, status, str(tg_id))
 
     async def update_user_phone(self, tg_id, phone, status='COMPLETED', *args, **kwargs):
         sql = """
@@ -93,7 +93,7 @@ class Database:
         WHERE
             tg_id = $3;
         """
-        return await self.execute(sql, phone, status, str(tg_id))
+        await self.execute(sql, phone, status, str(tg_id))
 
     async def update_user_passport(self, tg_id, student_id, status='COMPLETED', *args, **kwargs):
         sql = """
@@ -104,7 +104,7 @@ class Database:
         WHERE
             tg_id = $3;
         """
-        return await self.execute(sql, student_id, status, str(tg_id))
+        await self.execute(sql, student_id, status, str(tg_id))
 
     async def update_user_status(self, tg_id, status, *args, **kwargs):
         sql = """
@@ -115,7 +115,7 @@ class Database:
         WHERE
             tg_id = $2;
         """
-        return await self.execute(sql, status, str(tg_id))
+        await self.execute(sql, status, str(tg_id))
 
     async def get_student(self, passport: str) -> dict | None:
         sql = """
@@ -143,3 +143,70 @@ class Database:
             s.passport = $1;
         """
         return await self.fetchrow(sql, passport)
+
+    async def set_student_fullname(self, passport: str, fullname: str) -> None:
+        sql = """
+        UPDATE
+            students
+        SET
+            fullname = $1
+        WHERE
+            passport = $2;
+        """
+        await self.execute(sql, fullname, passport)
+
+    async def set_student_course(self, passport: str, course: str) -> None:
+        sql = """
+        UPDATE
+            students
+        SET
+            course = $1
+        WHERE
+            passport = $2;
+        """
+        await self.execute(sql, course, passport)
+
+    async def set_student_edu_direction(self, passport: str, edu_direction_id: int) -> None:
+        sql = """
+        UPDATE
+            students
+        SET
+            edu_direction_id = $1
+        WHERE
+            passport = $2;
+        """
+        await self.execute(sql, edu_direction_id, passport)
+
+    async def set_student_edu_type(self, passport: str, edu_type_id: int) -> None:
+        sql = """
+        UPDATE
+            students
+        SET
+            edu_type_id = $1
+        WHERE
+            passport = $2;
+        """
+        await self.execute(sql, edu_type_id, passport)
+
+    async def set_student_edu_lang(self, passport: str, edu_lang: str) -> None:
+        sql = """
+        UPDATE
+            students
+        SET
+            edu_lang = $1
+        WHERE
+            passport = $2;
+        """
+        await self.execute(sql, edu_lang, passport)
+
+    async def get_edu_directions(self) -> list[dict]:
+        sql = """
+        SELECT id, name_uz, name_ru FROM edu_directions;
+        """
+        return await self.fetch(sql)
+
+    async def get_edu_types(self) -> list[dict]:
+        sql = """
+        SELECT id, name_uz, name_ru FROM edu_types;
+        """
+        return await self.fetch(sql)
