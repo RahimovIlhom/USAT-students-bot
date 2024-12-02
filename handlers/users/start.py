@@ -36,7 +36,7 @@ async def bot_start(message: types.Message, state: FSMContext):
         await db.add_draft_user(user_id, 'DRAFT')
         await message.answer(await messages.get_message(chat_lang, 'welcome'))
         await state.set_state(RegisterForm.chat_lang)
-        return
+        user_status = "DRAFT"
 
     # Handle user status based on current status
     if user_status == "CONFIRMATION":
