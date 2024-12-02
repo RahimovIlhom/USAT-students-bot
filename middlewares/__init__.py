@@ -1,10 +1,9 @@
-import asyncio
+from data.config import REDIS_URL
+from loader import router
+from .throttling import ThrottlingMiddleware
+from .check_subs_func import check_subs
 
-from aiogram import Router
+redis_url = REDIS_URL
 
-from middlewares.throttling import ThrottlingMiddleware
-
-loop = asyncio.get_event_loop()
-redis_url = "redis://localhost"  # Redis URL
-router = Router()
+# Routerga middleware qo‘shish
 router.message.middleware(ThrottlingMiddleware(redis_url))

@@ -121,7 +121,7 @@ async def confirm_registration(callback_query: types.CallbackQuery, state: FSMCo
         chat = await bot.get_chat(channel_id)
         invite_link = await chat.export_invite_link()
         if not (await check_subscription_channel(callback_query.from_user.id, channel_id)):
-            channels_format += f"<a href='{invite_link}'>{chat.title}</a>\n"
+            channels_format += f"\n<a href='{invite_link}'>{chat.title}</a>"
 
     await callback_query.message.edit_text(channels_format,
                                            reply_markup=await check_subscribe_keyboard(chat_lang))
