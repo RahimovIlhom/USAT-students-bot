@@ -7,6 +7,7 @@
   "register_confirmation": "Quyidagi ma'lumotlarni tekshiring. To'g'ri bo'lsa tasdiqlash tugmasini, noto'g'ri bo'lsa tahrirlash tugmasini bosing.",
   "student_info": "Ism va familiya: {F}\nKurs: {N}\nYo'nalish: {X}\nTa'lim shakli: {Y}\nTil: {U}",
   "register_completed": "Siz botda muvaffaqiyatli ro'yxatdan o'tdingiz. Endi talabalar uchun yopiq kanalga a'zo bo'lishingiz mumkin:\n",
+  "register_completed2": "Siz botda muvaffaqiyatli ro'yxatdan o'tdingiz.",
   "edit": "Qaysi ma'lumotni tahrirlamoqchisiz?",
   "invalid_passport": "Xato pasport ma'lumotlari kiritildi. Iltimos quyidagi formatda kiriting: AA1234567",
   "passport_not_found": "Bunday pasport seria va raqamli talaba topilmadi. Iltimos, qayta kiriting",

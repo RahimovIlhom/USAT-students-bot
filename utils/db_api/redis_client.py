@@ -49,7 +49,7 @@ class RedisClient:
         return await self.delete(f"user:{tg_id}:chat_lang")
 
     async def get_user_passport(self, tg_id: str):
-        return (await self.get(f"user:{tg_id}:passport")).decode("utf-8") if await self.exists(f"user:{tg_id}:student_id") else None
+        return (await self.get(f"user:{tg_id}:passport")).decode("utf-8") if await self.exists(f"user:{tg_id}:passport") else None
 
     async def set_user_passport(self, tg_id: str, passport: str):
         return await self.set(f"user:{tg_id}:passport", passport)

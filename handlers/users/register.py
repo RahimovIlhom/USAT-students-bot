@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery, Message
 
 from data.config import PRIVATE_CHANNELS
-from keyboards.default import contact_keyboard
+from keyboards.default import contact_keyboard, user_menu
 from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard, check_subscribe_keyboard
 from loader import dp, redis_client, messages, db, bot
 from states import RegisterForm
@@ -117,14 +117,21 @@ async def edit_student_data(callback_query: CallbackQuery, state: FSMContext):
 async def confirm_registration(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
     channels_format = await messages.get_message(chat_lang, 'register_completed')
-    for channel_id in PRIVATE_CHANNELS:
-        chat = await bot.get_chat(channel_id)
-        invite_link = await chat.export_invite_link()
-        if not (await check_subscription_channel(callback_query.from_user.id, channel_id)):
-            channels_format += f"\n<a href='{invite_link}'>{chat.title}</a>"
+    no_subs_channels = []
 
-    await callback_query.message.edit_text(channels_format,
-                                           reply_markup=await check_subscribe_keyboard(chat_lang))
+    for channel_id in PRIVATE_CHANNELS:
+        if not (await check_subscription_channel(callback_query.from_user.id, channel_id)):
+            chat = await bot.get_chat(channel_id)
+            invite_link_obj = await chat.create_invite_link(member_limit=1)
+            no_subs_channels.append({'title': chat.title, 'link': invite_link_obj.invite_link})
+
+    if no_subs_channels:
+        await callback_query.message.edit_text(channels_format,
+                                               reply_markup=await check_subscribe_keyboard(no_subs_channels, chat_lang))
+    else:
+        await callback_query.message.delete()
+        await callback_query.message.answer(await messages.get_message(chat_lang, 'register_completed2'),
+                                               reply_markup=await user_menu(chat_lang))
     await redis_client.set_user_status(callback_query.from_user.id, 'COMPLETED')
     await db.update_user_status(callback_query.from_user.id, 'COMPLETED')
     await state.clear()
