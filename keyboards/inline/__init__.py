@@ -1,6 +1,6 @@
 from .registration_confirmation import registration_confirmation_keyboard
 from .edit_student_data import edit_student_data_keyboard
-from .check_subscribe_channel import check_subscribe_keyboard
+from .check_subscribe_channel import check_subscribe_keyboard, CheckSubscribeCallbackData
 from .course_numbers import get_courses_keyboard
 from .edu_directions import get_edu_directions_keyboard
 from .edu_types import get_edu_types_keyboard

@@ -56,3 +56,12 @@ class RedisClient:
 
     async def delete_user_passport(self, tg_id: str):
         return await self.delete(f"user:{tg_id}:passport")
+
+    async def get_user_invite_link(self, tg_id: str):
+        return (await self.get(f"user:{tg_id}:invite_link")).decode("utf-8") if await self.exists(f"user:{tg_id}:invite_link") else None
+
+    async def set_user_invite_link(self, tg_id: str, invite_link: str):
+        return await self.set(f"user:{tg_id}:invite_link", invite_link)
+
+    async def delete_user_invite_link(self, tg_id: str):
+        return await self.delete(f"user:{tg_id}:invite_link")

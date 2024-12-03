@@ -5,14 +5,13 @@ from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from data.config import PRIVATE_CHANNELS
 from filters.private_filters import PrivateFilter, PrivateAdminFilter
 from handlers.users.register import confirmation
 from keyboards.default import choose_language_keyboard, contact_keyboard, user_menu
 from keyboards.inline import edit_student_data_keyboard, check_subscribe_keyboard
 from loader import dp, messages, redis_client, db, bot
 from states import RegisterForm
-from utils.misc import check_subscription_channel
+from utils.misc import unsubscribed_channels
 
 
 @dp.message(PrivateAdminFilter(), CommandStart())
@@ -68,12 +67,7 @@ async def handle_confirmation_status(user_id: int, message: types.Message, chat_
 
 async def handle_restart_bot(message: types.Message, chat_lang: str, state: FSMContext):
     """Handle cases where the user's status is not recognized."""
-    no_subs_channels = []
-    for channel_id in PRIVATE_CHANNELS:
-        if not await check_subscription_channel(message.from_user.id, channel_id):
-            chat = await bot.get_chat(channel_id)
-            invite_link = (await chat.create_invite_link(member_limit=1)).invite_link
-            no_subs_channels.append({"title": chat.title, "link": invite_link})
+    no_subs_channels = await unsubscribed_channels(message.from_user.id)
 
     if no_subs_channels:
         await message.answer(

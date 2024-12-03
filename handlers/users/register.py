@@ -3,12 +3,11 @@ from aiogram.enums import ContentType
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery, Message
 
-from data.config import PRIVATE_CHANNELS
 from keyboards.default import contact_keyboard, user_menu
 from keyboards.inline import registration_confirmation_keyboard, edit_student_data_keyboard, check_subscribe_keyboard
-from loader import dp, redis_client, messages, db, bot
+from loader import dp, redis_client, messages, db
 from states import RegisterForm
-from utils.misc import check_subscription_channel
+from utils.misc import unsubscribed_channels
 
 
 async def set_language_and_proceed(user_id, lang, state: FSMContext):
@@ -116,17 +115,10 @@ async def edit_student_data(callback_query: CallbackQuery, state: FSMContext):
 @dp.callback_query(RegisterForm.confirm, F.data == 'registration_confirm')
 async def confirm_registration(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-    channels_format = await messages.get_message(chat_lang, 'register_completed')
-    no_subs_channels = []
-
-    for channel_id in PRIVATE_CHANNELS:
-        if not (await check_subscription_channel(callback_query.from_user.id, channel_id)):
-            chat = await bot.get_chat(channel_id)
-            invite_link_obj = await chat.create_invite_link(member_limit=1)
-            no_subs_channels.append({'title': chat.title, 'link': invite_link_obj.invite_link})
+    no_subs_channels = await unsubscribed_channels(callback_query.from_user.id)
 
     if no_subs_channels:
-        await callback_query.message.edit_text(channels_format,
+        await callback_query.message.edit_text(await messages.get_message(chat_lang, 'register_completed'),
                                                reply_markup=await check_subscribe_keyboard(no_subs_channels, chat_lang))
     else:
         await callback_query.message.delete()
