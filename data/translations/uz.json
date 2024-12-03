@@ -19,5 +19,6 @@
   "edit_course": "Nechanchi kursda o'qisiz?",
   "edit_edu_direction": "Ta'lim yo'nalishingizni tanlang",
   "edit_edu_type": "Ta'lim shaklini tanlang",
-  "edit_edu_lang": "Ta'lim tilini tanlang"
+  "edit_edu_lang": "Ta'lim tilini tanlang",
+  "unknown_status": "Noma'lum foydalanuvchi holati. Iltimos, bot administratoriga murojaat qiling."
 }
