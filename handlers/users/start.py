@@ -111,5 +111,4 @@ STATUS_HANDLERS = {
     "PHONE_INPUT": ("phone_input", contact_keyboard, RegisterForm.phone),
     "PASSPORT_INPUT": ("passport_input", lambda _: ReplyKeyboardRemove(), RegisterForm.passport),
     "EDIT": ("edit", edit_student_data_keyboard, RegisterForm.edit),
-    "BLOCKED": ("blocked", lambda _: ReplyKeyboardRemove(), None),
 }
