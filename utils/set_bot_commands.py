@@ -5,8 +5,7 @@ from loader import bot
 
 async def set_default_commands():
     commands = [
-            types.BotCommand(command="start", description="Botni ishga tushurish"),
-            types.BotCommand(command="help", description="Yordam"),
+            types.BotCommand(command="start", description="Botni ishga tushirish | Запустить бота"),
         ]
     await bot.set_my_commands(
         commands, types.BotCommandScopeDefault()

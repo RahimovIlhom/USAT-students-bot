@@ -58,7 +58,7 @@ async def input_course(callback_query: CallbackQuery, callback_data: CourseNumbe
     course_num = callback_data.course_number
     passport = await redis_client.get_user_passport(callback_query.from_user.id)
 
-    await db.set_student_course(passport, course_num)
+    await db.set_student_course(passport, f"{course_num}")
 
     # Check if student exists in the database
     student = await db.get_student(passport)

@@ -65,7 +65,16 @@ async def confirmation(update: Message | CallbackQuery, chat_lang, student, stat
     # Prepare confirmation message with student information
     student_info = await messages.get_message(chat_lang, 'student_info')
     register_confirmation = await messages.get_message(chat_lang, 'register_confirmation')
-    language_name = "O'zbek" if chat_lang == 'uz' else 'Русский'
+    language_name = {
+        'uz': {
+            'uz': "O'zbek",
+            'ru': "Rus tili"
+        },
+        'ru': {
+            'uz': "Узбекский",
+            'ru': "Русский"
+        }
+    }
 
     answer_text = (
             f"{register_confirmation}\n\n" +
@@ -74,7 +83,7 @@ async def confirmation(update: Message | CallbackQuery, chat_lang, student, stat
                 N=student['course'],
                 X=student[f'edu_direction_name_{chat_lang}'],
                 Y=student[f'edu_type_name_{chat_lang}'],
-                U=language_name
+                U=language_name[chat_lang][student['edu_lang']],
             )
     )
     if isinstance(update, CallbackQuery):
