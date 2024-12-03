@@ -5,7 +5,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.urls import path, include
 
 urlpatterns = [
-
+    path('', include('user_app.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from audioop import reverse
 
-# Create your views here.
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+
+
+def redirect_admin(request):
+    return redirect('/uz/admin')
