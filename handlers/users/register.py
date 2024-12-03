@@ -87,12 +87,17 @@ async def set_passport(message: Message, state: FSMContext):
         await message.answer(await messages.get_message(chat_lang, 'passport_not_found'))
         return
 
-    await confirmation(message, chat_lang, student, state)
+    # Check if student is already linked to the user
+    is_linked = await db.is_student_linked(student['id'])
+    if is_linked:
+        await message.answer(await messages.get_message(chat_lang, 'passport_already_linked'))
+    else:
+        await confirmation(message, chat_lang, student, state)
 
-    # Update database and Redis with new user state
-    await db.update_user_passport(user_id, student['id'], 'CONFIRMATION')
-    await redis_client.set_user_status(user_id, 'CONFIRMATION')
-    await redis_client.set_user_passport(user_id, passport)
+        # Update database and Redis with new user state
+        await db.linked_student_to_user(user_id, student['id'], 'CONFIRMATION')
+        await redis_client.set_user_status(user_id, 'CONFIRMATION')
+        await redis_client.set_user_passport(user_id, passport)
 
 
 @dp.message(RegisterForm.passport, lambda msg: msg.content_type == ContentType.TEXT)

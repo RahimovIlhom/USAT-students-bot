@@ -37,7 +37,7 @@ class Database:
         result = await self._query("fetchrow", command, *args)
         return dict(result) if result else None
 
-    async def fetchval(self, command, *args) -> str | None:
+    async def fetchval(self, command, *args):
         return await self._query("fetchval", command, *args)
 
     async def _query(self, query_type, command, *args):
@@ -95,7 +95,18 @@ class Database:
         """
         await self.execute(sql, phone, status, str(tg_id))
 
-    async def update_user_passport(self, tg_id, student_id, status='COMPLETED', *args, **kwargs):
+    async def is_student_linked(self, student_id: int) -> bool:
+        """
+        Tekshiradi: student_id allaqachon boshqa user bilan bog'langanmi.
+
+        :param student_id: Tekshirilayotgan student ID
+        :return: True - agar bog'langan bo'lsa, aks holda False
+        """
+        sql = "SELECT COUNT(*) FROM users WHERE student_id = $1;"
+        count = await self.fetchval(sql, student_id)
+        return count > 0
+
+    async def linked_student_to_user(self, tg_id, student_id, status='COMPLETED', *args, **kwargs):
         sql = """
         UPDATE
             users

@@ -11,6 +11,7 @@
   "edit": "Qaysi ma'lumotni tahrirlamoqchisiz?",
   "invalid_passport": "Xato pasport ma'lumotlari kiritildi. Iltimos quyidagi formatda kiriting: AA1234567",
   "passport_not_found": "Bunday pasport seria va raqamli talaba topilmadi. Iltimos, qayta kiriting",
+  "passport_already_linked": "Bunday pasport seriya va raqamli talaba allaqachon ro'yxatdan o'tgan. Iltimos, qayta kiriting",
   "blocked": "Siz bloklangansiz. Hozirda botdan foydalanishingiz mumkin emas",
   "warning_msg": "Xatolik!\n\nNoto'g'ri ma'lumot yuborildi. Iltimos, qayta yuboring",
   "error_subscription": "Iltimos, botdan foydalanish uchun talabalar uchun yopiq kanalga a'zo bo'ling:\n",
