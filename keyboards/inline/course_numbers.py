@@ -1,3 +1,4 @@
+from aiogram.filters.callback_data import CallbackData
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder, KeyboardBuilder
 
@@ -14,13 +15,20 @@ courses = {
     ]
 }
 
+class CourseNumberCallbackData(CallbackData, prefix='course_number'):
+    course_number: int
+
+
+async def make_callback_data(course_number: int) -> str:
+    return CourseNumberCallbackData(course_number=course_number).pack()
+
 async def get_courses_keyboard(lang: str = 'uz') -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for i in range(len(courses[lang])):
         builder.row(
             InlineKeyboardButton(
                 text=courses[lang][i],
-                callback_data=f'{i+1}'
+                callback_data=await make_callback_data(i+1)
             )
         )
     return builder.as_markup()

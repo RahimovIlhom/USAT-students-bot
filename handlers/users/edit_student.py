@@ -4,16 +4,18 @@ from aiogram import F
 from aiogram.enums import ContentType
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State
 from aiogram.types import CallbackQuery, Message
 
 from handlers.users.register import confirmation
 from keyboards.inline import get_courses_keyboard, get_edu_directions_keyboard, get_edu_types_keyboard, \
-    get_edu_languages_keyboard
+    get_edu_languages_keyboard, CourseNumberCallbackData, EduDirectionCallbackData, EduTypeCallbackData, \
+    EduLanguagesCallbackData
 from loader import dp, redis_client, messages, db
 from states import RegisterForm
 
 
-@dp.callback_query(RegisterForm.edit, F.data == 'edit_fullname')
+@dp.callback_query(StateFilter(RegisterForm.edit, State()), F.data == 'edit_fullname')
 async def edit_fullname(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
     await callback_query.message.edit_text(await messages.get_message(chat_lang, "edit_fullname"),
@@ -42,7 +44,7 @@ async def send_fullname(message: Message, state: FSMContext):
     await state.set_state(RegisterForm.confirm)
 
 
-@dp.callback_query(RegisterForm.edit, F.data == 'edit_course')
+@dp.callback_query(StateFilter(RegisterForm.edit, State()), F.data == 'edit_course')
 async def edit_course(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
     await callback_query.message.edit_text(await messages.get_message(chat_lang, "edit_course"),
@@ -50,10 +52,10 @@ async def edit_course(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.edit_course)
 
 
-@dp.callback_query(RegisterForm.edit_course)
-async def edit_course(callback_query: CallbackQuery, state: FSMContext):
+@dp.callback_query(StateFilter(RegisterForm.edit_course, State()), CourseNumberCallbackData.filter())
+async def input_course(callback_query: CallbackQuery, callback_data: CourseNumberCallbackData, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-    course_num = callback_query.data
+    course_num = callback_data.course_number
     passport = await redis_client.get_user_passport(callback_query.from_user.id)
 
     await db.set_student_course(passport, course_num)
@@ -70,7 +72,7 @@ async def edit_course(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.confirm)
 
 
-@dp.callback_query(RegisterForm.edit, F.data == 'edit_edu_direction')
+@dp.callback_query(StateFilter(RegisterForm.edit, State()), F.data == 'edit_edu_direction')
 async def edit_edu_direction(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
     await callback_query.message.edit_text(await messages.get_message(chat_lang, "edit_edu_direction"),
@@ -78,10 +80,10 @@ async def edit_edu_direction(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.edit_edu_direction)
 
 
-@dp.callback_query(RegisterForm.edit_edu_direction)
-async def edit_edu_direction(callback_query: CallbackQuery, state: FSMContext):
+@dp.callback_query(StateFilter(RegisterForm.edit_edu_direction, State()), EduDirectionCallbackData.filter())
+async def input_edu_direction(callback_query: CallbackQuery, callback_data: EduDirectionCallbackData, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-    edu_direction_id = int(callback_query.data)
+    edu_direction_id = int(callback_data.edu_direction_id)
     passport = await redis_client.get_user_passport(callback_query.from_user.id)
 
     await db.set_student_edu_direction(passport, edu_direction_id)
@@ -98,7 +100,7 @@ async def edit_edu_direction(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.confirm)
 
 
-@dp.callback_query(RegisterForm.edit, F.data == 'edit_edu_type')
+@dp.callback_query(StateFilter(RegisterForm.edit, State()), F.data == 'edit_edu_type')
 async def edit_edu_type(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
     await callback_query.message.edit_text(await messages.get_message(chat_lang, "edit_edu_type"),
@@ -106,10 +108,10 @@ async def edit_edu_type(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.edit_edu_type)
 
 
-@dp.callback_query(RegisterForm.edit_edu_type)
-async def edit_edu_type(callback_query: CallbackQuery, state: FSMContext):
+@dp.callback_query(StateFilter(RegisterForm.edit_edu_type, State()), EduTypeCallbackData.filter())
+async def input_edu_type(callback_query: CallbackQuery, callback_data: EduTypeCallbackData, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-    edu_type_id = int(callback_query.data)
+    edu_type_id = int(callback_data.edu_type_id)
     passport = await redis_client.get_user_passport(callback_query.from_user.id)
 
     await db.set_student_edu_type(passport, edu_type_id)
@@ -126,7 +128,7 @@ async def edit_edu_type(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.confirm)
 
 
-@dp.callback_query(RegisterForm.edit, F.data == 'edit_edu_lang')
+@dp.callback_query(StateFilter(RegisterForm.edit, State()), F.data == 'edit_edu_lang')
 async def edit_edu_lang(callback_query: CallbackQuery, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
     await callback_query.message.edit_text(await messages.get_message(chat_lang, "edit_edu_lang"),
@@ -134,10 +136,10 @@ async def edit_edu_lang(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(RegisterForm.edit_edu_lang)
 
 
-@dp.callback_query(RegisterForm.edit_edu_lang)
-async def edit_edu_lang(callback_query: CallbackQuery, state: FSMContext):
+@dp.callback_query(StateFilter(RegisterForm.edit_edu_lang, State()), EduLanguagesCallbackData.filter())
+async def input_edu_lang(callback_query: CallbackQuery, callback_data: EduLanguagesCallbackData, state: FSMContext):
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-    edu_lang = callback_query.data
+    edu_lang = callback_data.lang
     passport = await redis_client.get_user_passport(callback_query.from_user.id)
 
     await db.set_student_edu_lang(passport, edu_lang)

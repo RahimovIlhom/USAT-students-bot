@@ -1,7 +1,7 @@
 from .registration_confirmation import registration_confirmation_keyboard
 from .edit_student_data import edit_student_data_keyboard
 from .check_subscribe_channel import check_subscribe_keyboard, CheckSubscribeCallbackData
-from .course_numbers import get_courses_keyboard
-from .edu_directions import get_edu_directions_keyboard
-from .edu_types import get_edu_types_keyboard
-from .edu_languages import get_edu_languages_keyboard
+from .course_numbers import get_courses_keyboard, CourseNumberCallbackData
+from .edu_directions import get_edu_directions_keyboard, EduDirectionCallbackData
+from .edu_types import get_edu_types_keyboard, EduTypeCallbackData
+from .edu_languages import get_edu_languages_keyboard, EduLanguagesCallbackData

@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher, Router
+from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
@@ -9,9 +9,6 @@ from utils.db_api import Database, Messages, RedisClient
 bot = Bot(token=config.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
-router = Router(name='main')
-
-dp.include_router(router)
 
 db = Database()
 messages = Messages()

@@ -26,5 +26,5 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stdout)
+    # logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stdout)
     asyncio.run(main())

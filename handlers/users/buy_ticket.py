@@ -2,14 +2,14 @@ from aiogram import F
 from aiogram.types import Message
 
 from filters.private_filters import PrivateFilter
-from loader import router
+from loader import dp
 
 
-@router.message(PrivateFilter(), F.text == "🎟 Taklifnoma olish")
+@dp.message(PrivateFilter(), F.text == "🎟 Taklifnoma olish")
 async def buy_ticket(message: Message):
     await message.answer("Buy ticket")
 
 
-@router.message(PrivateFilter(), F.text == "🎟 Получить предложение")
+@dp.message(PrivateFilter(), F.text == "🎟 Получить предложение")
 async def buy_ticket(message: Message):
     await message.answer("Buy ticket")
