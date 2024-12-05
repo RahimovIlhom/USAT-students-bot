@@ -1,25 +1,29 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from hall_app.models import Section
+from hall_app.models import Section, Line
 
 
-class SectorForm(forms.ModelForm):
-    sections_count = forms.IntegerField(label=_("Bo'limlar soni"), min_value=1, required=True)
-    lines_count = forms.IntegerField(label=_("Qatorlar soni"), min_value=1, required=True)
+# Custom forma
+class SeatCreationForm(forms.Form):
+    start_seat = forms.IntegerField(label=_("Boshlanish o‘rindiq raqami"), min_value=1)
+    end_seat = forms.IntegerField(label=_("Tugash o‘rindiq raqami"), min_value=1)
+    section = forms.ModelChoiceField(
+        queryset=Section.objects.all(),
+        required=False,
+        label="Bo'lim (ixtiyoriy)"
+    )
 
-    class Meta:
-        model = Section
-        fields = '__all__'
+
+class SectionSeatCreationForm(forms.Form):
+    start_seat = forms.IntegerField(label=_("Boshlanish o‘rindiq raqami"), min_value=1, required=True)
+    end_seat = forms.IntegerField(label=_("Tugash o‘rindiq raqami"), min_value=1, required=True)
+    line = forms.ModelChoiceField(queryset=Line.objects.all(), required=True)
 
     def __init__(self, *args, **kwargs):
+        section = kwargs.pop('section', None)
         super().__init__(*args, **kwargs)
+        self.fields['section'] = forms.ModelChoiceField(queryset=Section.objects.filter(id=section.id), required=True)
 
-        if self.instance.pk:  # Agar zal mavjud bo'lsa
-            self.fields['sections_count'].disabled = True
-            self.fields['sections_count'].help_text = _("Bu maydon faqat yaratishda ko'rsatiladi")
-            self.fields['lines_count'].disabled = True
-            self.fields['lines_count'].help_text = _("Bu maydon faqat yaratishda ko'rsatiladi")
-        else:
-            self.fields['sections_count'].help_text = _("Sektorlar sonini kiriting")
-            self.fields['lines_count'].help_text = _("Qatorlar sonini kiriting")
+    class Meta:
+        fields = ['start_seat', 'end_seat', 'line', 'section']

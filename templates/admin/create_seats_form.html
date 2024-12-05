@@ -1,0 +1,15 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Qator orqali o‘rindiqlar yaratish</h1>
+<p><strong>Qator:</strong> {{ line }}</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="create_seats_action">
+    {% for obj in queryset %}
+        <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk }}">
+    {% endfor %}
+    {{ form.as_p }}
+    <button type="submit" name="apply" value="apply" class="button">Yaratish</button>
+    <button type="submit" name="cancel" value="cancel" class="button">Bekor qilish</button>
+</form>
+{% endblock %}

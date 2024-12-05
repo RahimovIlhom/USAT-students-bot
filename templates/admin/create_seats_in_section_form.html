@@ -1,0 +1,11 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Bo'lim orqali o‘rindiqlar yaratish</h1>
+<p><strong>Bo'lim:</strong> {{ section }}</p>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="apply">Yaratish</button>
+    <button type="submit" name="cancel">Bekor qilish</button>
+</form>
+{% endblock %}

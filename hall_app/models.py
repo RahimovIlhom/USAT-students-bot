@@ -17,7 +17,7 @@ class Hall(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
-    active_objects = ActiveManager()
+    # active_objects = ActiveManager()
     objects = models.Manager()
 
     def __str__(self):
@@ -28,9 +28,9 @@ class Hall(models.Model):
             self.is_active = True
         super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save()
+    # def delete(self, *args, **kwargs):
+    #     self.is_active = False
+    #     self.save()
 
     class Meta:
         verbose_name = _("Zal ")
@@ -42,13 +42,13 @@ class Sector(models.Model):
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE, related_name='sector_set', verbose_name=_("Zal"))
     name = models.CharField(max_length=100, verbose_name=_("Sektor nomi"))
     # Qatorlar va bo'limlar sonini saqlash
-    line_count = models.PositiveIntegerField(default=0, verbose_name="Qatorlar soni")
     section_count = models.PositiveIntegerField(default=0, verbose_name="Bo'limlar soni")
+    line_count = models.PositiveIntegerField(default=0, verbose_name="Qatorlar soni")
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
-    active_objects = ActiveManager()
+    # active_objects = ActiveManager()
     objects = models.Manager()
 
     def __str__(self):
@@ -88,9 +88,9 @@ class Sector(models.Model):
                 if i >= len(self.section_set.all()):  # Yangi Section yaratish
                     Section.objects.create(sector=self, number=i + 1)
 
-    def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save()
+    # def delete(self, *args, **kwargs):
+    #     self.is_active = False
+    #     self.save()
 
     class Meta:
         verbose_name = _("Sektor ")
@@ -105,25 +105,30 @@ class Line(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
-    active_objects = ActiveManager()
+    # active_objects = ActiveManager()
     objects = models.Manager()
 
     def __str__(self):
         return f"{self.sector.name} sektor, {self.number}-qator"
+
+    def create_seats(self, start_seat, end_seat, section=None):
+        for number in range(start_seat, end_seat + 1):
+            Seat.objects.create(line=self, section=section, number=number)
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.is_active = True
         super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save()
+    # def delete(self, *args, **kwargs):
+    #     self.is_active = False
+    #     self.save()
 
     class Meta:
         verbose_name = _("Qator ")
         verbose_name_plural = _("Qatorlar")
         db_table = "lines"
+        ordering = ['number']
 
 
 class Section(models.Model):
@@ -133,25 +138,35 @@ class Section(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
-    active_objects = ActiveManager()
+    # active_objects = ActiveManager()
     objects = models.Manager()
 
     def __str__(self):
         return f"{self.sector.name} sektor, {self.number}-bo'lim"
+
+    def create_seats_in_section(self, start_seat, end_seat, line):
+        # O'rindiqlarni yaratish
+        for seat_number in range(start_seat, end_seat + 1):
+            Seat.objects.create(
+                number=seat_number,
+                line=line,
+                section=self
+            )
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.is_active = True
         super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save()
+    # def delete(self, *args, **kwargs):
+    #     self.is_active = False
+    #     self.save()
 
     class Meta:
         verbose_name = _("Bo'lim ")
         verbose_name_plural = _("Bo'limlar")
         db_table = "sections"
+        ordering = ['number']
 
 
 class Seat(models.Model):
@@ -162,7 +177,7 @@ class Seat(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
-    active_objects = ActiveManager()
+    # active_objects = ActiveManager()
     objects = models.Manager()
 
     def __str__(self):
@@ -173,11 +188,12 @@ class Seat(models.Model):
             self.is_active = True
         super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save()
+    # def delete(self, *args, **kwargs):
+    #     self.is_active = False
+    #     self.save()
 
     class Meta:
         verbose_name = _("O‘rindiq ")
         verbose_name_plural = _("O‘rindiqlar")
         db_table = "seats"
+        ordering = ['line__number', 'section__number', 'number']
