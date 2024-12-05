@@ -38,3 +38,4 @@ class Event(models.Model):
         verbose_name = _("Tadbir ")
         verbose_name_plural = _("Tadbirlar")
         db_table = "events"
+        ordering = ['-date']
