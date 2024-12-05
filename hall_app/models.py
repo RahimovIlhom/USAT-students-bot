@@ -128,7 +128,7 @@ class Line(models.Model):
         verbose_name = _("Qator ")
         verbose_name_plural = _("Qatorlar")
         db_table = "lines"
-        ordering = ['number']
+        ordering = ['sector__name', 'number']
 
 
 class Section(models.Model):
@@ -166,7 +166,7 @@ class Section(models.Model):
         verbose_name = _("Bo'lim ")
         verbose_name_plural = _("Bo'limlar")
         db_table = "sections"
-        ordering = ['number']
+        ordering = ['sector__name', 'number']
 
 
 class Seat(models.Model):
@@ -196,4 +196,4 @@ class Seat(models.Model):
         verbose_name = _("O‘rindiq ")
         verbose_name_plural = _("O‘rindiqlar")
         db_table = "seats"
-        ordering = ['line__number', 'section__number', 'number']
+        ordering = ['line__sector__name', 'line__number', 'section__number', 'number']

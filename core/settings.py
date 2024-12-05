@@ -30,12 +30,14 @@ INSTALLED_APPS = [
 
     # global apps
     'modeltranslation',
+    'django_celery_beat',
 
     # local apps
     'user_app',
     'education_app',
     'event_app',
     'hall_app',
+    'ticket_app',
     'payment_app',
 ]
 
@@ -102,6 +104,18 @@ SESSION_CACHE_ALIAS = "default"
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+
+# Celery Beat sozlamalari
+CELERY_BEAT_SCHEDULE = {
+    'release-expired-tickets': {
+        'task': 'ticket_app.tasks.release_expired_bookings',
+        'schedule': 60.0,  # Har 1 daqiqada tekshiradi
+    },
+    'update-event-status': {
+        'task': 'event_app.tasks.update_event_status',
+        'schedule': 60.0,  # Har 1 daqiqada ishga tushadi
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

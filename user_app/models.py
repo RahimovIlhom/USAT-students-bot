@@ -63,7 +63,7 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Oxirgi yangilangan vaqti'))
 
     def __str__(self):
-        return f"{self.tg_id} - {self.phone}"
+        return f"{self.student.fullname} - {self.phone}"
 
     class Meta:
         indexes = [
