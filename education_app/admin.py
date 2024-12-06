@@ -1,17 +1,16 @@
 from django.contrib import admin
+from modeltranslation.admin import TabbedTranslationAdmin
 
 from .models import EduDirection, EduType
 
+
 @admin.register(EduDirection)
-class EduDirectionAdmin(admin.ModelAdmin):
-    list_display = ('name_uz', 'name_ru')
-    list_display_links = ('name_uz', 'name_ru')
-    search_fields = ('name_uz', 'name_ru')
-    list_filter = ('name_uz', 'name_ru')
+class EduDirectionAdmin(TabbedTranslationAdmin):
+    list_display = ('id', 'name', )
+    search_fields = ('name', )
+
 
 @admin.register(EduType)
-class EduTypeAdmin(admin.ModelAdmin):
-    list_display = ('name_uz', 'name_ru')
-    list_display_links = ('name_uz', 'name_ru')
-    search_fields = ('name_uz', 'name_ru')
-    list_filter = ('name_uz', 'name_ru')
+class EduTypeAdmin(TabbedTranslationAdmin):
+    list_display = ('id', 'name', )
+    search_fields = ('name', )

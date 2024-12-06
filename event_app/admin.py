@@ -1,8 +1,10 @@
 from django.contrib import admin
+from modeltranslation.admin import TabbedTranslationAdmin
 from .models import Event
 
-
-class EventAdmin(admin.ModelAdmin):
+@admin.register(Event)
+class EventAdmin(TabbedTranslationAdmin):
+    # Asosiy ma'lumotlar
     list_display = ('name', 'hall', 'date', 'default_price', 'status', 'is_active')
     list_filter = ('status', 'is_active', 'hall', 'date')
     search_fields = ('name', 'description', 'hall__name')
@@ -31,5 +33,3 @@ class EventAdmin(admin.ModelAdmin):
 
     # Eventning statusini va holatini ko'rsatish
     list_display += ('update_status_display',)
-
-admin.site.register(Event, EventAdmin)

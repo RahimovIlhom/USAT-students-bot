@@ -226,8 +226,10 @@ class Database:
         sql = """
             SELECT 
                 id,
-                name,
-                description,
+                name_uz,
+                name_ru,
+                description_uz,
+                description_ru,
                 date,
                 default_price
             FROM events

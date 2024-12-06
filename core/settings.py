@@ -21,6 +21,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,7 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # global apps
-    'modeltranslation',
     'django_celery_beat',
 
     # local apps
@@ -113,7 +113,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'update-event-status': {
         'task': 'event_app.tasks.update_event_status',
-        'schedule': 60.0,  # Har 1 daqiqada ishga tushadi
+        'schedule': 300.0,  # Har 5 daqiqada ishga tushadi
     },
 }
 

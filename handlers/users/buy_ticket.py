@@ -4,20 +4,21 @@ from aiogram import F
 from aiogram.types import Message
 
 from filters.private_filters import PrivateFilter
-from loader import dp, db
+from loader import dp, db, redis_client
 from utils import get_tashkent_timezone
 
 
 @dp.message(PrivateFilter(), F.text.in_(["🎫 Tadbirga chipta sotib olish", "🎫 Купить билет на мероприятие"]))
 async def buy_ticket(message: Message):
+    chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
     event = await db.get_next_upcoming_event()
 
     if event:
         # Formatlash
         formatted_event_date = (await get_tashkent_timezone(date=event['date'])).strftime('%d-%m-%Y %H:%M')
         text = (
-            f"{emoji.emojize(':sparkles:')} **Keyingi Tadbir:** *{event['name']}*\n\n"
-            f"{event['description'] if event['description'] else ''}\n"
+            f"{emoji.emojize(':sparkles:')} **Keyingi Tadbir:** *{event['name_uz']}*\n\n"
+            f"{event['description_uz'] if event['description_uz'] else ''}\n"
             f"**Boshlanish vaqti:** {formatted_event_date}\n"
             f"**Chipta narxi:** {event['default_price']} so‘m\n\n"
             f"{emoji.emojize(':ticket:')} *Chipta sotib olish uchun biz bilan bog‘laning!*"

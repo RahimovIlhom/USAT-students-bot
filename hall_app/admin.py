@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
 
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .forms import SeatCreationForm, SectionSeatCreationForm
 from .models import Hall, Sector, Line, Section, Seat
 
@@ -36,7 +38,7 @@ class SectorInline(admin.TabularInline):
 
 
 @admin.register(Hall)
-class HallAdmin(admin.ModelAdmin):
+class HallAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'capacity', 'address', 'description', 'created_at')
     list_filter = ('created_at', 'updated_at')
     search_fields = ('name', 'address')
@@ -46,7 +48,7 @@ class HallAdmin(admin.ModelAdmin):
 
 
 @admin.register(Sector)
-class SectorAdmin(admin.ModelAdmin):
+class SectorAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'hall', 'created_at', 'updated_at')
     list_filter = ('hall', 'created_at', 'updated_at')
     search_fields = ('name', 'hall__name')
