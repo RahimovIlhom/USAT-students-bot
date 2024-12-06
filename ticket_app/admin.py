@@ -4,11 +4,11 @@ from .models import Ticket
 
 class TicketAdmin(admin.ModelAdmin):
     # Tadbir va o'rindiq bilan bog'lanishni qo'shish
-    list_display = ('event', 'user', 'seat', 'price', 'is_paid', 'is_booking')
+    list_display = ('event', 'user', 'seat', 'price', 'is_paid', 'is_booking', 'is_available')
     list_filter = ('event', 'is_available', 'seat__line__sector__hall', 'is_paid', 'is_booking', 'created_at')
     search_fields = ('event__name', 'seat__id')
-    list_editable = ('price', 'is_paid', 'is_booking')
-    list_per_page = 20
+    list_editable = ('price', 'is_paid', 'is_booking', 'is_available')
+    list_per_page = 40
 
     # O'rindiqlar va Tadbirlar bilan bog'lanishni qo'shish
     def get_readonly_fields(self, request, obj=None):
@@ -20,6 +20,5 @@ class TicketAdmin(admin.ModelAdmin):
     # def get_queryset(self, request):
     #     qs = super().get_queryset(request)
     #     return qs.filter(is_booking=True)
-
 
 admin.site.register(Ticket, TicketAdmin)

@@ -5,7 +5,7 @@ from filters.private_filters import PrivateFilter
 from loader import dp
 
 
-@dp.message(PrivateFilter(), F.text == "🎟 Taklifnoma olish")
+@dp.message(PrivateFilter(), F.text == "🎫 Tadbirga chipta sotib olish")
 async def buy_ticket(message: Message):
     await message.answer("Buy ticket")
 
