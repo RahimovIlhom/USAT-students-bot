@@ -17,9 +17,9 @@ class TicketAdmin(admin.ModelAdmin):
             return ['event', 'seat']
         return []
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.filter(is_booking=True)
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     return qs.filter(is_booking=True)
 
 
 admin.site.register(Ticket, TicketAdmin)
