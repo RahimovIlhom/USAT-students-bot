@@ -4,30 +4,27 @@ from aiogram import F
 from aiogram.types import Message
 
 from filters.private_filters import PrivateFilter
-from loader import dp, db, redis_client
+from keyboards.default import user_menu_buttons_texts
+from loader import dp, db, redis_client, messages
 from utils import get_tashkent_timezone
 
 
-@dp.message(PrivateFilter(), F.text.in_(["🎫 Tadbirga chipta sotib olish", "🎫 Купить билет на мероприятие"]))
+@dp.message(PrivateFilter(), F.text.in_(user_menu_buttons_texts['uz'] + user_menu_buttons_texts['ru']))
 async def buy_ticket(message: Message):
     chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
     event = await db.get_next_upcoming_event()
 
     if event:
-        # Formatlash
-        formatted_event_date = (await get_tashkent_timezone(date=event['date'])).strftime('%d-%m-%Y %H:%M')
-        text = (
-            f"{emoji.emojize(':sparkles:')} **Keyingi Tadbir:** *{event['name_uz']}*\n\n"
-            f"{event['description_uz'] if event['description_uz'] else ''}\n"
-            f"**Boshlanish vaqti:** {formatted_event_date}\n"
-            f"**Chipta narxi:** {event['default_price']} so‘m\n\n"
-            f"{emoji.emojize(':ticket:')} *Chipta sotib olish uchun biz bilan bog‘laning!*"
+        text = (await messages.get_message(chat_lang, 'next_event')).format(
+            emoji=emoji.emojize(':sparkles:'),
+            name=event[f'name_{chat_lang}'],
+            body=event.get(f'description_{chat_lang}') or '',
+            date=(await get_tashkent_timezone(date=event['date'])).strftime('%d-%m-%Y %H:%M'),
+            price=event['default_price'],
+            ticket=emoji.emojize(':ticket:'),
         )
     else:
-        text = (
-            f"❌ **Ayni paytda yaqinlashib kelayotgan tadbirlar mavjud emas.**\n\n"
-            f"*Iltimos, keyinroq yana urinib ko‘ring!*"
-        )
+        text = await messages.get_message(chat_lang, 'no_events')
 
     # Foydalanuvchiga javob qaytarish
     await message.answer(text, parse_mode="Markdown")

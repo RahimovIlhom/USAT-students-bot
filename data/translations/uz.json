@@ -22,5 +22,7 @@
   "edit_edu_type": "Ta'lim shaklini tanlang",
   "edit_edu_lang": "Ta'lim tilini tanlang",
   "unknown_status": "Noma'lum foydalanuvchi holati. Iltimos, bot administratoriga murojaat qiling.",
-  "kicked_message": "Siz kanaldan o'chirildingiz. Kanal administratoriga murojaat qiling."
+  "kicked_message": "Siz kanaldan o'chirildingiz. Kanal administratoriga murojaat qiling.",
+  "next_event": "{emoji} **Tadbir:** *{name}*\n\n{body}\n**Boshlanish vaqti:** {date}\n**Chipta narxi:** {price} so‘m\n\n{ticket} *Chipta sotib olish uchun biz bilan bog‘laning!*",
+  "no_events": "❌ **Ayni paytda yaqinlashib kelayotgan tadbirlar mavjud emas.**\n\n*Iltimos, keyinroq yana urinib ko‘ring!*"
 }
