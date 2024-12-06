@@ -239,3 +239,14 @@ class Database:
             LIMIT 1;
         """
         return await self.fetchrow(sql)
+
+    async def get_available_tickets_count(self, event_id):
+        sql = """
+            SELECT COUNT(*)
+            FROM tickets
+            WHERE event_id = $1 AND is_booking = FALSE
+        """
+        return await self.fetchval(sql, event_id)
+
+    async def buy_ticket(self, event_id, student_id):
+        pass

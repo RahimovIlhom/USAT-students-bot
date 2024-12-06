@@ -4,10 +4,10 @@ from .models import Ticket
 
 class TicketAdmin(admin.ModelAdmin):
     # Tadbir va o'rindiq bilan bog'lanishni qo'shish
-    list_display = ('event', 'user', 'seat', 'price', 'is_paid', 'is_booking', 'is_available')
-    list_filter = ('event', 'is_available', 'seat__line__sector__hall', 'is_paid', 'is_booking', 'created_at')
+    list_display = ('event', 'user', 'seat', 'price', 'is_paid', 'is_booking')
+    list_filter = ('event', 'seat__line__sector__hall', 'is_paid', 'is_booking', 'created_at')
     search_fields = ('event__name', 'seat__id')
-    list_editable = ('price', 'is_paid', 'is_booking', 'is_available')
+    list_editable = ('price', 'is_paid', 'is_booking')
     list_per_page = 40
 
     # O'rindiqlar va Tadbirlar bilan bog'lanishni qo'shish
@@ -16,9 +16,5 @@ class TicketAdmin(admin.ModelAdmin):
         if obj:  # Agar ob'ekt mavjud bo'lsa
             return ['event', 'seat']
         return []
-
-    # def get_queryset(self, request):
-    #     qs = super().get_queryset(request)
-    #     return qs.filter(is_booking=True)
 
 admin.site.register(Ticket, TicketAdmin)

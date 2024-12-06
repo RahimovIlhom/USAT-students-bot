@@ -9,7 +9,6 @@ class Ticket(models.Model):
     seat = models.ForeignKey('hall_app.Seat', on_delete=models.CASCADE, verbose_name=_('O‘rindiq'))
     event = models.ForeignKey('event_app.Event', on_delete=models.CASCADE, verbose_name=_('Tadbir'))
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_("Tadbir narxi"))
-    is_available = models.BooleanField(default=True, verbose_name=_("Bo‘sh o‘rindiqmi?"))
     is_paid = models.BooleanField(default=False, verbose_name=_("To‘landimi?"))
     is_booking = models.BooleanField(default=False, verbose_name=_("Bron qilinganmi?"))
     booking_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Bron qilingan vaqti"))
@@ -17,17 +16,21 @@ class Ticket(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Oxirgi yangilangan vaqti'))
 
     def save(self, *args, **kwargs):
-        if self.is_booking and not self.booking_at:
-            self.booking_at = now()
-        elif not self.is_booking:
+        # Admin tomonidan is_booking false bo'lsa, booking_at va user ni None qilib qo'yish
+        if not self.is_booking:
             self.booking_at = None
+            self.user = None
+
+        # Bron qilingan bo'lsa, booking_at vaqtini o'rnatish
+        elif self.is_booking and not self.booking_at:
+            self.booking_at = now()
+
         super().save(*args, **kwargs)
 
     def release_booking_if_expired(self):
         """Bron qilingan vaqti 15 daqiqadan oshgan bo'lsa, bronni ochadi."""
         if self.is_booking and self.booking_at:
             if now() > self.booking_at + timedelta(minutes=15):
-                self.is_available = True
                 self.is_booking = False
                 self.booking_at = None
                 self.user = None
@@ -41,4 +44,4 @@ class Ticket(models.Model):
         verbose_name = _("Bilet")
         verbose_name_plural = _("Biletlar")
         db_table = "tickets"
-        ordering = ['event__date', 'seat__line__sector__name', 'seat__line__number', 'seat__section__number', 'seat__number']
+        ordering = ['-is_booking', '-booking_at', 'event__date', 'seat__line__sector__name', 'seat__line__number', 'seat__section__number', 'seat__number']

@@ -72,8 +72,7 @@ class Event(models.Model):
             Ticket.objects.get_or_create(
                 event=self,
                 seat=seat,
-                price=self.default_price,
-                is_available=True
+                price=self.default_price
             )
 
     def update_tickets_for_seats(self):
@@ -89,8 +88,7 @@ class Event(models.Model):
                 Ticket.objects.get_or_create(
                     event=self,
                     seat=seat,
-                    price=self.default_price,
-                    is_available=True
+                    price=self.default_price
                 )
 
     def update_ticket_prices(self):

@@ -141,7 +141,7 @@ class LineAdmin(admin.ModelAdmin):
             return
 
         line = queryset.first()
-        form = SeatCreationForm(request.POST or None)
+        form = SeatCreationForm(request.POST or None, line=line)
 
         if 'apply' in request.POST:
             if form.is_valid():

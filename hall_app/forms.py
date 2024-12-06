@@ -9,10 +9,15 @@ class SeatCreationForm(forms.Form):
     start_seat = forms.IntegerField(label=_("Boshlanish o‘rindiq raqami"), min_value=1)
     end_seat = forms.IntegerField(label=_("Tugash o‘rindiq raqami"), min_value=1)
     section = forms.ModelChoiceField(
-        queryset=Section.objects.all(),
+        queryset=Section.objects.none(),
         required=False,
         label="Bo'lim (ixtiyoriy)"
     )
+
+    def __init__(self, *args, line=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if line:
+            self.fields['section'].queryset = Section.objects.filter(is_active=True, sector=line.sector)
 
 
 class SectionSeatCreationForm(forms.Form):
