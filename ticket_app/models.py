@@ -21,10 +21,6 @@ class Ticket(models.Model):
             self.booking_at = None
             self.user = None
 
-        # Bron qilingan bo'lsa, booking_at vaqtini o'rnatish
-        elif self.is_booking and not self.booking_at:
-            self.booking_at = now()
-
         super().save(*args, **kwargs)
 
     def release_booking_if_expired(self):

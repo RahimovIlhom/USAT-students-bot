@@ -5,4 +5,4 @@ from .course_numbers import get_courses_keyboard, CourseNumberCallbackData
 from .edu_directions import get_edu_directions_keyboard, EduDirectionCallbackData
 from .edu_types import get_edu_types_keyboard, EduTypeCallbackData
 from .edu_languages import get_edu_languages_keyboard, EduLanguagesCallbackData
-from .booking_ticket import booking_ticket_keyboard, BookingTicketCallbackData
+from .booking_ticket import booking_ticket_keyboard, BookingTicketCallbackData, booking_ticket_texts
