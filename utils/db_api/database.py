@@ -221,3 +221,19 @@ class Database:
         SELECT id, name_uz, name_ru FROM edu_types;
         """
         return await self.fetch(sql)
+
+    async def get_next_upcoming_event(self):
+        sql = """
+            SELECT 
+                id,
+                name,
+                description,
+                date,
+                default_price
+            FROM events
+            WHERE status = 'no_started' AND is_active = TRUE
+              AND date > NOW()
+            ORDER BY date ASC
+            LIMIT 1;
+        """
+        return await self.fetchrow(sql)
