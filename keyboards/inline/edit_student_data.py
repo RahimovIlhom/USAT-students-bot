@@ -9,27 +9,27 @@ async def edit_student_data_keyboard(chat_lang: str = 'uz') -> InlineKeyboardMar
     if chat_lang == 'uz':
         builder.row(
             InlineKeyboardButton(
-                text="✏️ Ism-familiyani o'zgartirish",
+                text="✏️ Ism-familiyani o‘zgartirish",
                 callback_data='edit_fullname'
             ),
         )
         builder.row(InlineKeyboardButton(
-                text="🔢 Kursni o'zgartirish",
+                text="🔢 Kursni o‘zgartirish",
                 callback_data='edit_course'
             ),
         )
         builder.row(InlineKeyboardButton(
-                text="🎓  Ta'lim yo'nalishni o'zgartirish",
+                text="🎓  Ta’lim yo‘nalishni o‘zgartirish",
                 callback_data='edit_edu_direction'
             ),
         )
         builder.row(InlineKeyboardButton(
-                text="💡 Ta'lim turi o'zgartirish",
+                text="💡 Ta’lim turi o‘zgartirish",
                 callback_data='edit_edu_type'
             ),
         )
         builder.row(InlineKeyboardButton(
-                text="🌐 Ta'lim tili o'zgartirish",
+                text="🌐 Ta’lim tili o‘zgartirish",
                 callback_data='edit_edu_lang'
             )
         )

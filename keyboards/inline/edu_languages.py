@@ -13,7 +13,7 @@ async def make_callback_data(lang: str) -> str:
 
 async def get_edu_languages_keyboard(lang: str) -> InlineKeyboardMarkup:
     texts = {
-        'uz': ["🇺🇿 O'zbek tili", "🇷🇺 Rus tili"],
+        'uz': ["🇺🇿 O‘zbek tili", "🇷🇺 Rus tili"],
         'ru': ["🇺🇿 Узбекский", "🇷🇺 Русский"]
     }
     builder = InlineKeyboardBuilder()

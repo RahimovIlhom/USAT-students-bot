@@ -21,9 +21,9 @@ async def set_language_and_proceed(user_id, lang, state: FSMContext):
     return await contact_keyboard(lang)
 
 
-@dp.message(RegisterForm.chat_lang, F.text.in_(['🇺🇿 O\'zbek tili', '🇷🇺 Русский язык']))
+@dp.message(RegisterForm.chat_lang, F.text.in_(['🇺🇿 O‘zbek tili', '🇷🇺 Русский язык']))
 async def set_language(message: Message, state: FSMContext):
-    if message.text == '🇺🇿 O\'zbek tili':
+    if message.text == '🇺🇿 O‘zbek tili':
         lang = 'uz'
     elif message.text == '🇷🇺 Русский язык':
         lang = 'ru'
