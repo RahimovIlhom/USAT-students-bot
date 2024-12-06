@@ -33,7 +33,7 @@ async def buy_ticket(message: Message):
                     button=booking_ticket_texts[chat_lang],
                     count=available_tickets_count
                 )
-            markup = await booking_ticket_keyboard(chat_lang, event['id'], int(message.from_user.id)),
+            markup = await booking_ticket_keyboard(chat_lang, event['id'])
         await message.answer(
             text=text,
             reply_markup=markup,
@@ -48,10 +48,22 @@ async def buy_ticket(message: Message):
 @dp.callback_query(BookingTicketCallbackData.filter())
 async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicketCallbackData):
     event_id = callback_data.event_id
-    user_id = callback_data.user_id
     chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
 
-    await db.buy_ticket(event_id, user_id)
-    # await callback_query.message.delete()
-    # await callback_query.message.answer(await messages.get_message(chat_lang, 'ticket_purchased'),
-    #                                     reply_markup=await user_menu(chat_lang))
+    blocked_ticket = await db.has_user_booked_ticket(event_id, callback_query.from_user.id)
+
+    if blocked_ticket:
+        if blocked_ticket['ticket_is_paid']:
+            await callback_query.answer(await messages.get_message(chat_lang, 'already_paid_ticket'), show_alert=True)
+            return
+        await callback_query.answer(await messages.get_message(chat_lang, 'already_booked_ticket'), show_alert=True)
+        return
+    else:
+        unblocked_ticket = await db.get_first_unbooked_ticket(event_id)
+
+        if unblocked_ticket:
+            await db.booking_ticket(unblocked_ticket['ticket_id'], callback_query.from_user.id)
+            await callback_query.answer(await messages.get_message(chat_lang, 'ticket_booked'), show_alert=True)
+            return
+        else:
+            await callback_query.answer(await messages.get_message(chat_lang, 'no_tickets'), show_alert=True)

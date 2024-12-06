@@ -26,5 +26,8 @@
   "next_event": "{emoji} **Tadbir:** *{name}*\n\n{body}\n**Boshlanish vaqti:** {date}\n**Chipta narxi:** {price} so‘m",
   "no_events": "❌ **Ayni paytda yaqinlashib kelayotgan tadbirlar mavjud emas.**\n\n*Iltimos, keyinroq yana urinib ko‘ring!*",
   "yes_tickets": "\n\n{ticket} *Chipta sotib olish uchun “{button}” tugmasini bosing va biz bilan bog‘laning!*\nMavjud chiptalar soni: {count} ta",
-  "no_tickets": "\n\n❌ **Ayni paytda chiptalar mavjud emas.**\n\n*Iltimos, keyinroq yana urinib ko‘ring!*"
+  "no_tickets": "\n\n❌ **Ayni paytda chiptalar mavjud emas.**\n\n*Iltimos, keyinroq yana urinib ko‘ring!*",
+  "already_paid_ticket": "Siz alloqachon bu tadbir uchun chipta sotib olgansiz.",
+  "already_booked_ticket": "Siz alloqachon bu tadbir uchun chipta band qilgansiz. Iltimos, to'lovni amalga oshiring",
+  "ticket_booked": "Chipta band qildingiz"
 }

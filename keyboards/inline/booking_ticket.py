@@ -5,11 +5,10 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 class BookingTicketCallbackData(CallbackData, prefix="booking_ticket"):
     event_id: int
-    user_id: int
 
 
-async def make_callback_data(event_id: int, user_id: int) -> str:
-    return BookingTicketCallbackData(event_id=event_id, user_id=user_id).pack()
+async def make_callback_data(event_id: int) -> str:
+    return BookingTicketCallbackData(event_id=event_id).pack()
 
 booking_ticket_texts = {
     'uz': "Chipta band qilish",
@@ -17,13 +16,13 @@ booking_ticket_texts = {
 }
 
 
-async def booking_ticket_keyboard(lang: str, event_id: int, user_id: int) -> InlineKeyboardMarkup:
+async def booking_ticket_keyboard(lang: str, event_id: int) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
                     text=f"{emoji.emojize(':ticket:')} {booking_ticket_texts[lang]}",
-                    callback_data=await make_callback_data(event_id=event_id, user_id=user_id)
+                    callback_data=await make_callback_data(event_id=event_id)
                 )
             ]
         ]

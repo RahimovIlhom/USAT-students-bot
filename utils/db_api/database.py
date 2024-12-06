@@ -248,5 +248,47 @@ class Database:
         """
         return await self.fetchval(sql, event_id)
 
-    async def buy_ticket(self, event_id, student_id):
-        pass
+    async def has_user_booked_ticket(self, event_id, user_id):
+        sql = """
+            SELECT
+                tickets.price AS ticket_price,
+                tickets.is_paid AS ticket_is_paid,
+                tickets.is_booking AS ticket_is_booking,
+                tickets.booking_at AS ticket_booking_at,
+                seats.number AS seat_number,
+                lines.number AS line_number,
+                sectors.name AS sector_name
+            FROM tickets
+            JOIN seats ON tickets.seat_id = seats.id
+            JOIN lines ON seats.line_id = lines.id
+            JOIN sectors ON lines.sector_id = sectors.id
+            WHERE tickets.event_id = $1 AND tickets.user_id = $2 AND tickets.is_booking = TRUE
+        """
+        return await self.fetchrow(sql, event_id, str(user_id))
+
+    async def get_first_unbooked_ticket(self, event_id):
+        sql = """
+            SELECT
+                tickets.id AS ticket_id,
+                tickets.price AS ticket_price,
+                seats.number AS seat_number,
+                lines.number AS line_number,
+                sectors.name AS sector_name
+            FROM tickets
+            JOIN seats ON tickets.seat_id = seats.id
+            JOIN lines ON seats.line_id = lines.id
+            JOIN sectors ON lines.sector_id = sectors.id
+            WHERE tickets.event_id = $1 AND tickets.is_booking = FALSE
+            ORDER BY tickets.created_at ASC
+            LIMIT 1
+            FOR UPDATE SKIP LOCKED
+        """
+        return await self.fetchrow(sql, event_id)
+
+    async def booking_ticket(self, ticket_id, user_id):
+        sql = """
+            UPDATE tickets
+            SET is_booking = TRUE, booking_at = NOW(), user_id = $1, updated_at = NOW()
+            WHERE id = $2;
+        """
+        await self.execute(sql, str(user_id), ticket_id)
