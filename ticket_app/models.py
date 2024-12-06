@@ -35,7 +35,7 @@ class Ticket(models.Model):
 
     def __str__(self):
         user_name = self.user.student.fullname if self.user else "Foydalanuvchi yo'q"
-        return f"{user_name} - {self.event.name} - {self.seat.number}"
+        return f"{user_name} - {self.event}: {self.seat}"
 
     class Meta:
         verbose_name = _("Bilet")

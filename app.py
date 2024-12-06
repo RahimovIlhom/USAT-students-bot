@@ -22,7 +22,7 @@ async def on_startup():
 async def main() -> None:
     dp.startup.register(on_startup)
     dp.shutdown.register(stop_bot)
-    await dp.start_polling(bot)
+    await dp.start_polling(bot, skip_updates=True)
 
 
 if __name__ == "__main__":
