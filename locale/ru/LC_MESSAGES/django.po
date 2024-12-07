@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 15:06+0500\n"
+"POT-Creation-Date: 2024-12-08 03:14+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,23 +19,16 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-#: core/custom_admin.py:8
-msgid "Admin Panel"
-msgstr "Административная панель"
 
-#: core/custom_admin.py:9
-msgid "Admin Panel Title"
-msgstr "Заголовок административной панели"
-
-#: core/settings.py:120
+#: core/settings.py:157
 msgid "O'zbekcha"
 msgstr "Узбекский"
 
-#: core/settings.py:121
+#: core/settings.py:158
 msgid "Ruscha"
 msgstr "Русский"
 
-#: education_app/models.py:6
+#: education_app/models.py:6 user_app/models.py:24
 msgid "Ta'lim yo'nalishi"
 msgstr "Направление образования"
 
@@ -47,10 +40,462 @@ msgstr "Направление образования "
 msgid "Ta'lim yo'nalishlari"
 msgstr "Направления образования"
 
-#: education_app/models.py:18 education_app/models.py:25
+#: education_app/models.py:19 education_app/models.py:26 user_app/models.py:26
 msgid "Ta'lim turi"
 msgstr "Тип образования"
 
-#: education_app/models.py:26
+#: education_app/models.py:27
 msgid "Ta'lim turlari"
 msgstr "Типы образования"
+
+#: event_app/models.py:10
+msgid "Boshlanmagan"
+msgstr "Не началось"
+
+#: event_app/models.py:11
+msgid "Boshlandi"
+msgstr "Начато"
+
+#: event_app/models.py:12
+msgid "Yakunlangan"
+msgstr "Завершено"
+
+#: event_app/models.py:17
+msgid "Tadbir nomi"
+msgstr "Название мероприятия"
+
+#: event_app/models.py:18
+msgid "Tadbir zali"
+msgstr "Зал мероприятия"
+
+#: event_app/models.py:19
+msgid "Tadbir haqida"
+msgstr "О мероприятии"
+
+#: event_app/models.py:20
+msgid "Tadbir boshlanish sana va vaqti"
+msgstr "Дата и время начала мероприятия"
+
+#: event_app/models.py:21 ticket_app/models.py:10
+msgid "Tadbir narxi"
+msgstr "Цена билета"
+
+#: event_app/models.py:22
+msgid "Chipta bron qilingan vaqti"
+msgstr "Время бронирования билета"
+
+#: event_app/models.py:23
+msgid "Tadbir holati"
+msgstr "Статус мероприятия"
+
+#: event_app/models.py:24 hall_app/models.py:16 hall_app/models.py:47
+#: hall_app/models.py:104 hall_app/models.py:137 hall_app/models.py:176
+msgid "Aktikligi"
+msgstr "Актуальность"
+
+#: event_app/models.py:25 ticket_app/models.py:15
+msgid "Qo‘shilgan vaqti"
+msgstr "Время добавления"
+
+#: event_app/models.py:26 hall_app/models.py:18 hall_app/models.py:49
+#: hall_app/models.py:106 hall_app/models.py:139 hall_app/models.py:178
+#: payment_app/models.py:28 ticket_app/models.py:16 user_app/models.py:63
+msgid "Oxirgi yangilangan vaqti"
+msgstr "Последнее обновление"
+
+#: event_app/models.py:105
+msgid "Tadbir "
+msgstr "Мероприятие "
+
+#: event_app/models.py:106
+#, fuzzy
+#| msgid "Ta'lim turlari"
+msgid "Tadbirlar"
+msgstr "Мероприятия"
+
+#: hall_app/forms.py:9 hall_app/forms.py:24
+msgid "Boshlanish o‘rindiq raqami"
+msgstr "Номер начального места"
+
+#: hall_app/forms.py:10 hall_app/forms.py:25
+msgid "Tugash o‘rindiq raqami"
+msgstr "Номер конечного места"
+
+#: hall_app/models.py:11
+msgid "Zal nomi"
+msgstr "Название зала"
+
+#: hall_app/models.py:12
+msgid "Sig'imi"
+msgstr "Вместимость"
+
+#: hall_app/models.py:13
+msgid "Manzili"
+msgstr "Адрес"
+
+#: hall_app/models.py:14
+msgid "Tavsif"
+msgstr "Описание"
+
+#: hall_app/models.py:15
+msgid "Rasm"
+msgstr "Изображение"
+
+#: hall_app/models.py:17 hall_app/models.py:48 hall_app/models.py:105
+#: hall_app/models.py:138 hall_app/models.py:177 payment_app/models.py:27
+msgid "Qo'shilgan vaqti"
+msgstr "Время добавления"
+
+#: hall_app/models.py:36
+msgid "Zal "
+msgstr "Зал "
+
+#: hall_app/models.py:37
+msgid "Zallar"
+msgstr "Залы"
+
+#: hall_app/models.py:42
+msgid "Zal"
+msgstr "Зал"
+
+#: hall_app/models.py:43
+msgid "Sektor nomi"
+msgstr "Название сектора"
+
+#: hall_app/models.py:96
+msgid "Sektor "
+msgstr "Сектор"
+
+#: hall_app/models.py:97
+msgid "Sektorlar"
+msgstr "Секторы"
+
+#: hall_app/models.py:102 hall_app/models.py:135
+msgid "Sektori"
+msgstr "Сектор"
+
+#: hall_app/models.py:103
+msgid "Qator raqami"
+msgstr "Номер ряда"
+
+#: hall_app/models.py:128
+msgid "Qator "
+msgstr "Ряд"
+
+#: hall_app/models.py:129
+msgid "Qatorlar"
+msgstr "Ряды"
+
+#: hall_app/models.py:136
+msgid "Bo'lim raqami"
+msgstr "Номер секции"
+
+#: hall_app/models.py:166
+msgid "Bo'lim "
+msgstr "Секция "
+
+#: hall_app/models.py:167
+#, fuzzy
+#| msgid "Ta'lim turlari"
+msgid "Bo'limlar"
+msgstr "Секции"
+
+#: hall_app/models.py:173
+msgid "Qatori"
+msgstr "Ряд"
+
+#: hall_app/models.py:174
+msgid "Bo'limi"
+msgstr "Секция"
+
+#: hall_app/models.py:175
+msgid "O'rindiq raqami"
+msgstr "Номер места"
+
+#: hall_app/models.py:196
+msgid "O‘rindiq "
+msgstr "Место"
+
+#: hall_app/models.py:197
+msgid "O‘rindiqlar"
+msgstr "Места"
+
+#: payment_app/models.py:6
+msgid "Naqd"
+msgstr "Наличные"
+
+#: payment_app/models.py:7
+msgid "Karta"
+msgstr "Карта"
+
+#: payment_app/models.py:8
+msgid "Click"
+msgstr "Click"
+
+#: payment_app/models.py:9
+msgid "Payme"
+msgstr "Payme"
+
+#: payment_app/models.py:13
+msgid "Kutilmoqda"
+msgstr "Ожидается"
+
+#: payment_app/models.py:14
+msgid "Bajarildi"
+msgstr "Выполнено"
+
+#: payment_app/models.py:15
+msgid "Muvaffaqiyatsiz"
+msgstr "Неудачно"
+
+#: payment_app/models.py:20
+msgid "Bilet"
+msgstr "Билет"
+
+#: payment_app/models.py:21
+#, fuzzy
+#| msgid "Ta'lim turi"
+msgid "To'lov turi"
+msgstr "Тип обучения"
+
+#: payment_app/models.py:22
+msgid "To'lov summasi"
+msgstr "Сумма платежа"
+
+#: payment_app/models.py:23
+msgid "Tranzaksiya ID"
+msgstr "ID транзакции"
+
+#: payment_app/models.py:24
+msgid "Holat"
+msgstr "Статус"
+
+#: payment_app/models.py:25
+msgid "Qo'shimcha tafsilotlar"
+msgstr "Дополнительные детали"
+
+#: payment_app/models.py:26
+msgid "To'langan vaqti"
+msgstr "Время оплаты"
+
+#: payment_app/models.py:41
+msgid "To'lov "
+msgstr "Платеж"
+
+#: payment_app/models.py:42
+msgid "To'lovlar"
+msgstr "Платежи"
+
+#: templates/includes/footer.html:6
+msgid "Copyright"
+msgstr "Авторские права"
+
+#: templates/includes/footer.html:6
+msgid "All Rights Reserved"
+msgstr "Все права защищены"
+
+#: templates/includes/footer.html:9
+msgid "Developed by"
+msgstr "Разработано"
+
+#: templates/includes/navbar.html:53
+msgid "My Profile"
+msgstr "Мой профиль"
+
+#: templates/includes/navbar.html:64 templates/includes/sidebar.html:101
+msgid "Sign Out"
+msgstr "Выйти"
+
+#: templates/includes/navbar.html:72
+msgid "Login"
+msgstr "Войти"
+
+#: templates/includes/sidebar.html:17
+msgid "Tickets"
+msgstr "Билеты"
+
+#: templates/includes/sidebar.html:22
+msgid "Booked Tickets"
+msgstr "Забронированные билеты"
+
+#: templates/includes/sidebar.html:27
+msgid "Sold Tickets"
+msgstr "Проданные билеты"
+
+#: templates/includes/sidebar.html:36 templates/includes/sidebar.html:43
+msgid "Halls"
+msgstr "Залы"
+
+#: templates/includes/sidebar.html:49
+msgid "Sectors"
+msgstr "Секторы"
+
+#: templates/includes/sidebar.html:55 templates/includes/sidebar.html:73
+msgid "Sections"
+msgstr "Секции"
+
+#: templates/includes/sidebar.html:61
+msgid "Lines"
+msgstr "Линии"
+
+#: templates/includes/sidebar.html:67
+msgid "Seats"
+msgstr "Места"
+
+#: templates/includes/sidebar.html:78
+msgid "Events"
+msgstr "События"
+
+#: templates/includes/sidebar.html:86
+msgid "Payments"
+msgstr "Платежи"
+
+#: templates/includes/sidebar.html:93
+msgid "Profile"
+msgstr "Профиль"
+
+#: ticket_app/models.py:7
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+#: ticket_app/models.py:8
+msgid "O‘rindiq"
+msgstr "Место"
+
+#: ticket_app/models.py:9
+msgid "Tadbir"
+msgstr "Событие"
+
+#: ticket_app/models.py:11
+msgid "To‘landimi?"
+msgstr "Оплачено?"
+
+#: ticket_app/models.py:12
+msgid "Bron qilinganmi?"
+msgstr "Забронировано?"
+
+#: ticket_app/models.py:13
+msgid "Bron qilingan vaqti"
+msgstr "Время бронирования"
+
+#: ticket_app/models.py:14
+msgid "Chipta rasmi"
+msgstr "Фото билета"
+
+#: ticket_app/models.py:40
+msgid "Chipta "
+msgstr "Билет"
+
+#: ticket_app/models.py:41
+msgid "Chiptalar"
+msgstr "Билеты"
+
+#: user_app/models.py:6
+msgid "Uzbek"
+msgstr "Узбекский"
+
+#: user_app/models.py:7
+msgid "Russian"
+msgstr "Русский"
+
+#: user_app/models.py:19
+msgid "Ism familiya"
+msgstr "Имя и фамилия"
+
+#: user_app/models.py:20
+msgid "Passport"
+msgstr "Паспорт"
+
+#: user_app/models.py:21
+msgid "PINFL"
+msgstr "ИНН"
+
+#: user_app/models.py:22
+msgid "Kurs"
+msgstr "Курс"
+
+#: user_app/models.py:27
+#, fuzzy
+#| msgid "Ta'lim turi"
+msgid "Ta'lim tili"
+msgstr "Язык обучения"
+
+#: user_app/models.py:28
+msgid "Shartnoma summasi"
+msgstr "Сумма договора"
+
+#: user_app/models.py:29
+msgid "Voucher summasi"
+msgstr "Сумма ваучера"
+
+#: user_app/models.py:30
+msgid "Valyuta"
+msgstr "Валюта"
+
+#: user_app/models.py:41
+msgid "Talaba "
+msgstr "Студент"
+
+#: user_app/models.py:42
+msgid "Talabalar"
+msgstr "Студенты"
+
+#: user_app/models.py:46
+msgid "Qoralama"
+msgstr "Черновик"
+
+#: user_app/models.py:47
+msgid "Telefon raqamini kiritish"
+msgstr "Введите номер телефона"
+
+#: user_app/models.py:48
+msgid "Pasport maʼlumotlarini kiritish"
+msgstr "Введите данные паспорта"
+
+#: user_app/models.py:49
+msgid "Tasdiqlash kutilmoqda"
+msgstr "Ожидается подтверждение"
+
+#: user_app/models.py:50
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
+#: user_app/models.py:51
+msgid "Tugatildi"
+msgstr "Завершено"
+
+#: user_app/models.py:52
+msgid "Bloklangan"
+msgstr "Заблокировано"
+
+#: user_app/models.py:56
+msgid "Telegram ID"
+msgstr "ID Телеграма"
+
+#: user_app/models.py:57
+msgid "Telefon raqami"
+msgstr "Номер телефона"
+
+#: user_app/models.py:59
+msgid "Talaba"
+msgstr "Студент"
+
+#: user_app/models.py:60
+msgid "Chat tili"
+msgstr "Язык чата"
+
+#: user_app/models.py:61
+msgid "Status"
+msgstr "Статус"
+
+#: user_app/models.py:62
+msgid "Yaratilgan vaqti"
+msgstr "Время создания"
+
+#: user_app/models.py:73
+msgid "Foydalanuvchi "
+msgstr "Пользователь"
+
+#: user_app/models.py:74
+msgid "Foydalanuvchilar"
+msgstr "Пользователи"
