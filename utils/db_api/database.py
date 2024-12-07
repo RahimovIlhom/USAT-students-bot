@@ -315,3 +315,17 @@ class Database:
             WHERE id = $1 AND status = 'no_started' AND is_active = TRUE
         """
         return await self.fetchrow(sql, event_id)
+
+    async def get_ticket(self, ticket_id, user_id):
+        sql = """
+            SELECT
+                tickets.id AS ticket_id,
+                tickets.price AS ticket_price,
+                tickets.is_paid AS ticket_is_paid,
+                tickets.is_booking AS ticket_is_booking,
+                tickets.booking_at AS ticket_booking_at,
+                tickets.image AS ticket_image
+            FROM tickets
+            WHERE tickets.id = $1 AND tickets.user_id = $2
+        """
+        return await self.fetchrow(sql, ticket_id, str(user_id))

@@ -11,6 +11,7 @@ class Ticket(models.Model):
     is_paid = models.BooleanField(default=False, verbose_name=_("To‘landimi?"))
     is_booking = models.BooleanField(default=False, verbose_name=_("Bron qilinganmi?"))
     booking_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Bron qilingan vaqti"))
+    image = models.ImageField(upload_to='ticket_images/', null=True, blank=True, verbose_name=_("Chipta rasmi"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Oxirgi yangilangan vaqti'))
 

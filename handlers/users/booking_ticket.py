@@ -1,5 +1,7 @@
+import os
 from datetime import timedelta
 
+import django
 import emoji
 
 from aiogram import F
@@ -24,14 +26,14 @@ CALENDAR_EMOJI = emoji.emojize(':calendar:')
 MONEY_BUG_EMOJI = emoji.emojize(':moneybag:')
 ARROW_DOWN_EMOJI = emoji.emojize(':arrow_down:')
 
-async def format_remaining_time(remaining_time: timedelta) -> str:
+async def format_remaining_time(lang: str, remaining_time: timedelta) -> str:
     """
     Qolgan vaqti (timedelta obyekti) MM:SS formatida qaytaruvchi funksiya.
     """
     minutes_left = remaining_time.seconds // 60
     seconds_left = remaining_time.seconds % 60
 
-    return f"{minutes_left} daqiqa {seconds_left} soniya"
+    return (await messages.get_message(lang, 'format_remaining_time')).format(minutes_left=minutes_left, seconds_left=seconds_left)
 
 
 async def generate_event_message(lang, event, available_tickets_count) -> tuple[str, InlineKeyboardMarkup | None]:
@@ -48,7 +50,7 @@ async def generate_event_message(lang, event, available_tickets_count) -> tuple[
         ticket=TICKET_EMOJI,
         button=booking_ticket_texts[lang],
         count=available_tickets_count,
-        booking_time=await format_remaining_time(event['ticket_booking_time'])
+        booking_time=await format_remaining_time(lang, event['ticket_booking_time'])
     ), await booking_ticket_keyboard(lang, event['id'])
 
 
@@ -104,7 +106,7 @@ async def generate_ticket_message(lang, status, ticket) -> str:
                 'line': line,
                 'seat': seat,
                 'booking_date': await format_time('ticket_booking_at'),
-                'remaining_time': await format_remaining_time(ticket.get('time_remaining', timedelta(0))),
+                'remaining_time': await format_remaining_time(lang, ticket.get('time_remaining', timedelta(0))),
             },
         },
         'booked': {
@@ -113,7 +115,7 @@ async def generate_ticket_message(lang, status, ticket) -> str:
                 'line': line,
                 'seat': seat,
                 'booking_date': await format_time('ticket_booking_at'),
-                'remaining_time': await format_remaining_time(ticket.get('time_remaining', timedelta(0))),
+                'remaining_time': await format_remaining_time(lang, ticket.get('time_remaining', timedelta(0))),
             },
         },
         'reload_booking': {
@@ -122,7 +124,7 @@ async def generate_ticket_message(lang, status, ticket) -> str:
                 'line': line,
                 'seat': seat,
                 'booking_date': await format_time('ticket_booking_at'),
-                'remaining_time': await format_remaining_time(ticket.get('time_remaining', timedelta(0))),
+                'remaining_time': await format_remaining_time(lang, ticket.get('time_remaining', timedelta(0))),
             },
         },
         'unavailable': {
@@ -159,6 +161,7 @@ async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicket
         # User has already booked a ticket
         if ticket['ticket_is_paid']:
             status = 'paid'
+            markup = await download_ticket_keyboard(chat_lang, ticket['ticket_id'])
         else:
             if ticket['time_remaining'] < timedelta(0):
                 await db.booking_ticket(ticket['ticket_id'], user_id)  # Extend booking time
@@ -166,14 +169,12 @@ async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicket
                 status = 'reload_booking'
             else:
                 status = 'unpaid'
-        markup = await download_ticket_keyboard(chat_lang, ticket['ticket_id'])
     else:
         # Check for available unbooked tickets
         ticket = await db.get_first_unbooked_ticket(event_id)
         if ticket:
             status = 'booked'
             await db.booking_ticket(ticket['ticket_id'], user_id)
-            markup = await download_ticket_keyboard(chat_lang, ticket['ticket_id'])
         else:
             status = 'unavailable'
 
@@ -187,7 +188,62 @@ async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicket
     )
 
 
+# Callback handler
 @dp.callback_query(DownloadBookingCallbackData.filter())
 async def download_ticket(callback_query: CallbackQuery, callback_data: DownloadBookingCallbackData):
+    # Reply markup ni o'chirish
     await callback_query.message.edit_reply_markup(reply_markup=None)
-    # await callback_query.message.answer_document()
+
+    # Ticket ID dan ma'lumot olish
+    ticket_id = callback_data.ticket_id
+    chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
+
+    # DB dan chiptani tekshirish
+    ticket = await db.get_ticket(ticket_id, callback_query.from_user.id)
+
+    # Ticket topilmagan yoki to'lanmagan holatlarini tekshirish
+    if not ticket:
+        await callback_query.answer(await messages.get_message(chat_lang, 'ticket_not_found'), show_alert=True)
+        return
+
+    if not ticket['ticket_is_paid']:
+        await callback_query.answer(await messages.get_message(chat_lang, 'ticket_unpaid'), show_alert=True)
+        return
+
+    # Ticket uchun rasm URL hosil qilish yoki yaratish
+    # image_url = await handle_ticket_image(ticket['ticket_image'])
+    image_url = 'https://admin.usat.uz/media/news/galleries/assorti.jpg'
+
+    # Rasm yuborish
+    await callback_query.message.answer_photo(
+        photo=image_url,
+        disable_web_page_preview=True
+    )
+
+
+async def handle_ticket_image(ticket_image: str, ticket_id: int = None, user_id: int = None) -> str:
+    """
+    Ticket uchun tasvir yo'q bo'lsa, yaratish va URL hosil qilish.
+    """
+    if ticket_image:
+        # Ticket rasm URL sini olish
+        return await get_image_url(ticket_image)
+
+    # Ticket yo'q bo'lsa tasvir yaratish
+    # generated_image_path = await generate_ticket_image(ticket_id, user_id)
+    # return await get_image_url(generated_image_path)
+
+
+# Django muhitini ishga tushirish
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+django.setup()
+
+from django.conf import settings
+
+
+async def get_image_url(image_path: str) -> str:
+    """
+    Yaratilgan yoki mavjud bo'lgan rasm uchun URL hosil qiladi.
+    """
+    # Tasvirning to'liq URL hosil qilinishi
+    return f"{settings.SITE_URL}{settings.MEDIA_URL}{image_path}"
