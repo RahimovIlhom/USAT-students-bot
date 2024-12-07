@@ -19,6 +19,7 @@ class Event(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name=_("Tadbir haqida"))
     date = models.DateTimeField(verbose_name=_("Tadbir boshlanish sana va vaqti"))
     default_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_("Tadbir narxi"))
+    ticket_booking_time = models.DurationField(default=timedelta(minutes=15), verbose_name=_("Chipta bron qilingan vaqti"))  # Default 15 min booking_time
     status = models.CharField(max_length=10, choices=EVENT_STATUS, default='no_started', verbose_name=_("Tadbir holati"))
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))

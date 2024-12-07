@@ -231,7 +231,8 @@ class Database:
                 description_uz,
                 description_ru,
                 date,
-                default_price
+                default_price,
+                ticket_booking_time
             FROM events
             WHERE status = 'no_started' AND is_active = TRUE
               AND date > NOW()
@@ -251,18 +252,28 @@ class Database:
     async def has_user_booked_ticket(self, event_id, user_id):
         sql = """
             SELECT
+                tickets.id AS ticket_id,
                 tickets.price AS ticket_price,
                 tickets.is_paid AS ticket_is_paid,
                 tickets.is_booking AS ticket_is_booking,
                 tickets.booking_at AS ticket_booking_at,
                 seats.number AS seat_number,
                 lines.number AS line_number,
-                sectors.name AS sector_name
+                sectors.name AS sector_name,
+                COALESCE(payments.method, 'N/A') AS payment_method,
+                COALESCE(payments.amount, 0) AS payment_amount,
+                COALESCE(payments.status, 'N/A') AS payment_status,
+                COALESCE(payments.paid_at, NULL) AS payment_paid_at,
+                (tickets.booking_at + (events.ticket_booking_time || ' minutes')::INTERVAL) - now() AS time_remaining
             FROM tickets
             JOIN seats ON tickets.seat_id = seats.id
             JOIN lines ON seats.line_id = lines.id
             JOIN sectors ON lines.sector_id = sectors.id
-            WHERE tickets.event_id = $1 AND tickets.user_id = $2 AND tickets.is_booking = TRUE
+            LEFT JOIN payments ON tickets.id = payments.ticket_id
+            JOIN events ON tickets.event_id = events.id
+            WHERE tickets.event_id = $1
+              AND tickets.user_id = $2
+              AND tickets.is_booking = TRUE
         """
         return await self.fetchrow(sql, event_id, str(user_id))
 
@@ -273,11 +284,14 @@ class Database:
                 tickets.price AS ticket_price,
                 seats.number AS seat_number,
                 lines.number AS line_number,
-                sectors.name AS sector_name
+                sectors.name AS sector_name,
+                NOW() AS booking_at,
+                events.ticket_booking_time AS ticket_booking_time
             FROM tickets
             JOIN seats ON tickets.seat_id = seats.id
             JOIN lines ON seats.line_id = lines.id
             JOIN sectors ON lines.sector_id = sectors.id
+            JOIN events ON tickets.event_id = events.id
             WHERE tickets.event_id = $1 AND tickets.is_booking = FALSE
             ORDER BY tickets.created_at ASC
             LIMIT 1
@@ -292,3 +306,12 @@ class Database:
             WHERE id = $2;
         """
         await self.execute(sql, str(user_id), ticket_id)
+
+    async def get_active_event(self, event_id):
+        sql = """
+            SELECT
+                id
+            FROM events
+            WHERE id = $1 AND status = 'no_started' AND is_active = TRUE
+        """
+        return await self.fetchrow(sql, event_id)

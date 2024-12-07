@@ -25,9 +25,12 @@
   "kicked_message": "Siz kanaldan o‘chirildingiz. Kanal administratoriga murojaat qiling.",
   "next_event": "{emoji} **Tadbir:** *{name}*\n\n{body}\n**Boshlanish vaqti:** {date}\n**Chipta narxi:** {price} so‘m",
   "no_events": "❌ **Ayni paytda yaqinlashib kelayotgan tadbirlar mavjud emas.**\n\n*Iltimos, keyinroq yana urinib ko‘ring!*",
-  "yes_tickets": "\n\n{ticket} *Chipta sotib olish uchun “{button}” tugmasini bosing va biz bilan bog‘laning!*\nMavjud chiptalar soni: {count} ta",
+  "event_finished": "Afsuski, ushbu tadbir yakunlangan. Ammo tashvishlanmang! Tez orada yangi va qiziqarli tadbirlarni e’lon qilamiz. Keyingi tadbirlarimizda sizni kutib qolamiz! \uD83C\uDF89",
+  "yes_tickets": "\n\n{ticket} *Chipta sotib olish uchun “{button}” tugmasini bosing va biz bilan bog‘laning!*\n\nMavjud chiptalar soni: {count} ta\nChiptani bron qilish vaqti: {booking_time}",
   "no_tickets": "\n\n❌ **Ayni paytda chiptalar mavjud emas.**\n\n*Iltimos, keyinroq yana urinib ko‘ring!*",
-  "already_paid_ticket": "Siz alloqachon bu tadbir uchun chipta sotib olgansiz.",
-  "already_booked_ticket": "Siz alloqachon bu tadbir uchun chipta band qilgansiz. Iltimos, to'lovni amalga oshiring",
-  "ticket_booked": "Chipta band qildingiz"
+  "already_paid_ticket": "✅ <b>Siz allaqachon ushbu tadbir uchun chipta sotib olgansiz.</b>\n\n<b>Chiptangiz:</b>\n- \uD83D\uDCBA <b>Qator:</b> {line} <b>joy nomeri:</b> {seat}\n- \uD83D\uDCC6 <b>Sotib olingan sana:</b> {payment_date}\n\n⬇\uFE0F <b>Quyidagi tugma orqali chiptangizni yuklab olishingiz mumkin</b>",
+  "already_booked_ticket": "✅ Siz allaqachon ushbu tadbir uchun chipta bron qilgansiz.\n\n\uD83D\uDCDD Bron qilingan chipta:\n- \uD83D\uDCBA Qator: {line} joy nomeri: {seat}\n- \uD83D\uDCC6 Bron qilingan sana va vaqt: {booking_date}\n- ⏰ Bronlash vaqti tugashigacha qoldi: {remaining_time}\n\n\uD83D\uDED2 To‘lov qilganingizdan so‘ng chiptani yuklab olishingiz mumkin.\n\n\uD83D\uDCDE To‘lovni amalga oshirish uchun siz avvalgi xabarda keltirilgan telefon raqamiga qo‘ng‘iroq qiling.",
+  "ticket_booked": "<b>✅ Siz ushbu tadbir uchun chipta bron qildingiz.</b>\n\n\uD83D\uDCDD <b>Bron qilingan chipta:</b>\n- \uD83D\uDCBA <b>Qator:</b> {line} <b>joy nomeri:</b> {seat}\n- \uD83D\uDCC6 <b>Bron qilingan sana va vaqt:</b> {booking_date}\n- ⏰ <b>Bronlash vaqti tugashigacha qoldi:</b> {remaining_time}\n\n\uD83D\uDED2 To‘lov qilganingizdan so‘ng chiptani yuklab olishingiz mumkin.\n\n\uD83D\uDCDE To‘lovni amalga oshirish uchun siz avvalgi xabarda keltirilgan telefon raqamiga qo‘ng‘iroq qiling.",
+  "reload_booking_ticket": "✅ Siz ushbu tadbir uchun chiptani muvaffaqiyatli qayta bron qildingiz!\n\n\uD83D\uDCDD Bron qilingan chipta:\n- \uD83D\uDCBA Qator: {line} joy nomeri: {seat}\n- \uD83D\uDCC6 Bron qilingan sana va vaqt: {booking_date}\n- ⏰ Bronlash vaqti tugashigacha qoldi: {remaining_time}\n\n\uD83D\uDED2 To‘lov qilganingizdan so‘ng chiptani yuklab olishingiz mumkin.\n\n\uD83D\uDCDE To‘lovni amalga oshirish uchun siz avvalgi xabarda keltirilgan telefon raqamiga qo‘ng‘iroq qiling.",
+  "ticket_unavailable": "❌ Ayni paytda chiptalar mavjud emas.\n\n<b>Iltimos, keyinroq yana urinib ko‘ring!</b>"
 }

@@ -1,4 +1,3 @@
-from datetime import timedelta
 from django.utils.timezone import now
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -24,9 +23,9 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
 
     def release_booking_if_expired(self):
-        """Bron qilingan vaqti 15 daqiqadan oshgan bo'lsa, bronni ochadi."""
+        """Bron qilingan vaqti ticket_booking_time dan oshgan bo'lsa, bronni ochadi."""
         if self.is_booking and self.booking_at:
-            if now() > self.booking_at + timedelta(minutes=15):
+            if now() > self.booking_at + self.event.ticket_booking_time:
                 self.is_booking = False
                 self.booking_at = None
                 self.user = None
@@ -37,7 +36,7 @@ class Ticket(models.Model):
         return f"{user_name} - {self.event}: {self.seat}"
 
     class Meta:
-        verbose_name = _("Bilet")
-        verbose_name_plural = _("Biletlar")
+        verbose_name = _("Chipta ")
+        verbose_name_plural = _("Chiptalar")
         db_table = "tickets"
         ordering = ['-is_booking', '-booking_at', 'event__date', 'seat__line__sector__name', 'seat__line__number', 'seat__section__number', 'seat__number']

@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 PAYMENT_METHODS = (
     ('cash', _('Naqd')),
+    ('card', _('Karta')),
     ('click', _('Click')),
     ('payme', _('Payme')),
 )
@@ -29,6 +30,8 @@ class Payment(models.Model):
     def save(self, *args, **kwargs):
         if self.status == 'completed' and not self.paid_at:
             self.paid_at = timezone.now()
+            self.ticket.is_paid = True
+            self.ticket.save(update_fields=['is_paid'])
         super().save(*args, **kwargs)
 
     def __str__(self):

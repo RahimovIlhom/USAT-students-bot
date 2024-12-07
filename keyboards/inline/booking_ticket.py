@@ -11,7 +11,7 @@ async def make_callback_data(event_id: int) -> str:
     return BookingTicketCallbackData(event_id=event_id).pack()
 
 booking_ticket_texts = {
-    'uz': "Chipta band qilish",
+    'uz': "Chipta bron qilish",
     'ru': "Забронировать билет"
 }
 
