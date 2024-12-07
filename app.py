@@ -1,6 +1,4 @@
 import asyncio
-import logging
-import sys
 
 from loader import dp, bot, on_startup_bot, stop_bot
 import middlewares, filters, handlers
