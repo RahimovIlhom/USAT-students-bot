@@ -12,6 +12,7 @@ class EduDirection(models.Model):
         db_table = 'edu_directions'
         verbose_name = _('Ta\'lim yo\'nalishi ')
         verbose_name_plural = _('Ta\'lim yo\'nalishlari')
+        ordering = ['name']
 
 
 class EduType(models.Model):
@@ -24,3 +25,4 @@ class EduType(models.Model):
         db_table = 'edu_types'
         verbose_name = _('Ta\'lim turi')
         verbose_name_plural = _('Ta\'lim turlari')
+        ordering = ['name']
