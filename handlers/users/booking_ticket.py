@@ -8,7 +8,7 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
 from filters.private_filters import PrivateFilter
 from keyboards.default import user_menu_buttons_texts
 from keyboards.inline import booking_ticket_keyboard, BookingTicketCallbackData, booking_ticket_texts, \
-    download_ticket_keyboard
+    download_ticket_keyboard, DownloadBookingCallbackData
 from loader import dp, db, redis_client, messages
 from utils import get_tashkent_timezone
 
@@ -73,72 +73,111 @@ async def buy_ticket(message: Message):
 
 
 async def generate_ticket_message(lang, status, ticket) -> str:
-    if status == 'paid':
-        return (await messages.get_message(lang, 'already_paid_ticket')).format(
-            line = ticket['line_number'],
-            seat = ticket['seat_number'],
-            payment_date = (await get_tashkent_timezone(ticket['payment_paid_at'])).strftime('%d-%m-%Y %H:%M')
-        )
-    elif status == 'unpaid':
-        return (await messages.get_message(lang, 'already_booked_ticket')).format(
-            line = ticket['line_number'],
-            seat = ticket['seat_number'],
-            booking_date = (await get_tashkent_timezone(ticket['ticket_booking_at'])).strftime('%d-%m-%Y %H:%M'),
-            remaining_time = await format_remaining_time(ticket['time_remaining'])
-        )
-    elif status == 'booked':
-        return (await messages.get_message(lang, 'ticket_booked')).format(
-            line = ticket['line_number'],
-            seat = ticket['seat_number'],
-            booking_date = (await get_tashkent_timezone(ticket['booking_at'])).strftime('%d-%m-%Y %H:%M'),
-            remaining_time = await format_remaining_time(ticket['ticket_booking_time'])
-        )
-    elif status == 'reload_booking':
-        return (await messages.get_message(lang, 'reload_booking_ticket')).format(
-            line = ticket['line_number'],
-            seat = ticket['seat_number'],
-            booking_date = (await get_tashkent_timezone(ticket['booking_at'])).strftime('%d-%m-%Y %H:%M'),
-            remaining_time = await format_remaining_time(ticket['ticket_booking_time'])
-        )
-    else:
+    """Generate a message based on ticket status."""
+    if not ticket:
         return await messages.get_message(lang, 'ticket_unavailable')
+
+    # Common data for formatting
+    line = ticket.get('line_number', 'N/A')
+    seat = ticket.get('seat_number', 'N/A')
+
+    # Helper function to format time safely
+    async def format_time(key):
+        dt = ticket.get(key)
+        if not dt:
+            return 'N/A'
+        return (await get_tashkent_timezone(dt)).strftime('%d-%m-%Y %H:%M')
+
+    # Prepare message mapping dynamically
+    templates = {
+        'paid': {
+            'template': 'already_paid_ticket',
+            'data': {
+                'line': line,
+                'seat': seat,
+                'payment_date': await format_time('payment_paid_at'),
+            },
+        },
+        'unpaid': {
+            'template': 'already_booked_ticket',
+            'data': {
+                'line': line,
+                'seat': seat,
+                'booking_date': await format_time('ticket_booking_at'),
+                'remaining_time': await format_remaining_time(ticket.get('time_remaining', timedelta(0))),
+            },
+        },
+        'booked': {
+            'template': 'ticket_booked',
+            'data': {
+                'line': line,
+                'seat': seat,
+                'booking_date': await format_time('ticket_booking_at'),
+                'remaining_time': await format_remaining_time(ticket.get('time_remaining', timedelta(0))),
+            },
+        },
+        'reload_booking': {
+            'template': 'reload_booking_ticket',
+            'data': {
+                'line': line,
+                'seat': seat,
+                'booking_date': await format_time('ticket_booking_at'),
+                'remaining_time': await format_remaining_time(ticket.get('time_remaining', timedelta(0))),
+            },
+        },
+        'unavailable': {
+            'template': 'ticket_unavailable',
+            'data': {},
+        },
+    }
+
+    # Get the template and data for the given status
+    message_template = templates.get(status, templates['unavailable'])
+    template = await messages.get_message(lang, message_template['template'])
+    return template.format(**message_template['data'])
 
 
 @dp.callback_query(BookingTicketCallbackData.filter())
 async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicketCallbackData):
     await callback_query.message.edit_reply_markup(reply_markup=None)
-    event_id = callback_data.event_id
-    chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
 
+    event_id = callback_data.event_id
+    user_id = callback_query.from_user.id
+    chat_lang = await redis_client.get_user_chat_lang(user_id)
+
+    # Check event status
     active_event = await db.get_active_event(event_id)
     if not active_event:
         await callback_query.answer(await messages.get_message(chat_lang, 'event_finished'), show_alert=True)
         return
 
-    ticket = await db.has_user_booked_ticket(event_id, callback_query.from_user.id)
+    # Check user's ticket booking
+    ticket = await db.has_user_booked_ticket(event_id, user_id)
+    status, markup = None, None
 
     if ticket:
-        markup = await download_ticket_keyboard(chat_lang, ticket['ticket_id'])
+        # User has already booked a ticket
         if ticket['ticket_is_paid']:
             status = 'paid'
         else:
             if ticket['time_remaining'] < timedelta(0):
-                await db.booking_ticket(ticket['ticket_id'], callback_query.from_user.id)
-                ticket = await db.has_user_booked_ticket(event_id, callback_query.from_user.id)
+                await db.booking_ticket(ticket['ticket_id'], user_id)  # Extend booking time
+                ticket = await db.has_user_booked_ticket(event_id, user_id)  # Refresh ticket
                 status = 'reload_booking'
             else:
                 status = 'unpaid'
+        markup = await download_ticket_keyboard(chat_lang, ticket['ticket_id'])
     else:
+        # Check for available unbooked tickets
         ticket = await db.get_first_unbooked_ticket(event_id)
-
         if ticket:
             status = 'booked'
-            await db.booking_ticket(ticket['ticket_id'], callback_query.from_user.id)
+            await db.booking_ticket(ticket['ticket_id'], user_id)
             markup = await download_ticket_keyboard(chat_lang, ticket['ticket_id'])
         else:
             status = 'unavailable'
-            markup = None
 
+    # Generate the appropriate message
     text = await generate_ticket_message(chat_lang, status, ticket)
 
     await callback_query.message.answer(
@@ -146,3 +185,9 @@ async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicket
         reply_markup=markup,
         disable_web_page_preview=True
     )
+
+
+@dp.callback_query(DownloadBookingCallbackData.filter())
+async def download_ticket(callback_query: CallbackQuery, callback_data: DownloadBookingCallbackData):
+    await callback_query.message.edit_reply_markup(reply_markup=None)
+    # await callback_query.message.answer_document()

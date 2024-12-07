@@ -285,8 +285,8 @@ class Database:
                 seats.number AS seat_number,
                 lines.number AS line_number,
                 sectors.name AS sector_name,
-                NOW() AS booking_at,
-                events.ticket_booking_time AS ticket_booking_time
+                NOW() AS ticket_booking_at,
+                events.ticket_booking_time AS time_remaining
             FROM tickets
             JOIN seats ON tickets.seat_id = seats.id
             JOIN lines ON seats.line_id = lines.id
