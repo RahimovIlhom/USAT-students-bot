@@ -9,14 +9,17 @@ PAYMENT_METHODS = (
     ('payme', _('Payme')),
 )
 
-PAYMENT_STATUS = (
-    ('pending', _('Kutilmoqda')),
-    ('completed', _('Bajarildi')),
-    ('failed', _('Muvaffaqiyatsiz')),
-)
-
 
 class Payment(models.Model):
+    STATUS_PENDING = 'pending'
+    STATUS_COMPLETED = 'completed'
+    STATUS_FAILED = 'failed'
+
+    PAYMENT_STATUS = [
+        (STATUS_PENDING, _('Kutilmoqda')),
+        (STATUS_COMPLETED, _('Bajarildi')),
+        (STATUS_FAILED, _('Muvaffaqiyatsiz')),
+    ]
     ticket = models.ForeignKey('ticket_app.Ticket', on_delete=models.CASCADE, related_name='payment_set', verbose_name=_('Bilet'))
     method = models.CharField(max_length=5, choices=PAYMENT_METHODS, default='cash', verbose_name=_('To‘lov turi'))
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('To‘lov summasi'))

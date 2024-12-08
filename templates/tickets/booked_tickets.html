@@ -42,7 +42,7 @@
                 <td data-datetime="{{ booking_date|date:'d-m-Y H:i:s' }}">{{ ticket.booking_at|date:"d-m-Y H:i" }}</td>
                 <td>{{ ticket.price }}</td>
                 <td class="text-center">
-                  <a href="" type="button" class="btn btn-success"><i class="bi bi-check-circle"> {% translate "Confirmed" %}</i></a>
+                  <a href="{% url 'confirm_payment' ticket.id %}" type="button" class="btn btn-success"><i class="bi bi-check-circle"> {% translate "Confirmed" %}</i></a>
                 </td>
               </tr>
               {% endfor %}
