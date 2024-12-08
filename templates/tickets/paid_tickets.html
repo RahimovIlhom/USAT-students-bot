@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %}
-{%  translate "Booked tickets" %}
+{%  translate "Sold tickets" %}
 {% endblock %}
 
 
@@ -16,7 +16,7 @@
 
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">{%  translate "Booked tickets" %}</h5>
+          <h5 class="card-title">{%  translate "Sold tickets" %}</h5>
           <!-- Table with stripped rows -->
           <table class="table datatable">
             <thead>
@@ -29,12 +29,12 @@
                 <th>{% translate "Seat number" %}</th>
                 <th data-type="datetime" data-format="DD-MM-YYYY HH:mm">{% translate "Booking At" %}</th>
                 <th>{% translate "Price" %}</th>
-                <th>{% translate "Payment confirmation" %}</th>
+                <th>{% translate "Payment status" %}</th>
 
               </tr>
             </thead>
             <tbody>
-              {% for ticket in booked_tickets %}
+              {% for ticket in paid_tickets %}
               <tr>
                 <td>{{ ticket.user.student.fullname }}</td>
                 <td>{{ ticket.user.phone }}</td>
@@ -42,7 +42,11 @@
                 <td data-datetime="{{ booking_date|date:'d-m-Y H:i:s' }}">{{ ticket.booking_at|date:"d-m-Y H:i" }}</td>
                 <td>{{ ticket.price }}</td>
                 <td class="text-center">
-                  <a href="" type="button" class="btn btn-success"><i class="bi bi-check-circle"> {% translate "Confirmed" %}</i></a>
+                  {% if ticket.is_paid %}
+                  <span class="badge bg-success">{% translate "Paid" %}</span>
+                  {% else %}
+                  <span class="badge bg-danger">{% translate "Unpaid" %}</span>
+                  {% endif %}
                 </td>
               </tr>
               {% endfor %}
