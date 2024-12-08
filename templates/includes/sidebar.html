@@ -13,19 +13,19 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {% if request.resolver_match.url_name == 'booked-tickets' or request.resolver_match.url_name == 'paid-tickets' %}active{% else %}collapsed{% endif %}"
+        <a class="nav-link {% if request.resolver_match.url_name == 'booked-tickets' or request.resolver_match.url_name == 'all-tickets' %}active{% else %}collapsed{% endif %}"
            data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>{% translate "Tickets" %}</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-nav" class="nav-content collapse {% if request.resolver_match.url_name == 'booked-tickets' or request.resolver_match.url_name == 'paid-tickets' %}show{% endif %}" data-bs-parent="#sidebar-nav">
+        <ul id="tables-nav" class="nav-content collapse {% if request.resolver_match.url_name == 'booked-tickets' or request.resolver_match.url_name == 'all-tickets' %}show{% endif %}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{% url 'booked-tickets' %}" {% if request.resolver_match.url_name == 'booked-tickets' %}class="active"{% endif %}>
-              <i class="bi bi-circle"></i><span>{% translate "Booked Tickets" %}</span>
+            <a href="{% url 'all-tickets' %}" {% if request.resolver_match.url_name == 'all-tickets' %}class="active"{% endif %}>
+              <i class="bi bi-circle"></i><span>{% translate "All Tickets" %}</span>
             </a>
           </li>
           <li>
-            <a href="{% url 'paid-tickets' %}" {% if request.resolver_match.url_name == 'paid-tickets' %}class="active"{% endif %}>
-              <i class="bi bi-circle"></i><span>{% translate "Sold Tickets" %}</span>
+            <a href="{% url 'booked-tickets' %}" {% if request.resolver_match.url_name == 'booked-tickets' %}class="active"{% endif %}>
+              <i class="bi bi-circle"></i><span>{% translate "Booked Tickets" %}</span>
             </a>
           </li>
         </ul>
@@ -83,7 +83,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link {% if request.resolver_match.url_name == 'payments' %}active{% else %}collapsed{% endif %}" href="#">
+        <a class="nav-link {% if request.resolver_match.url_name == 'payments' %}active{% else %}collapsed{% endif %}" href="{% url 'payments' %}">
             <i class="bi bi-cash-coin"></i>
             <span>{% translate "Payments" %}</span>
         </a>

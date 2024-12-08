@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
+from django.views import View
+
 from ticket_app.models import Ticket
 from .models import Payment
 
@@ -38,3 +41,13 @@ def cancel_payment(request, payment_id):
         payment.ticket.image = None
         payment.ticket.save(update_fields=['is_paid'])
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class PaymentsView(LoginRequiredMixin, View):
+    def get(self, request):
+        payments = Payment.objects.filter().order_by('-created_at')
+
+        context = {
+            'payments': payments
+        }
+        return render(request, context=context, template_name='payments/payments.html')

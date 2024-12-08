@@ -30,12 +30,11 @@
                 <th data-type="datetime" data-format="DD-MM-YYYY HH:mm">{% translate "Booking At" %}</th>
                 <th>{% translate "Price" %}</th>
                 <th class="text-center">{% translate "Payment status" %}</th>
-                <th class="text-center">{% translate "Action" %}</th>
 
               </tr>
             </thead>
             <tbody>
-              {% for ticket in paid_tickets %}
+              {% for ticket in all_tickets %}
               <tr>
                 <td>{{ ticket.user.student.fullname }}</td>
                 <td>{{ ticket.user.phone }}</td>
@@ -48,11 +47,6 @@
                   {% else %}
                   <span class="badge bg-danger">{% translate "Unpaid" %}</span>
                   {% endif %}
-                </td>
-                <td class="text-center">
-                  <a href="{% url 'cancel_payment' ticket.payment_set.first.id %}" class="btn btn-danger">
-                    <i class="bi bi-x-circle"> {% translate "Payment cancel" %}</i>
-                  </a>
                 </td>
               </tr>
               {% endfor %}

@@ -15,11 +15,11 @@ class BookedTicketsView(LoginRequiredMixin, View):
         return render(request, context=context, template_name='tickets/booked_tickets.html')
 
 
-class PaidTicketsView(LoginRequiredMixin, View):
+class AllTicketsView(LoginRequiredMixin, View):
     def get(self, request):
-        paid_tickets = Ticket.objects.filter(is_paid=True).order_by('-booking_at')
+        all_tickets = Ticket.objects.filter(is_booking=True, booking_at__isnull=False).order_by('-booking_at')
 
         context = {
-            'paid_tickets': paid_tickets
+            'all_tickets': all_tickets
         }
-        return render(request, context=context, template_name='tickets/paid_tickets.html')
+        return render(request, context=context, template_name='tickets/all_tickets.html')
