@@ -24,7 +24,7 @@
                   </option>
               {% endfor %}
           </select>
-          <input type="submit" value="Go">
+          <input type="submit" value="{% translate 'Go' %}">
       </form>
     </li>
 
@@ -39,8 +39,8 @@
       <!-- Dropdown Menu -->
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile shadow-sm">
         <li class="dropdown-header text-center">
-          <h6 class="mb-1">{{ user.get_full_name|default:user.username }}</h6>
-          <span class="text-muted">Web Designer</span>
+          <h6 class="mb-1">{{ user.username }}</h6>
+          <span class="text-muted">{{ user.email }}</span>
         </li>
         <li>
           <hr class="dropdown-divider">

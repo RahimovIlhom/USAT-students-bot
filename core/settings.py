@@ -154,7 +154,7 @@ USE_TZ = True
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 
 LANGUAGES = [
-    ('uz', _('O\'zbekcha')),
+    ('uz', _('O‘zbekcha')),
     ('ru', _('Ruscha')),
 ]
 

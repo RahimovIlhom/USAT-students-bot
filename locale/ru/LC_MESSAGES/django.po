@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR THE PACKAGE’S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-08 03:14+0500\n"
+"POT-Creation-Date: 2024-12-08 23:14+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: core/settings.py:157
-msgid "O'zbekcha"
+msgid "O‘zbekcha"
 msgstr "Узбекский"
 
 #: core/settings.py:158
@@ -29,23 +29,23 @@ msgid "Ruscha"
 msgstr "Русский"
 
 #: education_app/models.py:6 user_app/models.py:24
-msgid "Ta'lim yo'nalishi"
+msgid "Ta’lim yo‘nalishi"
 msgstr "Направление образования"
 
 #: education_app/models.py:13
-msgid "Ta'lim yo'nalishi "
+msgid "Ta’lim yo‘nalishi "
 msgstr "Направление образования "
 
 #: education_app/models.py:14
-msgid "Ta'lim yo'nalishlari"
+msgid "Ta’lim yo‘nalishlari"
 msgstr "Направления образования"
 
 #: education_app/models.py:19 education_app/models.py:26 user_app/models.py:26
-msgid "Ta'lim turi"
+msgid "Ta’lim turi"
 msgstr "Тип образования"
 
 #: education_app/models.py:27
-msgid "Ta'lim turlari"
+msgid "Ta’lim turlari"
 msgstr "Типы образования"
 
 #: event_app/models.py:10
@@ -93,10 +93,6 @@ msgstr "Статус мероприятия"
 msgid "Aktikligi"
 msgstr "Актуальность"
 
-#: event_app/models.py:25 ticket_app/models.py:15
-msgid "Qo‘shilgan vaqti"
-msgstr "Время добавления"
-
 #: event_app/models.py:26 hall_app/models.py:18 hall_app/models.py:49
 #: hall_app/models.py:106 hall_app/models.py:139 hall_app/models.py:178
 #: payment_app/models.py:28 ticket_app/models.py:16 user_app/models.py:63
@@ -108,8 +104,6 @@ msgid "Tadbir "
 msgstr "Мероприятие "
 
 #: event_app/models.py:106
-#, fuzzy
-#| msgid "Ta'lim turlari"
 msgid "Tadbirlar"
 msgstr "Мероприятия"
 
@@ -126,7 +120,7 @@ msgid "Zal nomi"
 msgstr "Название зала"
 
 #: hall_app/models.py:12
-msgid "Sig'imi"
+msgid "Sig‘imi"
 msgstr "Вместимость"
 
 #: hall_app/models.py:13
@@ -141,9 +135,10 @@ msgstr "Описание"
 msgid "Rasm"
 msgstr "Изображение"
 
+#: event_app/models.py:25 ticket_app/models.py:15
 #: hall_app/models.py:17 hall_app/models.py:48 hall_app/models.py:105
 #: hall_app/models.py:138 hall_app/models.py:177 payment_app/models.py:27
-msgid "Qo'shilgan vaqti"
+msgid "Qo‘shilgan vaqti"
 msgstr "Время добавления"
 
 #: hall_app/models.py:36
@@ -187,17 +182,15 @@ msgid "Qatorlar"
 msgstr "Ряды"
 
 #: hall_app/models.py:136
-msgid "Bo'lim raqami"
+msgid "Bo‘lim raqami"
 msgstr "Номер секции"
 
 #: hall_app/models.py:166
-msgid "Bo'lim "
+msgid "Bo‘lim "
 msgstr "Секция "
 
 #: hall_app/models.py:167
-#, fuzzy
-#| msgid "Ta'lim turlari"
-msgid "Bo'limlar"
+msgid "Bo‘limlar"
 msgstr "Секции"
 
 #: hall_app/models.py:173
@@ -205,11 +198,11 @@ msgid "Qatori"
 msgstr "Ряд"
 
 #: hall_app/models.py:174
-msgid "Bo'limi"
+msgid "Bo‘limi"
 msgstr "Секция"
 
 #: hall_app/models.py:175
-msgid "O'rindiq raqami"
+msgid "O‘rindiq raqami"
 msgstr "Номер места"
 
 #: hall_app/models.py:196
@@ -253,13 +246,11 @@ msgid "Bilet"
 msgstr "Билет"
 
 #: payment_app/models.py:21
-#, fuzzy
-#| msgid "Ta'lim turi"
-msgid "To'lov turi"
+msgid "To‘lov turi"
 msgstr "Тип обучения"
 
 #: payment_app/models.py:22
-msgid "To'lov summasi"
+msgid "To‘lov summasi"
 msgstr "Сумма платежа"
 
 #: payment_app/models.py:23
@@ -271,20 +262,24 @@ msgid "Holat"
 msgstr "Статус"
 
 #: payment_app/models.py:25
-msgid "Qo'shimcha tafsilotlar"
+msgid "Qo‘shimcha tafsilotlar"
 msgstr "Дополнительные детали"
 
 #: payment_app/models.py:26
-msgid "To'langan vaqti"
+msgid "To‘langan vaqti"
 msgstr "Время оплаты"
 
 #: payment_app/models.py:41
-msgid "To'lov "
+msgid "To‘lov "
 msgstr "Платеж"
 
 #: payment_app/models.py:42
-msgid "To'lovlar"
+msgid "To‘lovlar"
 msgstr "Платежи"
+
+#: templates/dashboard/dashboard.html:11
+msgid "Home"
+msgstr "Главная"
 
 #: templates/includes/footer.html:6
 msgid "Copyright"
@@ -297,6 +292,10 @@ msgstr "Все права защищены"
 #: templates/includes/footer.html:9
 msgid "Developed by"
 msgstr "Разработано"
+
+#: templates/includes/navbar.html:27
+msgid "Go"
+msgstr "Перейти"
 
 #: templates/includes/navbar.html:53
 msgid "My Profile"
@@ -353,6 +352,43 @@ msgstr "Платежи"
 #: templates/includes/sidebar.html:93
 msgid "Profile"
 msgstr "Профиль"
+
+#: templates/tickets/booked_tickets.html:7
+#: templates/tickets/booked_tickets.html:19
+msgid "Booked tickets"
+msgstr "Забронированные билеты"
+
+#: templates/tickets/booked_tickets.html:26
+msgid "Student"
+msgstr "Студент"
+
+#: templates/tickets/booked_tickets.html:28
+msgid "Phone"
+msgstr "Телефон"
+
+#: templates/tickets/booked_tickets.html:29
+msgid "Seat"
+msgstr "Места"
+
+#: templates/tickets/booked_tickets.html:30
+msgid "Booking At"
+msgstr "Дата бронирования"
+
+#: templates/tickets/booked_tickets.html:31
+msgid "Price"
+msgstr "Цена"
+
+#: templates/tickets/booked_tickets.html:32
+msgid "Action"
+msgstr "Секции"
+
+#: templates/tickets/booked_tickets.html:41
+msgid "Line"
+msgstr "Линии"
+
+#: templates/tickets/booked_tickets.html:41
+msgid "seat"
+msgstr "место"
 
 #: ticket_app/models.py:7
 msgid "Foydalanuvchi"
@@ -415,9 +451,7 @@ msgid "Kurs"
 msgstr "Курс"
 
 #: user_app/models.py:27
-#, fuzzy
-#| msgid "Ta'lim turi"
-msgid "Ta'lim tili"
+msgid "Ta’lim tili"
 msgstr "Язык обучения"
 
 #: user_app/models.py:28

@@ -9,12 +9,12 @@ class ActiveManager(models.Manager):
 
 class Hall(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("Zal nomi"))
-    capacity = models.PositiveIntegerField(verbose_name=_("Sig'imi"))
+    capacity = models.PositiveIntegerField(verbose_name=_("Sig‘imi"))
     address = models.CharField(max_length=200, null=True, blank=True, verbose_name=_("Manzili"))
     description = models.TextField(null=True, blank=True, verbose_name=_("Tavsif"))
     image = models.ImageField(upload_to='hall_images/', null=True, blank=True, verbose_name=_("Rasm"))
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
     # active_objects = ActiveManager()
@@ -45,7 +45,7 @@ class Sector(models.Model):
     section_count = models.PositiveIntegerField(default=0, verbose_name="Bo'limlar soni")
     line_count = models.PositiveIntegerField(default=0, verbose_name="Qatorlar soni")
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
     # active_objects = ActiveManager()
@@ -102,7 +102,7 @@ class Line(models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='line_set', verbose_name=_("Sektori"))
     number = models.PositiveIntegerField(verbose_name=_("Qator raqami"))
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
     # active_objects = ActiveManager()
@@ -133,9 +133,9 @@ class Line(models.Model):
 
 class Section(models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='section_set', verbose_name=_("Sektori"))
-    number = models.PositiveIntegerField(verbose_name=_("Bo'lim raqami"))
+    number = models.PositiveIntegerField(verbose_name=_("Bo‘lim raqami"))
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
     # active_objects = ActiveManager()
@@ -163,18 +163,18 @@ class Section(models.Model):
     #     self.save()
 
     class Meta:
-        verbose_name = _("Bo'lim ")
-        verbose_name_plural = _("Bo'limlar")
+        verbose_name = _("Bo‘lim ")
+        verbose_name_plural = _("Bo‘limlar")
         db_table = "sections"
         ordering = ['sector__name', 'number']
 
 
 class Seat(models.Model):
     line = models.ForeignKey(Line, on_delete=models.CASCADE, verbose_name=_("Qatori"))
-    section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("Bo'limi"))
-    number = models.PositiveIntegerField(verbose_name=_("O'rindiq raqami"))
+    section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("Bo‘limi"))
+    number = models.PositiveIntegerField(verbose_name=_("O‘rindiq raqami"))
     is_active = models.BooleanField(default=True, verbose_name=_("Aktikligi"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo'shilgan vaqti"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Qo‘shilgan vaqti"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Oxirgi yangilangan vaqti"))
 
     # active_objects = ActiveManager()

@@ -9,6 +9,6 @@ def redirect_admin(request):
     return redirect(reverse('dashboard'))
 
 
-class DashboardView(View, LoginRequiredMixin):
+class DashboardView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         return render(request, 'dashboard/dashboard.html')

@@ -21,10 +21,10 @@ class Student(models.Model):
     pinfl = models.CharField(max_length=14, verbose_name=_('PINFL'))
     course = models.CharField(max_length=1, verbose_name=_('Kurs'))
     edu_direction = ForeignKey('education_app.EduDirection', on_delete=models.DO_NOTHING, related_name='students',
-                               verbose_name=_('Ta\'lim yo\'nalishi'))
+                               verbose_name=_('Ta’lim yo‘nalishi'))
     edu_type = ForeignKey('education_app.EduType', on_delete=models.DO_NOTHING, related_name='students',
-                          verbose_name=_('Ta\'lim turi'))
-    edu_lang = models.CharField(max_length=2, choices=EDU_LANGUAGES, default='uz', verbose_name=_('Ta\'lim tili'))
+                          verbose_name=_('Ta’lim turi'))
+    edu_lang = models.CharField(max_length=2, choices=EDU_LANGUAGES, default='uz', verbose_name=_('Ta’lim tili'))
     contract_amount = models.CharField(max_length=10, verbose_name=_('Shartnoma summasi'))
     voucher_amount = models.CharField(max_length=10, verbose_name=_('Voucher summasi'))
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='UZS', verbose_name=_('Valyuta'))
