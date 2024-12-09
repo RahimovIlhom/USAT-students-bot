@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-08 23:48+0500\n"
+"POT-Creation-Date: 2024-12-09 16:42+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: core/settings.py:157
+#: core/settings.py:162
 msgid "O‘zbekcha"
 msgstr "O‘zbekcha"
 
-#: core/settings.py:158
+#: core/settings.py:163
 msgid "Ruscha"
 msgstr "Ruscha"
 
@@ -97,13 +97,13 @@ msgstr "Aktikligi"
 
 #: event_app/models.py:25 hall_app/models.py:17 hall_app/models.py:48
 #: hall_app/models.py:105 hall_app/models.py:138 hall_app/models.py:177
-#: payment_app/models.py:27 ticket_app/models.py:15
+#: payment_app/models.py:31 ticket_app/models.py:15
 msgid "Qo‘shilgan vaqti"
 msgstr "Qo‘shilgan vaqti"
 
 #: event_app/models.py:26 hall_app/models.py:18 hall_app/models.py:49
 #: hall_app/models.py:106 hall_app/models.py:139 hall_app/models.py:178
-#: payment_app/models.py:28 ticket_app/models.py:16 user_app/models.py:63
+#: payment_app/models.py:32 ticket_app/models.py:16 user_app/models.py:63
 msgid "Oxirgi yangilangan vaqti"
 msgstr "Oxirgi yangilangan vaqti"
 
@@ -227,61 +227,106 @@ msgstr "Naqd"
 msgid "Karta"
 msgstr "Karta"
 
-#: payment_app/models.py:8
+#: payment_app/models.py:8 templates/payments/payments.html:50
 msgid "Click"
 msgstr "Click"
 
-#: payment_app/models.py:9
+#: payment_app/models.py:9 templates/payments/payments.html:52
 msgid "Payme"
 msgstr "Payme"
 
-#: payment_app/models.py:13
+#: payment_app/models.py:19
 msgid "Kutilmoqda"
 msgstr "Kutilmoqda"
 
-#: payment_app/models.py:14
+#: payment_app/models.py:20
 msgid "Bajarildi"
 msgstr "Bajarildi"
 
-#: payment_app/models.py:15
+#: payment_app/models.py:21
 msgid "Muvaffaqiyatsiz"
 msgstr "Muvaffaqiyatsiz"
 
-#: payment_app/models.py:20
+#: payment_app/models.py:23 ticket_app/models.py:7
+msgid "Foydalanuvchi"
+msgstr "Foydalanuvchi"
+
+#: payment_app/models.py:24
 msgid "Bilet"
 msgstr "Bilet"
 
-#: payment_app/models.py:21
+#: payment_app/models.py:25
 msgid "To‘lov turi"
 msgstr "To‘lov turi"
 
-#: payment_app/models.py:22
+#: payment_app/models.py:26
 msgid "To‘lov summasi"
 msgstr "To‘lov summasi"
 
-#: payment_app/models.py:23
+#: payment_app/models.py:27
 msgid "Tranzaksiya ID"
 msgstr "Tranzaksiya ID"
 
-#: payment_app/models.py:24
+#: payment_app/models.py:28
 msgid "Holat"
 msgstr "Holat"
 
-#: payment_app/models.py:25
+#: payment_app/models.py:29
 msgid "Qo‘shimcha tafsilotlar"
 msgstr "Qo‘shimcha tafsilotlar"
 
-#: payment_app/models.py:26
+#: payment_app/models.py:30
 msgid "To‘langan vaqti"
 msgstr "To‘langan vaqti"
 
-#: payment_app/models.py:41
+#: payment_app/models.py:45
 msgid "To‘lov "
 msgstr "To‘lov"
 
-#: payment_app/models.py:42
+#: payment_app/models.py:46
 msgid "To‘lovlar"
 msgstr "To‘lovlar"
+
+#: templates/400.html:7 templates/400.html:15
+msgid "Bad Request"
+msgstr "Noto'g'ri so'rov"
+
+#: templates/400.html:16 templates/403.html:16 templates/404.html:16
+#: templates/500.html:16
+msgid "Back to dashboard"
+msgstr "Bosh sahifaga qaytish"
+
+#: templates/403.html:7
+msgid "Forbidden"
+msgstr "Taqiqlangan"
+
+#: templates/403.html:15
+msgid "You don't have permission to access this page"
+msgstr "Ushbu sahifaga kirish uchun ruxsat yoq"
+
+#: templates/404.html:7
+msgid "Page Not Found"
+msgstr "Sahifa topilmadi"
+
+#: templates/404.html:15
+msgid "The page you are looking for doesn't exist"
+msgstr "Ushbu sahifa topilmadi"
+
+#: templates/500.html:7
+msgid "Server Error"
+msgstr "Server xatosi"
+
+#: templates/500.html:15
+msgid "A server error occurred. Please contact the administrator"
+msgstr "Server xatoligi. Iltimos, administratoriga murojaat qiling"
+
+#: templates/500.html:19 templates/includes/footer.html:9
+msgid "Developed by"
+msgstr "Tuzuvchi"
+
+#: templates/base_null.html:11
+msgid "Null"
+msgstr "Bo‘sh"
 
 #: templates/dashboard/dashboard.html:11
 msgid "Home"
@@ -295,10 +340,6 @@ msgstr "Mualliflik huquqi"
 msgid "All Rights Reserved"
 msgstr "Barcha huquqlar himoyalangan"
 
-#: templates/includes/footer.html:9
-msgid "Developed by"
-msgstr "Tuzuvchi"
-
 #: templates/includes/navbar.html:27
 msgid "Go"
 msgstr "Qo‘llash"
@@ -307,7 +348,7 @@ msgstr "Qo‘llash"
 msgid "My Profile"
 msgstr "Mening profilim"
 
-#: templates/includes/navbar.html:64 templates/includes/sidebar.html:101
+#: templates/includes/navbar.html:64 templates/includes/sidebar.html:103
 msgid "Sign Out"
 msgstr "Chiqish"
 
@@ -315,90 +356,158 @@ msgstr "Chiqish"
 msgid "Login"
 msgstr "Kirish"
 
-#: templates/includes/sidebar.html:17
+#: templates/includes/sidebar.html:18
 msgid "Tickets"
 msgstr "Chiptalar"
 
-#: templates/includes/sidebar.html:22
+#: templates/includes/sidebar.html:23
+msgid "All Tickets"
+msgstr "Barcha chiptalar"
+
+#: templates/includes/sidebar.html:28
 msgid "Booked Tickets"
 msgstr "Bron qilingan chiptalar"
 
-#: templates/includes/sidebar.html:27
-msgid "Sold Tickets"
-msgstr "Sotilgan chiptalar"
-
-#: templates/includes/sidebar.html:36 templates/includes/sidebar.html:43
+#: templates/includes/sidebar.html:38 templates/includes/sidebar.html:45
 msgid "Halls"
 msgstr "Zallar"
 
-#: templates/includes/sidebar.html:49
+#: templates/includes/sidebar.html:51
 msgid "Sectors"
 msgstr "Sektorlar"
 
-#: templates/includes/sidebar.html:55 templates/includes/sidebar.html:73
+#: templates/includes/sidebar.html:57 templates/includes/sidebar.html:75
 msgid "Sections"
 msgstr "Bo‘limlar"
 
-#: templates/includes/sidebar.html:61
+#: templates/includes/sidebar.html:63
 msgid "Lines"
 msgstr "Qatorlar"
 
-#: templates/includes/sidebar.html:67
+#: templates/includes/sidebar.html:69
 msgid "Seats"
 msgstr "O‘rindiqlar"
 
-#: templates/includes/sidebar.html:78
+#: templates/includes/sidebar.html:80
 msgid "Events"
 msgstr "Tadbirlar"
 
-#: templates/includes/sidebar.html:86
+#: templates/includes/sidebar.html:88 templates/payments/payments.html:7
+#: templates/payments/payments.html:19
 msgid "Payments"
 msgstr "To‘lovlar"
 
-#: templates/includes/sidebar.html:93
+#: templates/includes/sidebar.html:95
 msgid "Profile"
 msgstr "Profil"
+
+#: templates/payments/payments.html:26 templates/tickets/all_tickets.html:26
+#: templates/tickets/booked_tickets.html:26
+msgid "Student"
+msgstr "Talaba"
+
+#: templates/payments/payments.html:28 templates/tickets/all_tickets.html:28
+#: templates/tickets/booked_tickets.html:28
+msgid "Phone"
+msgstr "Telefon"
+
+#: templates/payments/payments.html:29
+msgid "Ticket"
+msgstr "Chiptalar"
+
+#: templates/payments/payments.html:30
+msgid "Method"
+msgstr "To‘lov turi"
+
+#: templates/payments/payments.html:31
+msgid "Amount"
+msgstr "Summa"
+
+#: templates/payments/payments.html:32
+msgid "Payment date"
+msgstr "To‘lov vaqti"
+
+#: templates/payments/payments.html:33 templates/tickets/all_tickets.html:32
+msgid "Payment status"
+msgstr "To‘lov holati"
+
+#: templates/payments/payments.html:34
+msgid "Action"
+msgstr "Amal"
+
+#: templates/payments/payments.html:46
+msgid "Cash"
+msgstr "Naqd"
+
+#: templates/payments/payments.html:48
+msgid "Card"
+msgstr "Karta"
+
+#: templates/payments/payments.html:59
+msgid "Pending"
+msgstr "Kutilmoqda"
+
+#: templates/payments/payments.html:61
+msgid "Completed"
+msgstr "Muvaffaqiyatli"
+
+#: templates/payments/payments.html:63
+msgid "Failed"
+msgstr "Muvaffaqiyatsiz"
+
+#: templates/payments/payments.html:69
+msgid "Payment cancel"
+msgstr "To‘lovni bekor qilish"
+
+#: templates/tickets/all_tickets.html:7 templates/tickets/all_tickets.html:19
+msgid "All tickets"
+msgstr "Barcha chiptalar"
+
+#: templates/tickets/all_tickets.html:29
+#: templates/tickets/booked_tickets.html:29
+msgid "Seat number"
+msgstr "O‘rindiq raqami"
+
+#: templates/tickets/all_tickets.html:30
+#: templates/tickets/booked_tickets.html:30
+msgid "Booking At"
+msgstr "Bron vaqt"
+
+#: templates/tickets/all_tickets.html:31
+#: templates/tickets/booked_tickets.html:31
+msgid "Price"
+msgstr "Narx"
+
+#: templates/tickets/all_tickets.html:41
+#: templates/tickets/booked_tickets.html:41
+msgid "Line"
+msgstr "Qator"
+
+#: templates/tickets/all_tickets.html:41
+#: templates/tickets/booked_tickets.html:41
+msgid "seat"
+msgstr "joy"
+
+#: templates/tickets/all_tickets.html:46
+msgid "Paid"
+msgstr "To‘langan"
+
+#: templates/tickets/all_tickets.html:48
+msgid "Unpaid"
+msgstr "To‘lanmagan"
 
 #: templates/tickets/booked_tickets.html:7
 #: templates/tickets/booked_tickets.html:19
 msgid "Booked tickets"
 msgstr "Bron qilingan chiptalar"
 
-#: templates/tickets/booked_tickets.html:26
-msgid "Student"
-msgstr "Talaba"
-
-#: templates/tickets/booked_tickets.html:28
-msgid "Phone"
-msgstr "Telefon"
-
-#: templates/tickets/booked_tickets.html:29
-msgid "Seat number"
-msgstr "O‘rindiq raqami"
-
-#: templates/tickets/booked_tickets.html:30
-msgid "Booking At"
-msgstr "Bron vaqt"
-
-#: templates/tickets/booked_tickets.html:31
-msgid "Price"
-msgstr "Narx"
-
 #: templates/tickets/booked_tickets.html:32
-msgid "Action"
-msgstr "Amal"
+msgid "Payment confirmation"
+msgstr "To‘lovni tasdiqlash"
 
-#: templates/tickets/booked_tickets.html:41
-msgid "Line"
-msgstr "Qator"
-
-#: templates/tickets/booked_tickets.html:41
-msgid "seat"
-msgstr "joy"
-
-#: ticket_app/models.py:7
-msgid "Foydalanuvchi"
-msgstr "Foydalanuvchi"
+#: templates/tickets/booked_tickets.html:45
+msgid "Confirmed"
+msgstr "Tasdiqlash"
 
 #: ticket_app/models.py:8
 msgid "O‘rindiq"
@@ -457,8 +566,6 @@ msgid "Kurs"
 msgstr "Kurs"
 
 #: user_app/models.py:27
-#, fuzzy
-#| msgid "Ta’lim turi"
 msgid "Ta’lim tili"
 msgstr "Ta’lim tili"
 

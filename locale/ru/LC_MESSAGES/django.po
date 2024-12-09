@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-08 23:48+0500\n"
+"POT-Creation-Date: 2024-12-09 16:42+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: core/settings.py:157
+#: core/settings.py:162
 msgid "O‘zbekcha"
 msgstr "Узбекский"
 
-#: core/settings.py:158
+#: core/settings.py:163
 msgid "Ruscha"
 msgstr "Русский"
 
@@ -99,13 +99,13 @@ msgstr "Актуальность"
 
 #: event_app/models.py:25 hall_app/models.py:17 hall_app/models.py:48
 #: hall_app/models.py:105 hall_app/models.py:138 hall_app/models.py:177
-#: payment_app/models.py:27 ticket_app/models.py:15
+#: payment_app/models.py:31 ticket_app/models.py:15
 msgid "Qo‘shilgan vaqti"
 msgstr "Время добавления"
 
 #: event_app/models.py:26 hall_app/models.py:18 hall_app/models.py:49
 #: hall_app/models.py:106 hall_app/models.py:139 hall_app/models.py:178
-#: payment_app/models.py:28 ticket_app/models.py:16 user_app/models.py:63
+#: payment_app/models.py:32 ticket_app/models.py:16 user_app/models.py:63
 msgid "Oxirgi yangilangan vaqti"
 msgstr "Последнее обновление"
 
@@ -225,61 +225,106 @@ msgstr "Наличные"
 msgid "Karta"
 msgstr "Карта"
 
-#: payment_app/models.py:8
+#: payment_app/models.py:8 templates/payments/payments.html:50
 msgid "Click"
 msgstr "Click"
 
-#: payment_app/models.py:9
+#: payment_app/models.py:9 templates/payments/payments.html:52
 msgid "Payme"
 msgstr "Payme"
 
-#: payment_app/models.py:13
+#: payment_app/models.py:19
 msgid "Kutilmoqda"
 msgstr "Ожидается"
 
-#: payment_app/models.py:14
+#: payment_app/models.py:20
 msgid "Bajarildi"
 msgstr "Выполнено"
 
-#: payment_app/models.py:15
+#: payment_app/models.py:21
 msgid "Muvaffaqiyatsiz"
 msgstr "Неудачно"
 
-#: payment_app/models.py:20
+#: payment_app/models.py:23 ticket_app/models.py:7
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+#: payment_app/models.py:24
 msgid "Bilet"
 msgstr "Билет"
 
-#: payment_app/models.py:21
+#: payment_app/models.py:25
 msgid "To‘lov turi"
 msgstr "Тип обучения"
 
-#: payment_app/models.py:22
+#: payment_app/models.py:26
 msgid "To‘lov summasi"
 msgstr "Сумма платежа"
 
-#: payment_app/models.py:23
+#: payment_app/models.py:27
 msgid "Tranzaksiya ID"
 msgstr "ID транзакции"
 
-#: payment_app/models.py:24
+#: payment_app/models.py:28
 msgid "Holat"
 msgstr "Статус"
 
-#: payment_app/models.py:25
+#: payment_app/models.py:29
 msgid "Qo‘shimcha tafsilotlar"
 msgstr "Дополнительные детали"
 
-#: payment_app/models.py:26
+#: payment_app/models.py:30
 msgid "To‘langan vaqti"
 msgstr "Время оплаты"
 
-#: payment_app/models.py:41
+#: payment_app/models.py:45
 msgid "To‘lov "
 msgstr "Платеж"
 
-#: payment_app/models.py:42
+#: payment_app/models.py:46
 msgid "To‘lovlar"
 msgstr "Платежи"
+
+#: templates/400.html:7 templates/400.html:15
+msgid "Bad Request"
+msgstr "Плохой запрос"
+
+#: templates/400.html:16 templates/403.html:16 templates/404.html:16
+#: templates/500.html:16
+msgid "Back to dashboard"
+msgstr "Вернуться на панель управления"
+
+#: templates/403.html:7
+msgid "Forbidden"
+msgstr "Запрещенный"
+
+#: templates/403.html:15
+msgid "You don't have permission to access this page"
+msgstr "У вас нет прав доступа к этой странице"
+
+#: templates/404.html:7
+msgid "Page Not Found"
+msgstr "Страница не найдена"
+
+#: templates/404.html:15
+msgid "The page you are looking for doesn't exist"
+msgstr "Запрашиваемая вами страница не существует"
+
+#: templates/500.html:7
+msgid "Server Error"
+msgstr "Ошибка сервера"
+
+#: templates/500.html:15
+msgid "A server error occurred. Please contact the administrator"
+msgstr "Произошла ошибка сервера. Пожалуйста, свяжитесь с администратором"
+
+#: templates/500.html:19 templates/includes/footer.html:9
+msgid "Developed by"
+msgstr "Разработано"
+
+#: templates/base_null.html:11
+msgid "Null"
+msgstr "Нулевой"
 
 #: templates/dashboard/dashboard.html:11
 msgid "Home"
@@ -293,10 +338,6 @@ msgstr "Авторские права"
 msgid "All Rights Reserved"
 msgstr "Все права защищены"
 
-#: templates/includes/footer.html:9
-msgid "Developed by"
-msgstr "Разработано"
-
 #: templates/includes/navbar.html:27
 msgid "Go"
 msgstr "Перейти"
@@ -305,7 +346,7 @@ msgstr "Перейти"
 msgid "My Profile"
 msgstr "Мой профиль"
 
-#: templates/includes/navbar.html:64 templates/includes/sidebar.html:101
+#: templates/includes/navbar.html:64 templates/includes/sidebar.html:103
 msgid "Sign Out"
 msgstr "Выйти"
 
@@ -313,90 +354,158 @@ msgstr "Выйти"
 msgid "Login"
 msgstr "Войти"
 
-#: templates/includes/sidebar.html:17
+#: templates/includes/sidebar.html:18
 msgid "Tickets"
 msgstr "Билеты"
 
-#: templates/includes/sidebar.html:22
+#: templates/includes/sidebar.html:23
+msgid "All Tickets"
+msgstr "Проданные билеты"
+
+#: templates/includes/sidebar.html:28
 msgid "Booked Tickets"
 msgstr "Забронированные билеты"
 
-#: templates/includes/sidebar.html:27
-msgid "Sold Tickets"
-msgstr "Проданные билеты"
-
-#: templates/includes/sidebar.html:36 templates/includes/sidebar.html:43
+#: templates/includes/sidebar.html:38 templates/includes/sidebar.html:45
 msgid "Halls"
 msgstr "Залы"
 
-#: templates/includes/sidebar.html:49
+#: templates/includes/sidebar.html:51
 msgid "Sectors"
 msgstr "Секторы"
 
-#: templates/includes/sidebar.html:55 templates/includes/sidebar.html:73
+#: templates/includes/sidebar.html:57 templates/includes/sidebar.html:75
 msgid "Sections"
 msgstr "Секции"
 
-#: templates/includes/sidebar.html:61
+#: templates/includes/sidebar.html:63
 msgid "Lines"
 msgstr "Линии"
 
-#: templates/includes/sidebar.html:67
+#: templates/includes/sidebar.html:69
 msgid "Seats"
 msgstr "Места"
 
-#: templates/includes/sidebar.html:78
+#: templates/includes/sidebar.html:80
 msgid "Events"
 msgstr "События"
 
-#: templates/includes/sidebar.html:86
+#: templates/includes/sidebar.html:88 templates/payments/payments.html:7
+#: templates/payments/payments.html:19
 msgid "Payments"
 msgstr "Платежи"
 
-#: templates/includes/sidebar.html:93
+#: templates/includes/sidebar.html:95
 msgid "Profile"
 msgstr "Профиль"
+
+#: templates/payments/payments.html:26 templates/tickets/all_tickets.html:26
+#: templates/tickets/booked_tickets.html:26
+msgid "Student"
+msgstr "Студент"
+
+#: templates/payments/payments.html:28 templates/tickets/all_tickets.html:28
+#: templates/tickets/booked_tickets.html:28
+msgid "Phone"
+msgstr "Телефон"
+
+#: templates/payments/payments.html:29
+msgid "Ticket"
+msgstr "Билеты"
+
+#: templates/payments/payments.html:30
+msgid "Method"
+msgstr "Метод"
+
+#: templates/payments/payments.html:31
+msgid "Amount"
+msgstr "Сумма"
+
+#: templates/payments/payments.html:32
+msgid "Payment date"
+msgstr "Платежи"
+
+#: templates/payments/payments.html:33 templates/tickets/all_tickets.html:32
+msgid "Payment status"
+msgstr "Платежи"
+
+#: templates/payments/payments.html:34
+msgid "Action"
+msgstr "Секции"
+
+#: templates/payments/payments.html:46
+msgid "Cash"
+msgstr "Наличные"
+
+#: templates/payments/payments.html:48
+msgid "Card"
+msgstr "Карточка"
+
+#: templates/payments/payments.html:59
+msgid "Pending"
+msgstr "Ожидание"
+
+#: templates/payments/payments.html:61
+msgid "Completed"
+msgstr "Завершено"
+
+#: templates/payments/payments.html:63
+msgid "Failed"
+msgstr "Неудачно"
+
+#: templates/payments/payments.html:69
+msgid "Payment cancel"
+msgstr "Отменить платеж"
+
+#: templates/tickets/all_tickets.html:7 templates/tickets/all_tickets.html:19
+msgid "All tickets"
+msgstr "Все билеты"
+
+#: templates/tickets/all_tickets.html:29
+#: templates/tickets/booked_tickets.html:29
+msgid "Seat number"
+msgstr "Номер места"
+
+#: templates/tickets/all_tickets.html:30
+#: templates/tickets/booked_tickets.html:30
+msgid "Booking At"
+msgstr "Дата бронирования"
+
+#: templates/tickets/all_tickets.html:31
+#: templates/tickets/booked_tickets.html:31
+msgid "Price"
+msgstr "Цена"
+
+#: templates/tickets/all_tickets.html:41
+#: templates/tickets/booked_tickets.html:41
+msgid "Line"
+msgstr "Линии"
+
+#: templates/tickets/all_tickets.html:41
+#: templates/tickets/booked_tickets.html:41
+msgid "seat"
+msgstr "место"
+
+#: templates/tickets/all_tickets.html:46
+msgid "Paid"
+msgstr "Оплаченный"
+
+#: templates/tickets/all_tickets.html:48
+msgid "Unpaid"
+msgstr "Неоплаченный"
 
 #: templates/tickets/booked_tickets.html:7
 #: templates/tickets/booked_tickets.html:19
 msgid "Booked tickets"
 msgstr "Забронированные билеты"
 
-#: templates/tickets/booked_tickets.html:26
-msgid "Student"
-msgstr "Студент"
-
-#: templates/tickets/booked_tickets.html:28
-msgid "Phone"
-msgstr "Телефон"
-
-#: templates/tickets/booked_tickets.html:29
-msgid "Seat number"
-msgstr "Номер места"
-
-#: templates/tickets/booked_tickets.html:30
-msgid "Booking At"
-msgstr "Дата бронирования"
-
-#: templates/tickets/booked_tickets.html:31
-msgid "Price"
-msgstr "Цена"
-
 #: templates/tickets/booked_tickets.html:32
-msgid "Action"
-msgstr "Секции"
+msgid "Payment confirmation"
+msgstr "Подтвердить оплату"
 
-#: templates/tickets/booked_tickets.html:41
-msgid "Line"
-msgstr "Линии"
-
-#: templates/tickets/booked_tickets.html:41
-msgid "seat"
-msgstr "место"
-
-#: ticket_app/models.py:7
-msgid "Foydalanuvchi"
-msgstr "Пользователь"
+#: templates/tickets/booked_tickets.html:45
+msgid "Confirmed"
+msgstr "Подтверждено"
 
 #: ticket_app/models.py:8
 msgid "O‘rindiq"
