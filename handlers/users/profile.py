@@ -68,6 +68,9 @@ async def get_my_ticket(message: Message):
 
     if image:
         image_url = await handle_ticket_image(image)
-        await message.answer_photo(image_url, caption=await messages.get_message(chat_lang, 'ticket'))
+        try:
+            await message.answer_photo(image_url, caption=await messages.get_message(chat_lang, 'ticket'))
+        except Exception as e:
+            await message.answer(str(e))
     else:
         await message.answer(await messages.get_message(chat_lang, 'no_ticket'))
