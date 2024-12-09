@@ -1,5 +1,6 @@
 import re
 
+from aiogram import F
 from aiogram.enums import ContentType
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State
@@ -7,9 +8,16 @@ from aiogram.types import Message, ReplyKeyboardRemove
 
 from filters.private_filters import PrivateFilter
 from handlers.users.register import set_language, set_phone, set_passport, PASSPORT_REGEX, confirmation
+from keyboards.default import user_menu
 from keyboards.inline import edit_student_data_keyboard
 from loader import dp, redis_client, messages, db
 from states import RegisterForm
+
+
+@dp.message(PrivateFilter(), State(), F.text.in_(['🔙 Orqaga', '🔙 Назад']))
+async def cancel(message: Message):
+    chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
+    await message.answer(await messages.get_message(chat_lang, 'restart'), reply_markup=await user_menu(chat_lang))
 
 
 async def get_user_data(user_id: int):

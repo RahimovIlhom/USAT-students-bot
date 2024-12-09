@@ -329,3 +329,14 @@ class Database:
             WHERE tickets.id = $1 AND tickets.user_id = $2
         """
         return await self.fetchrow(sql, ticket_id, str(user_id))
+
+    async def set_chat_lang(self, tg_id, lang):
+        sql = """
+        UPDATE
+            users
+        SET
+            chat_lang = $1
+        WHERE
+            tg_id = $2;
+        """
+        await self.execute(sql, lang, str(tg_id))

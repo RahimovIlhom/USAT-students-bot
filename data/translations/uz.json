@@ -36,5 +36,8 @@
   "format_remaining_time": "{minutes_left} daqiqa {seconds_left} soniya",
   "ticket_not_found": "❌ Chipta topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
   "ticket_unpaid": "❌ Chipta uchun to‘lov amalga oshirilmagan.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
-  "ticket_image_not_found": "❌ Chipta rasmi topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>"
+  "ticket_image_not_found": "❌ Chipta rasmi topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
+  "settings": "⚙️ Sozlamalar",
+  "settings_language": "Tilni tanlang",
+  "settings_language_changed": "✅ Til muvaffaqiyatli o‘zgartirildi."
 }

@@ -36,5 +36,8 @@
   "format_remaining_time": "{minutes_left} минут {seconds_left} секунд",
   "ticket_not_found": "❌ Билетов не найдено.\n\n<b>Пожалуйста, попробуйте снова!</b>",
   "ticket_unpaid": "❌ Оплата за билет не была произведена.\n\n<b>Пожалуйста, попробуйте снова!</b>",
-  "ticket_image_not_found": "❌ Изображение билета не найдено.\n\n<b>Пожалуйста, попробуйте снова!</b>"
+  "ticket_image_not_found": "❌ Изображение билета не найдено.\n\n<b>Пожалуйста, попробуйте снова!</b>",
+  "settings": "⚙️ Настройки",
+  "settings_language": "Выберите язык",
+  "settings_language_changed": "✅ Язык успешно изменен."
 }
