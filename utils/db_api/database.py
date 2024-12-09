@@ -14,6 +14,7 @@ class Database:
                     user=config.DB_USER,
                     password=config.DB_PASSWORD,
                     host=config.DB_HOST,
+                    port=config.DB_PORT,
                     database=config.DB_NAME,
                     min_size=1,
                     max_size=10,
