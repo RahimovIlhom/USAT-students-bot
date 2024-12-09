@@ -7,7 +7,7 @@ from django.views import View
 from django.views.decorators.http import require_GET
 
 from ticket_app.models import Ticket
-from .tasks import generate_ticket_image
+from .tasks import generate_ticket_image, cancel_payment_error_msg
 from .models import Payment
 
 
@@ -57,6 +57,8 @@ def cancel_payment(request, payment_id):
         payment.ticket.is_paid = False
         payment.ticket.image = None
         payment.ticket.save(update_fields=['is_paid', 'image'])
+
+        cancel_payment_error_msg.delay(payment.ticket.user.tg_id, payment.ticket.id)
 
     # Avvalgi sahifaga qaytarish
     return redirect(request.META.get('HTTP_REFERER', 'dashboard'))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09 16:42+0500\n"
+"POT-Creation-Date: 2024-12-09 18:32+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: core/settings.py:162
+#: core/settings.py:164
 msgid "O‘zbekcha"
 msgstr "O‘zbekcha"
 
-#: core/settings.py:163
+#: core/settings.py:165
 msgid "Ruscha"
 msgstr "Ruscha"
 
@@ -286,6 +286,19 @@ msgstr "To‘lov"
 #: payment_app/models.py:46
 msgid "To‘lovlar"
 msgstr "To‘lovlar"
+
+#: payment_app/tasks.py:51
+#, python-brace-format
+msgid ""
+"Event: {event_name}. \n"
+"Ticket: Seat {seat_line}/{seat_number}. \n"
+"The payment for this ticket has been canceled. Please try to make the "
+"payment again."
+msgstr ""
+"Tadbir: {event_name}. \n"
+"Chipta: O‘rindiq {seat_line}/{seat_number}. \n"
+"Ushbu chipta uchun to‘lov bekor qilindi. Iltimos, qayta to‘lovni amalga oshiring."
+
 
 #: templates/400.html:7 templates/400.html:15
 msgid "Bad Request"

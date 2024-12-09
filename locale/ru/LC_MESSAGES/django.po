@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09 16:42+0500\n"
+"POT-Creation-Date: 2024-12-09 18:32+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: core/settings.py:162
+#: core/settings.py:164
 msgid "O‘zbekcha"
 msgstr "Узбекский"
 
-#: core/settings.py:163
+#: core/settings.py:165
 msgid "Ruscha"
 msgstr "Русский"
 
@@ -284,6 +284,18 @@ msgstr "Платеж"
 #: payment_app/models.py:46
 msgid "To‘lovlar"
 msgstr "Платежи"
+
+#: payment_app/tasks.py:51
+#, python-brace-format
+msgid ""
+"Event: {event_name}. \n"
+"Ticket: Seat {seat_line}/{seat_number}. \n"
+"The payment for this ticket has been canceled. Please try to make the "
+"payment again."
+msgstr ""
+"Событие: {event_name}. \n"
+"Билет: Место {seat_line}/{seat_number}. \n"
+"Платеж за этот билет был отменен. Пожалуйста, попробуйте снова выполнить платеж."
 
 #: templates/400.html:7 templates/400.html:15
 msgid "Bad Request"
