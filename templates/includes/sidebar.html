@@ -1,0 +1,109 @@
+{% load i18n %}
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% else %}collapsed{% endif %}" href="{% url 'dashboard' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'booked-tickets' or request.resolver_match.url_name == 'all-tickets' %}active{% else %}collapsed{% endif %}"
+           data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>{% translate "Tickets" %}</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse {% if request.resolver_match.url_name == 'booked-tickets' or request.resolver_match.url_name == 'all-tickets' %}show{% endif %}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'all-tickets' %}" {% if request.resolver_match.url_name == 'all-tickets' %}class="active"{% endif %}>
+              <i class="bi bi-circle"></i><span>{% translate "All Tickets" %}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'booked-tickets' %}" {% if request.resolver_match.url_name == 'booked-tickets' %}class="active"{% endif %}>
+              <i class="bi bi-circle"></i><span>{% translate "Booked Tickets" %}</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link nav-link {% if request.resolver_match.url_name == 'halls' or request.resolver_match.url_name == 'sectors' %}active{% else %}collapsed{% endif %}"
+           data-bs-target="#halls-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-building"></i>
+            <span>{% translate "Halls" %}</span>
+            <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="halls-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="">
+                    <i class="bi bi-circle"></i>
+                    <span>{% translate "Halls" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="bi bi-circle"></i>
+                    <span>{% translate "Sectors" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="bi bi-circle"></i>
+                    <span>{% translate "Sections" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="bi bi-circle"></i>
+                    <span>{% translate "Lines" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="bi bi-circle"></i>
+                    <span>{% translate "Seats" %}</span>
+                </a>
+            </li>
+        </ul>
+      </li><!-- End Halls Nav -->
+
+      <li class="nav-heading">{% translate "Sections" %}</li>
+
+      <li class="nav-item">
+        <a class="nav-link nav-link {% if request.resolver_match.url_name == 'events' %}active{% else %}collapsed{% endif %}" href="">
+            <i class="bi bi-calendar-event"></i>
+            <span>{% translate "Events" %}</span>
+        </a>
+      </li><!-- End Events Page Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'payments' %}active{% else %}collapsed{% endif %}" href="{% url 'payments' %}">
+            <i class="bi bi-cash-coin"></i>
+            <span>{% translate "Payments" %}</span>
+        </a>
+      </li><!-- End Payments Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% else %}collapsed{% endif %}" href="">
+          <i class="bi bi-person"></i>
+          <span>{% translate "Profile" %}</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'logout' %}active{% else %}collapsed{% endif %}" href="">
+          <i class="bi bi-box-arrow-right me-2"></i>
+          <span>{% translate "Sign Out" %}</span>
+        </a>
+      </li><!-- End Logout Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->

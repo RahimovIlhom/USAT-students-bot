@@ -1,5 +1,6 @@
 import os
 
+from celery.schedules import crontab
 from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 
@@ -34,8 +35,10 @@ INSTALLED_APPS = [
 
     # global apps
     'django_celery_beat',
+    'django_celery_results',
 
     # local apps
+    'dashboard_app',
     'user_app',
     'education_app',
     'event_app',
@@ -49,11 +52,11 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -97,6 +100,7 @@ CACHES = {
         "LOCATION": env.str("REDIS_URL"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "IGNORE_EXCEPTIONS": True,  # Redis ishlamasa, kod xato bermasdan davom etadi
         }
     }
 }
@@ -105,6 +109,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = env.str('CELERY_RESULT_BACKEND')
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
@@ -112,13 +117,14 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_BEAT_SCHEDULE = {
     'release-expired-tickets': {
         'task': 'ticket_app.tasks.release_expired_bookings',
-        'schedule': 60.0,  # Har 1 daqiqada tekshiradi
+        'schedule': crontab(minute='*/1'),  # Har 1 daqiqada
     },
     'update-event-status': {
         'task': 'event_app.tasks.update_event_status',
-        'schedule': 300.0,  # Har 5 daqiqada ishga tushadi
+        'schedule': crontab(minute='*/5'),  # Har 5 daqiqada
     },
 }
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -153,7 +159,7 @@ USE_TZ = True
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 
 LANGUAGES = [
-    ('uz', _('O\'zbekcha')),
+    ('uz', _('O‘zbekcha')),
     ('ru', _('Ruscha')),
 ]
 
@@ -188,5 +194,24 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'error.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
 
 SITE_URL = env.str('SITE_URL')

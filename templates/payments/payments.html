@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{%  translate "Payments" %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{%  translate "Payments" %}</h5>
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+
+                <th>
+                  <b>{% translate "Student" %}</b>
+                </th>
+                <th>{% translate "Phone" %}</th>
+                <th>{% translate "Ticket" %}</th>
+                <th>{% translate "Method" %}</th>
+                <th>{% translate "Amount" %}</th>
+                <th data-type="datetime" data-format="DD-MM-YYYY HH:mm">{% translate "Payment date" %}</th>
+                <th class="text-center">{% translate "Payment status" %}</th>
+                <th class="text-center">{% translate "Action" %}</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for payment in payments %}
+              <tr>
+                <td>{{ payment.user.student.fullname }}</td>
+                <td>{{ payment.user.phone }}</td>
+                <td>{{ payment.ticket.seat.line.number }}/{{ payment.ticket.seat.number }}</td>
+                <td>
+                    {% if payment.method == "cash" %}
+                    <span class="badge bg-primary"><i class="bi bi-cash"></i> {% translate "Cash" %}</span>
+                    {% elif payment.method == "card" %}
+                    <span class="badge bg-info"><i class="bi bi-credit-card"></i> {% translate "Card" %}</span>
+                    {% elif payment.method == "click" %}
+                    <span class="badge bg-success"><i class="bi bi-phone"></i> {% translate "Click" %}</span>
+                    {% elif payment.method == "payme" %}
+                    <span class="badge bg-warning"><i class="bi bi-wallet2"></i> {% translate "Payme" %}</span>
+                    {% endif %}
+                </td>
+                <td>{{ payment.amount }}</td>
+                <td data-datetime="{{ payment_date|date:'d-m-Y H:i:s' }}">{{ payment.paid_at|date:"d-m-Y H:i" }}</td>
+                <td class="text-center">
+                  {% if payment.status == "pending" %}
+                  <span class="badge bg-warning">{% translate "Pending" %}</span>
+                  {% elif payment.status == "completed" %}
+                  <span class="badge bg-success">{% translate "Completed" %}</span>
+                  {% elif payment.status == "failed" %}
+                  <span class="badge bg-danger">{% translate "Failed" %}</span>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  {% if payment.status != "failed" %}
+                  <a href="{% url 'cancel_payment' payment.id %}" type="button" class="btn btn-danger">
+                      <i class="bi bi-x-circle"> {% translate "Payment cancel" %}</i>
+                  </a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

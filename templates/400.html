@@ -1,0 +1,21 @@
+{% extends "base_null.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% translate "Bad Request" %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+      <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h1>400</h1>
+        <h2>{% translate "Bad Request" %}.</h2>
+        <a class="btn" href="{% url 'dashboard' %}">{% translate "Back to dashboard" %}</a>
+        <img src="{% static 'assets/img/not-found.svg' %}" class="img-fluid py-5" alt="Bad Request">
+      </section>
+
+    </div>
+{% endblock %}

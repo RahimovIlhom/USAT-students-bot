@@ -1,0 +1,24 @@
+{% extends "base_null.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% translate "Server Error" %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+      <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h1>500</h1>
+        <h2>{% translate "A server error occurred. Please contact the administrator" %}.</h2>
+        <a class="btn" href="{% url 'dashboard' %}">{% translate "Back to dashboard" %}</a>
+        <img src="{% static 'assets/img/not-found.svg' %}" class="img-fluid py-5" alt="Page Not Found">
+        <div class="credits">
+          {% translate "Developed by" %} <a href="https://t.me/ilhomjon_dev">Ilhomjon</a>
+        </div>
+      </section>
+
+    </div>
+{% endblock %}

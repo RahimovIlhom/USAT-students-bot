@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{%  translate "Sold tickets" %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{%  translate "Sold tickets" %}</h5>
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+
+                <th>
+                  <b>{% translate "Student" %}</b>
+                </th>
+                <th>{% translate "Phone" %}</th>
+                <th>{% translate "Seat number" %}</th>
+                <th data-type="datetime" data-format="DD-MM-YYYY HH:mm">{% translate "Booking At" %}</th>
+                <th>{% translate "Price" %}</th>
+                <th class="text-center">{% translate "Payment status" %}</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for ticket in all_tickets %}
+              <tr>
+                <td>{{ ticket.user.student.fullname }}</td>
+                <td>{{ ticket.user.phone }}</td>
+                <td>{% translate "Line" %}: {{ ticket.seat.line.number }} {% translate "seat" %}: {{ ticket.seat.number }}</td>
+                <td data-datetime="{{ booking_date|date:'d-m-Y H:i:s' }}">{{ ticket.booking_at|date:"d-m-Y H:i" }}</td>
+                <td>{{ ticket.price }}</td>
+                <td class="text-center">
+                  {% if ticket.is_paid %}
+                  <span class="badge bg-success">{% translate "Paid" %}</span>
+                  {% else %}
+                  <span class="badge bg-danger">{% translate "Unpaid" %}</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
