@@ -18,3 +18,5 @@ DB_PORT = env.str("DB_PORT")
 REDIS_URL = env.str("REDIS_URL")
 
 PRIVATE_CHANNELS = env.list("PRIVATE_CHANNELS")
+
+SEND_PHOTO_URL = env.str("SEND_PHOTO_URL")
