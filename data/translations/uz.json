@@ -40,5 +40,7 @@
   "settings": "⚙️ Sozlamalar",
   "settings_language": "Tilni tanlang",
   "settings_language_changed": "✅ Til muvaffaqiyatli o‘zgartirildi.",
-  "profile": "👤 Profil"
+  "profile": "👤 Profil",
+  "ticket": "🎟️ Chiptangiz",
+  "no_ticket": "❌ Sizda chipta mavjud emas."
 }

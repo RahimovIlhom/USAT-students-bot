@@ -356,3 +356,17 @@ class Database:
             tg_id = $2;
         """
         await self.execute(sql, lang, str(tg_id))
+
+    async def get_my_ticket_image(self, tg_id):
+        sql = """
+        SELECT
+            image
+        FROM 
+            tickets
+        WHERE 
+            user_id = $1 AND is_booking = TRUE AND is_paid = TRUE
+        ORDER BY 
+            booking_at DESC
+        LIMIT 1;
+        """
+        return await self.fetchval(sql, str(tg_id))

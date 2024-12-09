@@ -4,12 +4,12 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 profile_buttons_texts = {
     'uz': [
         "📋 Ma’lumotlarim",
-        "🎫 Chiptalarim",
+        "🎫 Mening chiptam",
         "🔙 Orqaga"
     ],
     'ru': [
         "📋 Мои данные",
-        "🎫 Мои билеты",
+        "🎫 Мой билет",
         "🔙 Назад"
     ]
 }

@@ -2,6 +2,7 @@ from aiogram import F
 from aiogram.types import Message
 
 from filters.private_filters import PrivateFilter
+from handlers.users.download_ticket import handle_ticket_image
 from keyboards.default import user_menu_buttons_texts, profile_menu, profile_buttons_texts
 from loader import dp, redis_client, messages, db
 
@@ -59,3 +60,14 @@ async def get_my_profile(message: Message):
     # Profil ma'lumotlarini yuborish
     await message.answer(profile_text, parse_mode="HTML")
 
+
+@dp.message(PrivateFilter(), F.text.in_(profile_buttons_texts['uz'][1] + profile_buttons_texts['ru'][1]))
+async def get_my_ticket(message: Message):
+    chat_lang = await redis_client.get_user_chat_lang(message.from_user.id)
+    image = await db.get_my_ticket_image(message.from_user.id)
+
+    if image:
+        image_url = await handle_ticket_image(image)
+        await message.answer_photo(image_url, caption=await messages.get_message(chat_lang, 'ticket'))
+    else:
+        await message.answer(await messages.get_message(chat_lang, 'no_ticket'))
