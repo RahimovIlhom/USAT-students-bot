@@ -35,5 +35,6 @@
   "ticket_unavailable": "❌ Ayni paytda chiptalar mavjud emas.\n\n<b>Iltimos, keyinroq yana urinib ko‘ring!</b>",
   "format_remaining_time": "{minutes_left} daqiqa {seconds_left} soniya",
   "ticket_not_found": "❌ Chipta topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
-  "ticket_unpaid": "❌ Chipta uchun to‘lov amalga oshirilmagan.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>"
+  "ticket_unpaid": "❌ Chipta uchun to‘lov amalga oshirilmagan.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
+  "ticket_image_not_found": "❌ Chipta rasmi topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>"
 }

@@ -1,7 +1,5 @@
-import os
 from datetime import timedelta
 
-import django
 import emoji
 
 from aiogram import F
@@ -10,7 +8,7 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
 from filters.private_filters import PrivateFilter
 from keyboards.default import user_menu_buttons_texts
 from keyboards.inline import booking_ticket_keyboard, BookingTicketCallbackData, booking_ticket_texts, \
-    download_ticket_keyboard, DownloadBookingCallbackData
+    download_ticket_keyboard
 from loader import dp, db, redis_client, messages
 from utils import get_tashkent_timezone
 
@@ -140,7 +138,7 @@ async def generate_ticket_message(lang, status, ticket) -> str:
 
 
 @dp.callback_query(BookingTicketCallbackData.filter())
-async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicketCallbackData):
+async def booking_ticket(callback_query: CallbackQuery, callback_data: BookingTicketCallbackData):
     await callback_query.message.edit_reply_markup(reply_markup=None)
 
     event_id = callback_data.event_id
@@ -186,64 +184,3 @@ async def buy_ticket(callback_query: CallbackQuery, callback_data: BookingTicket
         reply_markup=markup,
         disable_web_page_preview=True
     )
-
-
-# Callback handler
-@dp.callback_query(DownloadBookingCallbackData.filter())
-async def download_ticket(callback_query: CallbackQuery, callback_data: DownloadBookingCallbackData):
-    # Reply markup ni o'chirish
-    await callback_query.message.edit_reply_markup(reply_markup=None)
-
-    # Ticket ID dan ma'lumot olish
-    ticket_id = callback_data.ticket_id
-    chat_lang = await redis_client.get_user_chat_lang(callback_query.from_user.id)
-
-    # DB dan chiptani tekshirish
-    ticket = await db.get_ticket(ticket_id, callback_query.from_user.id)
-
-    # Ticket topilmagan yoki to'lanmagan holatlarini tekshirish
-    if not ticket:
-        await callback_query.answer(await messages.get_message(chat_lang, 'ticket_not_found'), show_alert=True)
-        return
-
-    if not ticket['ticket_is_paid']:
-        await callback_query.answer(await messages.get_message(chat_lang, 'ticket_unpaid'), show_alert=True)
-        return
-
-    # Ticket uchun rasm URL hosil qilish yoki yaratish
-    # image_url = await handle_ticket_image(ticket['ticket_image'])
-    image_url = 'https://admin.usat.uz/media/news/galleries/assorti.jpg'
-
-    # Rasm yuborish
-    await callback_query.message.answer_photo(
-        photo=image_url,
-        disable_web_page_preview=True
-    )
-
-
-async def handle_ticket_image(ticket_image: str, ticket_id: int = None, user_id: int = None) -> str:
-    """
-    Ticket uchun tasvir yo'q bo'lsa, yaratish va URL hosil qilish.
-    """
-    if ticket_image:
-        # Ticket rasm URL sini olish
-        return await get_image_url(ticket_image)
-
-    # Ticket yo'q bo'lsa tasvir yaratish
-    # generated_image_path = await generate_ticket_image(ticket_id, user_id)
-    # return await get_image_url(generated_image_path)
-
-
-# Django muhitini ishga tushirish
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
-django.setup()
-
-from django.conf import settings
-
-
-async def get_image_url(image_path: str) -> str:
-    """
-    Yaratilgan yoki mavjud bo'lgan rasm uchun URL hosil qiladi.
-    """
-    # Tasvirning to'liq URL hosil qilinishi
-    return f"{settings.SITE_URL}{settings.MEDIA_URL}{image_path}"
