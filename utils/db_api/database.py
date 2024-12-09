@@ -53,16 +53,32 @@ class Database:
     async def get_user(self, tg_id) -> dict | None:
         sql = """
         SELECT 
-            tg_id, 
-            phone,
-            chat_lang,
-            status
+            u.tg_id, 
+            u.phone,
+            u.chat_lang,
+            u.status,
+            u.created_at,
+            u.updated_at,
+            s.fullname AS student_fullname,
+            s.passport AS student_passport,
+            s.course AS student_course,
+            s.edu_lang AS student_edu_lang,
+            ed.name_uz AS edu_direction_name_uz,
+            ed.name_ru AS edu_direction_name_ru,
+            et.name_uz AS edu_type_name_uz,
+            et.name_ru AS edu_type_name_ru
         FROM
-            users
+            users u
+        LEFT JOIN 
+            students s ON u.student_id = s.id
+        LEFT JOIN 
+            edu_directions ed ON s.edu_direction_id = ed.id
+        LEFT JOIN 
+            edu_types et ON s.edu_type_id = et.id
         WHERE
-            tg_id = $1;
+            u.tg_id = $1;
         """
-        return await self.fetchrow(sql, tg_id)
+        return await self.fetchrow(sql, str(tg_id))
 
     async def add_draft_user(self, tg_id, status, *args, **kwargs):
         sql = """

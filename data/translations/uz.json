@@ -39,5 +39,6 @@
   "ticket_image_not_found": "❌ Chipta rasmi topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
   "settings": "⚙️ Sozlamalar",
   "settings_language": "Tilni tanlang",
-  "settings_language_changed": "✅ Til muvaffaqiyatli o‘zgartirildi."
+  "settings_language_changed": "✅ Til muvaffaqiyatli o‘zgartirildi.",
+  "profile": "👤 Profil"
 }
