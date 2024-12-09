@@ -1,4 +1,3 @@
-import asyncio
 import os
 from PIL import Image, ImageDraw, ImageFont
 
@@ -43,4 +42,4 @@ async def create_ticket_image(tg_id, event_id, fullname: str) -> str:
     save_image_name = f"media/ticket_images/{tg_id}_{event_id}.jpg"
     img.save(save_image_name)
 
-    return save_image_name
+    return f"ticket_images/{tg_id}_{event_id}.jpg"

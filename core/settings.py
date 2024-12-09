@@ -1,5 +1,6 @@
 import os
 
+from celery.schedules import crontab
 from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
 
     # global apps
     'django_celery_beat',
+    'django_celery_results',
 
     # local apps
     'dashboard_app',
@@ -98,6 +100,7 @@ CACHES = {
         "LOCATION": env.str("REDIS_URL"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "IGNORE_EXCEPTIONS": True,  # Redis ishlamasa, kod xato bermasdan davom etadi
         }
     }
 }
@@ -106,6 +109,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = env.str('CELERY_RESULT_BACKEND')
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
@@ -113,13 +117,14 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_BEAT_SCHEDULE = {
     'release-expired-tickets': {
         'task': 'ticket_app.tasks.release_expired_bookings',
-        'schedule': 60.0,  # Har 1 daqiqada tekshiradi
+        'schedule': crontab(minute='*/1'),  # Har 1 daqiqada
     },
     'update-event-status': {
         'task': 'event_app.tasks.update_event_status',
-        'schedule': 300.0,  # Har 5 daqiqada ishga tushadi
+        'schedule': crontab(minute='*/5'),  # Har 5 daqiqada
     },
 }
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

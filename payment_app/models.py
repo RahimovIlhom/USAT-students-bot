@@ -20,6 +20,7 @@ class Payment(models.Model):
         (STATUS_COMPLETED, _('Bajarildi')),
         (STATUS_FAILED, _('Muvaffaqiyatsiz')),
     ]
+    user = models.ForeignKey('user_app.User', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Foydalanuvchi'))
     ticket = models.ForeignKey('ticket_app.Ticket', on_delete=models.CASCADE, related_name='payment_set', verbose_name=_('Bilet'))
     method = models.CharField(max_length=5, choices=PAYMENT_METHODS, default='cash', verbose_name=_('To‘lov turi'))
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('To‘lov summasi'))
