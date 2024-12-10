@@ -32,6 +32,8 @@ services:
       - redis
     ports:
       - "8380:8080"
+    volumes:
+      - ./certs:/etc/letsencrypt
     command: python web_bot.py
 
   celery_worker:
