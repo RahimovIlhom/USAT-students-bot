@@ -34,6 +34,7 @@ services:
       - "8380:8080"
     volumes:
       - ./certs:/etc/letsencrypt
+      - ./media:/app/media
     command: python web_bot.py
 
   celery_worker:
@@ -44,6 +45,8 @@ services:
     depends_on:
       - redis
       - db
+    volumes:
+      - ./media:/app/media
     command: celery -A core worker --loglevel=info
 
   celery_beat:
@@ -54,6 +57,8 @@ services:
     depends_on:
       - redis
       - db
+    volumes:
+      - ./media:/app/media
     command: celery -A core beat -l info
 
   redis:
