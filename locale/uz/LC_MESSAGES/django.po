@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09 18:32+0500\n"
+"POT-Creation-Date: 2024-12-10 11:25+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: core/settings.py:164
+#: account_app/models.py:17
+msgid "Foydalanuvchi "
+msgstr "Foydalanuvchi "
+
+#: account_app/models.py:18
+msgid "Foydalanuvchilar"
+msgstr "Foydalanuvchilar"
+
+#: account_app/views.py:23
+msgid "Siz muvaffaqiyatli kirishingiz"
+msgstr "Siz muvaffaqiyatli kirishingiz"
+
+#: account_app/views.py:26
+msgid "Foydalanuvchi nomi yoki parol noto‘g‘ri"
+msgstr "Foydalanuvchi nomi yoki parol noto‘g‘ri"
+
+#: account_app/views.py:35
+msgid "Siz muvaffaqiyatli chiqdingiz"
+msgstr "Siz muvaffaqiyatli chiqdingiz"
+
+#: core/settings.py:167
 msgid "O‘zbekcha"
 msgstr "O‘zbekcha"
 
-#: core/settings.py:165
+#: core/settings.py:168
 msgid "Ruscha"
 msgstr "Ruscha"
 
@@ -297,8 +317,8 @@ msgid ""
 msgstr ""
 "Tadbir: {event_name}. \n"
 "Chipta: O‘rindiq {seat_line}/{seat_number}. \n"
-"Ushbu chipta uchun to‘lov bekor qilindi. Iltimos, qayta to‘lovni amalga oshiring."
-
+"Ushbu chipta uchun to‘lov bekor qilindi. Iltimos, qayta to‘lovni amalga "
+"oshiring."
 
 #: templates/400.html:7 templates/400.html:15
 msgid "Bad Request"
@@ -337,6 +357,35 @@ msgstr "Server xatoligi. Iltimos, administratoriga murojaat qiling"
 msgid "Developed by"
 msgstr "Tuzuvchi"
 
+#: templates/accounts/login.html:7 templates/accounts/login.html:54
+#: templates/includes/navbar.html:72
+msgid "Login"
+msgstr "Kirish"
+
+#: templates/accounts/login.html:30
+msgid "Login to Your Account"
+msgstr "Hisobingizga kirish"
+
+#: templates/accounts/login.html:31
+msgid "Enter your username & password to login"
+msgstr "Kirish uchun foydalanuvchi nomingiz va parolingizni kiriting"
+
+#: templates/accounts/login.html:39
+msgid "Username"
+msgstr "Foydalanuvchi nomi"
+
+#: templates/accounts/login.html:43
+msgid "Please enter your username."
+msgstr "Foydalanuvchi nomingizni kiriting."
+
+#: templates/accounts/login.html:48
+msgid "Password"
+msgstr "Parol"
+
+#: templates/accounts/login.html:50
+msgid "Please enter your password!"
+msgstr "Parolingizni kiriting!"
+
 #: templates/base_null.html:11
 msgid "Null"
 msgstr "Bo‘sh"
@@ -364,10 +413,6 @@ msgstr "Mening profilim"
 #: templates/includes/navbar.html:64 templates/includes/sidebar.html:103
 msgid "Sign Out"
 msgstr "Chiqish"
-
-#: templates/includes/navbar.html:72
-msgid "Login"
-msgstr "Kirish"
 
 #: templates/includes/sidebar.html:18
 msgid "Tickets"
@@ -655,9 +700,9 @@ msgid "Yaratilgan vaqti"
 msgstr "Yaratilgan vaqti"
 
 #: user_app/models.py:73
-msgid "Foydalanuvchi "
-msgstr "Foydalanuvchi"
+msgid "Talaba profil "
+msgstr "Talaba profil "
 
 #: user_app/models.py:74
-msgid "Foydalanuvchilar"
-msgstr "Foydalanuvchilar"
+msgid "Talaba profillari"
+msgstr "Talabalar profillari"

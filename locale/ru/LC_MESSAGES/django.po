@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09 18:32+0500\n"
+"POT-Creation-Date: 2024-12-10 11:25+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,31 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: core/settings.py:164
+#: account_app/models.py:17
+msgid "Foydalanuvchi "
+msgstr "Пользователь"
+
+#: account_app/models.py:18
+msgid "Foydalanuvchilar"
+msgstr "Пользователи"
+
+#: account_app/views.py:23
+msgid "Siz muvaffaqiyatli kirishingiz"
+msgstr "Вы успешно вошли"
+
+#: account_app/views.py:26
+msgid "Foydalanuvchi nomi yoki parol noto‘g‘ri"
+msgstr "Неправильное имя пользователя или пароль"
+
+#: account_app/views.py:35
+msgid "Siz muvaffaqiyatli chiqdingiz"
+msgstr "Вы успешно вышли"
+
+#: core/settings.py:167
 msgid "O‘zbekcha"
 msgstr "Узбекский"
 
-#: core/settings.py:165
+#: core/settings.py:168
 msgid "Ruscha"
 msgstr "Русский"
 
@@ -295,7 +315,8 @@ msgid ""
 msgstr ""
 "Событие: {event_name}. \n"
 "Билет: Место {seat_line}/{seat_number}. \n"
-"Платеж за этот билет был отменен. Пожалуйста, попробуйте снова выполнить платеж."
+"Платеж за этот билет был отменен. Пожалуйста, попробуйте снова выполнить "
+"платеж."
 
 #: templates/400.html:7 templates/400.html:15
 msgid "Bad Request"
@@ -334,6 +355,35 @@ msgstr "Произошла ошибка сервера. Пожалуйста, с
 msgid "Developed by"
 msgstr "Разработано"
 
+#: templates/accounts/login.html:7 templates/accounts/login.html:54
+#: templates/includes/navbar.html:72
+msgid "Login"
+msgstr "Войти"
+
+#: templates/accounts/login.html:30
+msgid "Login to Your Account"
+msgstr "Войти в свой аккаунт"
+
+#: templates/accounts/login.html:31
+msgid "Enter your username & password to login"
+msgstr "Введите имя пользователя и пароль для входа"
+
+#: templates/accounts/login.html:39
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: templates/accounts/login.html:43
+msgid "Please enter your username."
+msgstr "Введите ваше имя пользователя."
+
+#: templates/accounts/login.html:48
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/accounts/login.html:50
+msgid "Please enter your password!"
+msgstr "Пожалуйста, введите ваш пароль!"
+
 #: templates/base_null.html:11
 msgid "Null"
 msgstr "Нулевой"
@@ -361,10 +411,6 @@ msgstr "Мой профиль"
 #: templates/includes/navbar.html:64 templates/includes/sidebar.html:103
 msgid "Sign Out"
 msgstr "Выйти"
-
-#: templates/includes/navbar.html:72
-msgid "Login"
-msgstr "Войти"
 
 #: templates/includes/sidebar.html:18
 msgid "Tickets"
@@ -652,9 +698,9 @@ msgid "Yaratilgan vaqti"
 msgstr "Время создания"
 
 #: user_app/models.py:73
-msgid "Foydalanuvchi "
-msgstr "Пользователь"
+msgid "Talaba profil "
+msgstr "Профиль студента"
 
 #: user_app/models.py:74
-msgid "Foydalanuvchilar"
-msgstr "Пользователи"
+msgid "Talaba profillari"
+msgstr "Профили студентов"

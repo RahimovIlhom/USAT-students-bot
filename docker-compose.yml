@@ -14,9 +14,12 @@ services:
       - db
       - redis
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
-             gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+      sh -c "
+            python manage.py compilemessages &&
+            python manage.py migrate &&
+            python manage.py collectstatic --noinput &&
+            python manage.py createsuperuser --noinput || echo 'Superuser yaratilmadi.' &&
+            gunicorn core.wsgi:application --bind 0.0.0.0:8000"
 
   bot:
     build:

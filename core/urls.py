@@ -7,6 +7,7 @@ from django.views.i18n import set_language
 
 urlpatterns = [
     path('set-language/', set_language, name='set_language'),
+    path('accounts/', include('account_app.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

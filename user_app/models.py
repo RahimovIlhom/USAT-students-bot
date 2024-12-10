@@ -70,5 +70,5 @@ class User(models.Model):
             models.Index(fields=['tg_id']),
         ]
         db_table = 'users'
-        verbose_name = _('Foydalanuvchi ')
-        verbose_name_plural = _('Foydalanuvchilar')
+        verbose_name = _('Talaba profil ')
+        verbose_name_plural = _('Talaba profillari')

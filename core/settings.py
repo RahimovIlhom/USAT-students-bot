@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_celery_results',
 
     # local apps
+    'account_app',
     'dashboard_app',
     'user_app',
     'education_app',
@@ -217,5 +218,11 @@ LOGGING = {
         },
     },
 }
+
+AUTH_USER_MODEL = 'account_app.CustomUser'
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 SITE_URL = env.str('SITE_URL')
