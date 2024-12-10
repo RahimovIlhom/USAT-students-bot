@@ -28,10 +28,11 @@ async def format_remaining_time(lang: str, remaining_time: timedelta) -> str:
     """
     Qolgan vaqti (timedelta obyekti) MM:SS formatida qaytaruvchi funksiya.
     """
-    minutes_left = remaining_time.seconds // 60
+    hours_left = remaining_time.seconds // 3600
+    minutes_left = (remaining_time.seconds % 3600) // 60
     seconds_left = remaining_time.seconds % 60
 
-    return (await messages.get_message(lang, 'format_remaining_time')).format(minutes_left=minutes_left, seconds_left=seconds_left)
+    return (await messages.get_message(lang, 'format_remaining_time')).format(hours_left=hours_left, minutes_left=minutes_left, seconds_left=seconds_left)
 
 
 async def generate_event_message(lang, event, available_tickets_count) -> tuple[str, InlineKeyboardMarkup | None]:

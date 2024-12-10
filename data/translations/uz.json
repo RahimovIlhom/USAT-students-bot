@@ -33,7 +33,7 @@
   "ticket_booked": "<b>✅ Siz ushbu tadbir uchun chipta bron qildingiz.</b>\n\n\uD83D\uDCDD <b>Bron qilingan chipta:</b>\n- 🪑 <b>Qator:</b> {line} <b>joy nomeri:</b> {seat}\n- \uD83D\uDCC6 <b>Bron qilingan sana va vaqt:</b> {booking_date}\n- ⏰ <b>Bronlash vaqti tugashigacha qoldi:</b> {remaining_time}\n\n💸 To‘lov qilganingizdan so‘ng chipta sizga yuboriladi.\n\n\uD83D\uDCDE To‘lovni amalga oshirish uchun siz avvalgi xabarda keltirilgan telefon raqamiga qo‘ng‘iroq qiling.",
   "reload_booking_ticket": "✅ Siz ushbu tadbir uchun chiptani muvaffaqiyatli qayta bron qildingiz!\n\n\uD83D\uDCDD Bron qilingan chipta:\n- 🪑 Qator: {line} joy nomeri: {seat}\n- \uD83D\uDCC6 Bron qilingan sana va vaqt: {booking_date}\n- ⏰ Bronlash vaqti tugashigacha qoldi: {remaining_time}\n\n💸 To‘lov qilganingizdan so‘ng chipta sizga yuboriladi.\n\n\uD83D\uDCDE To‘lovni amalga oshirish uchun siz avvalgi xabarda keltirilgan telefon raqamiga qo‘ng‘iroq qiling.",
   "ticket_unavailable": "❌ Ayni paytda chiptalar mavjud emas.\n\n<b>Iltimos, keyinroq yana urinib ko‘ring!</b>",
-  "format_remaining_time": "{minutes_left} daqiqa {seconds_left} soniya",
+  "format_remaining_time": "{hours_left} soat {minutes_left} daqiqa {seconds_left} soniya",
   "ticket_not_found": "❌ Chipta topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
   "ticket_unpaid": "❌ Chipta uchun to‘lov amalga oshirilmagan.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",
   "ticket_image_not_found": "❌ Chipta rasmi topilmadi.\n\n<b>Iltimos, qayta urinib ko‘ring!</b>",

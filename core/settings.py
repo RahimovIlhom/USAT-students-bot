@@ -23,6 +23,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 # SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -122,13 +123,14 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     'release-expired-tickets': {
         'task': 'ticket_app.tasks.release_expired_bookings',
-        'schedule': crontab(minute='*/1'),  # Har 1 daqiqada
+        'schedule': crontab(minute='*/10'),  # Har 10 daqiqada
     },
     'update-event-status': {
         'task': 'event_app.tasks.update_event_status',
-        'schedule': crontab(minute='*/5'),  # Har 5 daqiqada
+        'schedule': crontab(minute='0', hour='*/2'),  # Har 2 soatda bir marta
     },
 }
+
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 # Password validation
