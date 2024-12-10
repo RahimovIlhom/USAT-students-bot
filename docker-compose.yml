@@ -10,7 +10,7 @@ services:
       - "8280:8000"
     volumes:
       - .:/app
-      - ./static:/app/static
+      - ./staticfiles:/app/staticfiles
       - ./media:/app/media
     depends_on:
       - db
