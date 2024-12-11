@@ -23,7 +23,6 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 # SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -84,6 +83,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Database
