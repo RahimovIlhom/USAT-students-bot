@@ -39,7 +39,7 @@ async def create_ticket_image(tg_id, event_id, fullname: str) -> str:
 
     # Rasmni saqlash
     os.makedirs("media/ticket_images/", exist_ok=True)
-    save_image_name = f"media/ticket_images/{tg_id}_{event_id}.jpg"
+    save_image_name = f"media/ticket_images/{fullname.split(' ')[0]}{tg_id}_{event_id}.jpg"
     img.save(save_image_name)
 
-    return f"ticket_images/{tg_id}_{event_id}.jpg"
+    return save_image_name[6:]
